@@ -199,13 +199,18 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-
 .boot-bar span {
     display: block;
     height: 100%;
-    width: 45%;
+    width: 38%;
     border-radius: 3px;
-    background: linear-gradient(90deg, var(--heather), var(--gorse));
-    animation: boot-slide 1.3s ease-in-out infinite alternate;
+    background: linear-gradient(90deg, transparent, var(--heather) 30%, var(--gorse) 70%, transparent);
+    animation: boot-slide 1.5s linear infinite;
+    will-change: transform;
 }
 
-@keyframes boot-slide { from { transform: translateX(-30%); } to { transform: translateX(160%); } }
+/* scorrimento continuo in una direzione sola: fluido, mai a scatti */
+@keyframes boot-slide {
+    from { transform: translateX(-110%); }
+    to { transform: translateX(380%); }
+}
 
 /* ---------- struttura pagina ---------- */
 .app-shell {
