@@ -1,0 +1,23 @@
+@* Cinque stelle tappabili: ogni bottone è alto 44px (target Apple HIG). *@
+<div class="stars" role="radiogroup" aria-label="Voto di @RaterName">
+    @for (var i = 1; i <= 5; i++)
+    {
+        var star = i;
+        <button type="button"
+                class="@(star <= Value ? "filled" : "")"
+                role="radio"
+                aria-checked="@(star == Value ? "true" : "false")"
+                aria-label="@star stelle"
+                @onclick="() => OnStarTapped(star)">
+            @(star <= Value ? "★" : "☆")
+        </button>
+    }
+</div>
+
+@code {
+    [Parameter] public string RaterName { get; set; } = "";
+    [Parameter] public int Value { get; set; }
+    [Parameter] public EventCallback<int> ValueChanged { get; set; }
+
+    private Task OnStarTapped(int star) => ValueChanged.InvokeAsync(star);
+}

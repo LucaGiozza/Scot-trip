@@ -1,0 +1,88 @@
+@page "/tappa/{Id}"
+
+@if (_stop is null)
+{
+    <div class="empty-state">
+        <CatDoodle Pose="CatPose.Curious" />
+        <p>Tappa non trovata.</p>
+        <a class="btn btn-primary" href="">Torna all'itinerario</a>
+    </div>
+}
+else
+{
+    <PageTitle>@_stop.Name · Scozia</PageTitle>
+
+    <div class="stop-hero">
+        @if (_day is not null)
+        {
+            <a class="btn-ghost" href="giorno/@_day.Index">← @_day.Title</a>
+        }
+        <h1>@_stop.Name</h1>
+        <p class="stop-day-ref">
+            @DayView.KindLabel(_stop.Kind)@(_day is null ? "" : $" · giorno {_day.Index} · {_day.Date:ddd d MMMM}")
+        </p>
+        <p class="stop-body">@_stop.Summary</p>
+
+        @if (!string.IsNullOrWhiteSpace(_stop.Practical))
+        {
+            <div class="practical-box">
+                @(_stop.BookingRequired ? "⚠ " : "")@_stop.Practical
+            </div>
+        }
+
+        <div style="margin-top:14px">
+            <a class="btn btn-secondary btn-block" href="@_stop.MapsUrl" target="_blank" rel="noopener">
+                Apri in Google Maps
+            </a>
+        </div>
+    </div>
+
+    @if (_stop.Curiosities.Count > 0)
+    {
+        <h2 class="section-title">Lo sapevi?</h2>
+        @foreach (var curiosity in _stop.Curiosities)
+        {
+            <div class="curiosity-card">
+                <CatDoodle Pose="CatPose.Stamp" CssClass="cat-stamp" />
+                <span class="curiosity-kind @KindClass(curiosity.Kind)">@KindLabel(curiosity.Kind)</span>
+                <h4>@curiosity.Title</h4>
+                <p>@curiosity.Text</p>
+            </div>
+        }
+    }
+
+    <h2 class="section-title">Le nostre foto</h2>
+    <PhotoGallery StopId="@_stop.Id" />
+
+    <h2 class="section-title">Il nostro voto</h2>
+    <RatingBlock TargetKind="RatingTarget.Stop" TargetId="@_stop.Id" />
+}
+
+@code {
+    [Inject] public required ItineraryService Itinerary { get; set; }
+
+    [Parameter] public string Id { get; set; } = "";
+
+    private TripStop? _stop;
+    private TripDay? _day;
+
+    protected override void OnParametersSet()
+    {
+        _stop = Itinerary.StopsById.GetValueOrDefault(Id);
+        _day = Itinerary.DayByStopId.GetValueOrDefault(Id);
+    }
+
+    private static string KindLabel(CuriosityKind kind) => kind switch
+    {
+        CuriosityKind.Weird => "Assurdo ma vero",
+        CuriosityKind.History => "Un po' di storia",
+        _ => "Leggenda"
+    };
+
+    private static string KindClass(CuriosityKind kind) => kind switch
+    {
+        CuriosityKind.Weird => "weird",
+        CuriosityKind.History => "history",
+        _ => "legend"
+    };
+}

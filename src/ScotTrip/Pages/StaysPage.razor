@@ -1,0 +1,146 @@
+@page "/alloggi"
+@implements IDisposable
+
+<PageTitle>Alloggi · Scozia</PageTitle>
+
+<h1 class="day-heading">Dove abbiamo dormito</h1>
+<p class="day-area">Dal B&amp;B con vista loch al letto un po' così.</p>
+
+@if (State.Stays.Count == 0)
+{
+    <div class="empty-state">
+        <CatDoodle Pose="CatPose.Sleeping" />
+        <p>Nessun alloggio ancora.<br />Aggiungete il primo con il tasto +.</p>
+    </div>
+}
+else
+{
+    @foreach (var stay in State.Stays)
+    {
+        <div class="entry-card">
+            <div class="entry-top">
+                <h3>@stay.Name</h3>
+                <span class="entry-tag">@Nights(stay) nott@(Nights(stay) == 1 ? "e" : "i")</span>
+            </div>
+            <p class="entry-sub">@stay.Location · @stay.CheckIn.ToString("d MMM") → @stay.CheckOut.ToString("d MMM")</p>
+            @if (!string.IsNullOrWhiteSpace(stay.Note))
+            {
+                <p class="entry-note">"@stay.Note"</p>
+            }
+            <RatingBlock TargetKind="RatingTarget.Stay" TargetId="@stay.Id.ToString()" />
+            <div class="entry-actions">
+                <button type="button" class="btn-ghost" @onclick="() => OpenEdit(stay)">Modifica</button>
+                <button type="button" class="btn-danger-ghost" @onclick="() => DeleteAsync(stay)">Elimina</button>
+            </div>
+        </div>
+    }
+}
+
+<button type="button" class="fab" @onclick="OpenNew" aria-label="Aggiungi alloggio">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+        <path d="M12 5 V19 M5 12 H19" stroke-linecap="round" />
+    </svg>
+</button>
+
+@if (_editing is not null)
+{
+    <div class="sheet-backdrop" @onclick="CloseSheet">
+        <div class="sheet" @onclick:stopPropagation="true">
+            <div class="sheet-grip"></div>
+            <h2>@(_isNew ? "Nuovo alloggio" : "Modifica alloggio")</h2>
+
+            <div class="form-field">
+                <label for="stay-name">Nome</label>
+                <input id="stay-name" @bind="_editing.Name" placeholder="Es. Heather View B&B" />
+            </div>
+            <div class="form-field">
+                <label for="stay-location">Località</label>
+                <input id="stay-location" @bind="_editing.Location" placeholder="Es. Portree, Isola di Skye" />
+            </div>
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="stay-in">Check-in</label>
+                    <input id="stay-in" type="date" @bind="_editing.CheckIn" />
+                </div>
+                <div class="form-field">
+                    <label for="stay-out">Check-out</label>
+                    <input id="stay-out" type="date" @bind="_editing.CheckOut" />
+                </div>
+            </div>
+            <div class="form-field">
+                <label for="stay-note">Nota</label>
+                <textarea id="stay-note" rows="2" @bind="_editing.Note" placeholder="Colazione? Vista? Doccia che funziona?"></textarea>
+            </div>
+
+            @if (_error is not null)
+            {
+                <p class="form-error">@_error</p>
+            }
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" @onclick="CloseSheet">Annulla</button>
+                <button type="button" class="btn btn-primary" @onclick="SaveAsync">Salva</button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Inject] public required TripState State { get; set; }
+
+    private Stay? _editing;
+    private bool _isNew;
+    private string? _error;
+
+    protected override void OnInitialized() => State.Changed += StateHasChanged;
+
+    private static int Nights(Stay stay) => Math.Max(1, stay.CheckOut.DayNumber - stay.CheckIn.DayNumber);
+
+    private void OpenNew()
+    {
+        var today = DateOnly.FromDateTime(DateTime.Now);
+        _editing = new Stay { CheckIn = today, CheckOut = today.AddDays(1) };
+        _isNew = true;
+        _error = null;
+    }
+
+    private void OpenEdit(Stay stay)
+    {
+        _editing = new Stay
+        {
+            Id = stay.Id, Name = stay.Name, Location = stay.Location,
+            CheckIn = stay.CheckIn, CheckOut = stay.CheckOut, Note = stay.Note, UpdatedAt = stay.UpdatedAt
+        };
+        _isNew = false;
+        _error = null;
+    }
+
+    private async Task SaveAsync()
+    {
+        if (_editing is null) return;
+        if (string.IsNullOrWhiteSpace(_editing.Name))
+        {
+            _error = "Serve almeno il nome dell'alloggio.";
+            return;
+        }
+        if (_editing.CheckOut <= _editing.CheckIn)
+        {
+            _error = "Il check-out deve venire dopo il check-in.";
+            return;
+        }
+        _editing.Name = _editing.Name.Trim();
+        _editing.Location = _editing.Location?.Trim() ?? "";
+        await State.SaveStayAsync(_editing);
+        CloseSheet();
+    }
+
+    private Task DeleteAsync(Stay stay) => State.DeleteStayAsync(stay);
+
+    private void CloseSheet()
+    {
+        _editing = null;
+        _error = null;
+    }
+
+    public void Dispose() => State.Changed -= StateHasChanged;
+}

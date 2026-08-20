@@ -1,0 +1,25 @@
+@page "/giorno/{Index:int}"
+
+@if (_day is not null)
+{
+    <DayView Day="@_day" />
+}
+else
+{
+    <div class="empty-state">
+        <CatDoodle Pose="CatPose.Curious" />
+        <p>Questo giorno non è nell'itinerario.</p>
+        <a class="btn btn-primary" href="">Torna all'itinerario</a>
+    </div>
+}
+
+@code {
+    [Inject] public required ItineraryService Itinerary { get; set; }
+
+    [Parameter] public int Index { get; set; }
+
+    private TripDay? _day;
+
+    protected override void OnParametersSet()
+        => _day = Itinerary.Trip.Days.FirstOrDefault(d => d.Index == Index);
+}

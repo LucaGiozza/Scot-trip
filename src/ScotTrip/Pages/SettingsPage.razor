@@ -1,0 +1,138 @@
+@page "/impostazioni"
+@implements IDisposable
+
+<PageTitle>Impostazioni · Scozia</PageTitle>
+
+<h1 class="day-heading">Impostazioni</h1>
+<p class="day-area">Chi siete, e come restano in sync i due telefoni.</p>
+
+<div class="settings-block">
+    <h2>I viaggiatori</h2>
+    <div class="form-row">
+        <div class="form-field">
+            <label for="traveler-1">Persona 1</label>
+            <input id="traveler-1" @bind="_traveler1" />
+        </div>
+        <div class="form-field">
+            <label for="traveler-2">Persona 2</label>
+            <input id="traveler-2" @bind="_traveler2" />
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary btn-block" @onclick="SaveTravelersAsync">Salva nomi</button>
+    @if (_travelersSaved)
+    {
+        <p class="settings-hint">Salvato ✓</p>
+    }
+</div>
+
+<div class="settings-block">
+    <h2>Account condiviso</h2>
+    @if (!Config.IsConfigured)
+    {
+        <p class="settings-hint">
+            Supabase non è ancora configurato: inserisci URL e anon key in
+            <code>wwwroot/appsettings.json</code> (vedi README del progetto).
+            L'app funziona comunque, ma solo su questo telefono.
+        </p>
+    }
+    else if (Auth.IsLoggedIn)
+    {
+        <div class="logged-line">
+            <span>Connesso come <strong>@Auth.Session!.UserEmail</strong></span>
+            <button type="button" class="btn-danger-ghost" @onclick="LogoutAsync">Esci</button>
+        </div>
+        <p class="settings-hint">Foto e voti si sincronizzano tra i vostri telefoni quando c'è rete.</p>
+    }
+    else
+    {
+        <div class="form-field">
+            <label for="login-email">Email</label>
+            <input id="login-email" type="email" inputmode="email" autocomplete="username" @bind="_email" />
+        </div>
+        <div class="form-field">
+            <label for="login-password">Password</label>
+            <input id="login-password" type="password" autocomplete="current-password" @bind="_password" />
+        </div>
+        @if (_loginError is not null)
+        {
+            <p class="form-error">@_loginError</p>
+        }
+        <button type="button" class="btn btn-primary btn-block" disabled="@_loggingIn" @onclick="LoginAsync">
+            @(_loggingIn ? "Accesso in corso…" : "Accedi")
+        </button>
+        <p class="settings-hint">Usate l'utente creato nel pannello Supabase (uno per telefono va benissimo).</p>
+    }
+</div>
+
+<div class="settings-block">
+    <h2>Sincronizzazione</h2>
+    <p class="settings-hint" style="margin-top:0">
+        Stato: <strong>@StatusLabel</strong>
+        @if (Sync.PendingCount > 0)
+        {
+            <text> · @Sync.PendingCount modifiche in attesa</text>
+        }
+    </p>
+    <button type="button" class="btn btn-secondary btn-block" @onclick="() => Sync.TrySyncAsync()">Sincronizza ora</button>
+    <p class="settings-hint">
+        Tutto quello che fate offline resta al sicuro sul telefono
+        e parte da solo appena torna la rete.
+    </p>
+</div>
+
+@code {
+    [Inject] public required AppConfigService Config { get; set; }
+    [Inject] public required SupabaseAuthService Auth { get; set; }
+    [Inject] public required SyncService Sync { get; set; }
+
+    private string _traveler1 = "";
+    private string _traveler2 = "";
+    private bool _travelersSaved;
+    private string _email = "";
+    private string _password = "";
+    private string? _loginError;
+    private bool _loggingIn;
+
+    private string StatusLabel => Sync.Status switch
+    {
+        SyncStatus.Syncing => "sincronizzazione in corso",
+        SyncStatus.Offline => "offline",
+        SyncStatus.NeedsLogin => "accesso necessario",
+        _ => "tutto aggiornato"
+    };
+
+    protected override void OnInitialized()
+    {
+        _traveler1 = Config.Travelers.ElementAtOrDefault(0) ?? "";
+        _traveler2 = Config.Travelers.ElementAtOrDefault(1) ?? "";
+        Auth.Changed += StateHasChanged;
+        Sync.Changed += StateHasChanged;
+    }
+
+    private async Task SaveTravelersAsync()
+    {
+        await Config.SaveTravelersAsync(_traveler1, _traveler2);
+        _travelersSaved = true;
+    }
+
+    private async Task LoginAsync()
+    {
+        _loggingIn = true;
+        _loginError = null;
+        _loginError = await Auth.LoginAsync(_email.Trim(), _password);
+        _loggingIn = false;
+        if (_loginError is null)
+        {
+            _password = "";
+            await Sync.TrySyncAsync();
+        }
+    }
+
+    private Task LogoutAsync() => Auth.LogoutAsync();
+
+    public void Dispose()
+    {
+        Auth.Changed -= StateHasChanged;
+        Sync.Changed -= StateHasChanged;
+    }
+}

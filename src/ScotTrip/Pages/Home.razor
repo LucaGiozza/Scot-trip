@@ -1,0 +1,8 @@
+@page "/"
+
+@* Home = il giorno "giusto": oggi se siamo in viaggio, il primo giorno prima della partenza. *@
+<DayView Day="@Itinerary.CurrentDay(DateOnly.FromDateTime(DateTime.Now))" />
+
+@code {
+    [Inject] public required ItineraryService Itinerary { get; set; }
+}

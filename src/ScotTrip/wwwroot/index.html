@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="utf-8" />
+    <!-- viewport-fit=cover: l'app arriva fino ai bordi del notch; i padding li gestisce il CSS con env() -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0" />
+    <title>Scozia · il nostro viaggio</title>
+    <base href="/" />
+
+    <meta name="theme-color" content="#1E3B33" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Scozia" />
+    <link rel="apple-touch-icon" href="icons/icon-192.png" />
+    <link rel="icon" type="image/png" href="icons/icon-192.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link href="css/app.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app">
+        <!-- Splash mostrato mentre il runtime WASM si scarica (solo la prima volta: poi è in cache) -->
+        <div class="boot-screen">
+            <svg class="boot-cat" viewBox="0 0 120 120" aria-hidden="true">
+                <path fill="currentColor"
+                    d="M38 34 L30 14 L48 24 Q60 20 72 24 L90 14 L82 34 Q94 48 90 66 Q86 86 60 88 Q34 86 30 66 Q26 48 38 34 Z" />
+                <circle cx="48" cy="52" r="4" fill="#EDF0EA" />
+                <circle cx="72" cy="52" r="4" fill="#EDF0EA" />
+                <path d="M54 64 Q60 70 66 64" stroke="#EDF0EA" stroke-width="3" fill="none" stroke-linecap="round" />
+            </svg>
+            <p>Si parte per la Scozia…</p>
+            <div class="boot-bar"><span></span></div>
+        </div>
+    </div>
+
+    <div id="blazor-error-ui">
+        Qualcosa è andato storto.
+        <a href="." class="reload">Ricarica</a>
+        <span class="dismiss">🗙</span>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="_framework/blazor.webassembly.js"></script>
+    <script>navigator.serviceWorker.register('service-worker.js');</script>
+</body>
+
+</html>

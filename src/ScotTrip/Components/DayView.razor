@@ -1,0 +1,78 @@
+@implements IDisposable
+
+<PageTitle>@Day.Title · Scozia</PageTitle>
+
+<div class="day-strip" role="tablist" aria-label="Giorni del viaggio">
+    @foreach (var d in Itinerary.Trip.Days)
+    {
+        <a class="day-chip @(d.Index == Day.Index ? "active" : "")"
+           href="giorno/@d.Index"
+           role="tab"
+           aria-selected="@(d.Index == Day.Index ? "true" : "false")">
+            <span class="dow">@d.Date.ToString("ddd")</span>
+            <span class="num">@d.Date.Day</span>
+        </a>
+    }
+</div>
+
+<h1 class="day-heading">@Day.Title</h1>
+<p class="day-area">@Day.Date.ToString("dddd d MMMM") · @Day.Area</p>
+
+<div class="timeline">
+    @foreach (var stop in Day.Stops)
+    {
+        var avg = State.AverageFor(RatingTarget.Stop, stop.Id);
+        var photoCount = State.PhotosForStop(stop.Id).Count;
+        <a class="stop-card @(avg is not null || photoCount > 0 ? "visited" : "")" href="tappa/@stop.Id">
+            <div class="stop-top">
+                <h3>@stop.Name</h3>
+            </div>
+            <p class="stop-summary">@stop.Summary</p>
+            <div class="stop-meta">
+                <span class="kind-badge">@KindLabel(stop.Kind)</span>
+                @if (stop.BookingRequired)
+                {
+                    <span class="booking-flag">⚠ prenotazione</span>
+                }
+                @if (avg is double a)
+                {
+                    <span class="mini-stars" aria-label="Voto medio @a.ToString("0.#")">@Stars(a)</span>
+                }
+                @if (photoCount > 0)
+                {
+                    <span class="mini-count">📷 @photoCount</span>
+                }
+            </div>
+        </a>
+    }
+</div>
+
+@code {
+    [Inject] public required ItineraryService Itinerary { get; set; }
+    [Inject] public required TripState State { get; set; }
+
+    [Parameter, EditorRequired] public TripDay Day { get; set; } = new();
+
+    protected override void OnInitialized() => State.Changed += StateHasChanged;
+
+    internal static string KindLabel(StopKind kind) => kind switch
+    {
+        StopKind.Castle => "Castello",
+        StopKind.Nature => "Natura",
+        StopKind.Village => "Borgo",
+        StopKind.Beach => "Spiaggia",
+        StopKind.Distillery => "Distilleria",
+        StopKind.Church => "Cattedrale",
+        StopKind.Viewpoint => "Panorama",
+        StopKind.City => "Città",
+        _ => "Da vedere"
+    };
+
+    private static string Stars(double avg)
+    {
+        var full = (int)Math.Round(avg);
+        return new string('★', full) + new string('☆', 5 - full);
+    }
+
+    public void Dispose() => State.Changed -= StateHasChanged;
+}

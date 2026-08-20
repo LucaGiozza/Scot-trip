@@ -1,0 +1,33 @@
+@implements IDisposable
+
+<div class="rating-block">
+    @foreach (var traveler in Config.Travelers)
+    {
+        var current = State.RatingFor(TargetKind, TargetId, traveler)?.Stars ?? 0;
+        <div class="rating-row">
+            <span class="rater-name">@traveler</span>
+            <RatingStars RaterName="@traveler"
+                         Value="current"
+                         ValueChanged="stars => SetAsync(traveler, stars)" />
+        </div>
+    }
+    @if (State.AverageFor(TargetKind, TargetId) is double avg)
+    {
+        <div class="avg-line">Media di coppia: @avg.ToString("0.#") ★</div>
+    }
+</div>
+
+@code {
+    [Inject] public required TripState State { get; set; }
+    [Inject] public required AppConfigService Config { get; set; }
+
+    [Parameter, EditorRequired] public RatingTarget TargetKind { get; set; }
+    [Parameter, EditorRequired] public string TargetId { get; set; } = "";
+
+    protected override void OnInitialized() => State.Changed += StateHasChanged;
+
+    private Task SetAsync(string traveler, int stars)
+        => State.SetRatingAsync(TargetKind, TargetId, traveler, stars);
+
+    public void Dispose() => State.Changed -= StateHasChanged;
+}

@@ -1,0 +1,123 @@
+@implements IDisposable
+
+<div class="photo-grid">
+    @foreach (var photo in State.PhotosForStop(StopId))
+    {
+        var url = _photoUrls.GetValueOrDefault(photo.Id);
+        <button type="button" class="photo-cell" @onclick="() => _viewing = photo" aria-label="Apri foto">
+            @if (url is not null)
+            {
+                <img src="@url" alt="@(photo.Caption ?? "Foto del viaggio")" loading="lazy" />
+            }
+            @if (photo.StoragePath is null || _pendingIds.Contains(photo.Id))
+            {
+                <span class="pending-dot" title="In attesa di sincronizzazione"></span>
+            }
+        </button>
+    }
+
+    <button type="button" class="photo-add" @onclick="OpenPicker">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+            <rect x="3" y="6" width="18" height="14" rx="2.5" />
+            <circle cx="12" cy="13" r="3.5" />
+            <path d="M8.5 6 L10 3.5 H14 L15.5 6" />
+        </svg>
+        Aggiungi foto
+    </button>
+</div>
+
+@* capture assente di proposito: iOS mostra il foglio nativo "Fotocamera / Libreria" *@
+<input id="@_inputId" type="file" accept="image/*" class="visually-hidden"
+       @onchange="OnFileSelectedAsync" tabindex="-1" aria-hidden="true" />
+
+@if (_viewing is not null)
+{
+    <div class="photo-viewer" @onclick="() => _viewing = null">
+        <img src="@_photoUrls.GetValueOrDefault(_viewing.Id)" alt="@(_viewing.Caption ?? "Foto")" />
+        <div class="viewer-bar" @onclick:stopPropagation="true">
+            <span>@_viewing.TakenAt.ToLocalTime().ToString("d MMM · HH:mm")@(string.IsNullOrEmpty(_viewing.Author) ? "" : $" · {_viewing.Author}")</span>
+            <div>
+                <button type="button" class="btn-danger-ghost" @onclick="DeleteViewingAsync">Elimina</button>
+                <button type="button" class="btn-ghost" style="color:var(--mist)" @onclick="() => _viewing = null">Chiudi</button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Inject] public required TripState State { get; set; }
+    [Inject] public required AppInterop Interop { get; set; }
+    [Inject] public required SupabaseApiService Api { get; set; }
+    [Inject] public required AppConfigService Config { get; set; }
+    [Inject] public required IJSRuntime Js { get; set; }
+
+    [Parameter, EditorRequired] public string StopId { get; set; } = "";
+
+    private readonly string _inputId = $"photo-input-{Guid.NewGuid():N}";
+    private readonly Dictionary<Guid, string> _photoUrls = new();
+    private readonly HashSet<Guid> _pendingIds = new();
+    private TripPhoto? _viewing;
+
+    protected override void OnInitialized() => State.Changed += OnStateChanged;
+
+    protected override async Task OnParametersSetAsync() => await RefreshUrlsAsync();
+
+    private async void OnStateChanged()
+    {
+        await RefreshUrlsAsync();
+        StateHasChanged();
+    }
+
+    private async Task RefreshUrlsAsync()
+    {
+        foreach (var photo in State.PhotosForStop(StopId))
+        {
+            if (_photoUrls.ContainsKey(photo.Id)) continue;
+
+            // 1) il blob locale è la via più rapida (e l'unica offline)
+            var local = await Interop.GetLocalPhotoUrlAsync(PhotoKey(photo.Id));
+            if (local is not null) { _photoUrls[photo.Id] = local; continue; }
+
+            // 2) foto scattata dall'altro telefono: serve un URL firmato (solo online)
+            if (photo.StoragePath is not null)
+            {
+                var signed = await Api.CreateSignedPhotoUrlAsync(photo.StoragePath);
+                if (signed is not null) _photoUrls[photo.Id] = signed;
+            }
+        }
+    }
+
+    private async Task OpenPicker()
+        => await Js.InvokeVoidAsync("scotTrip.clickElement", _inputId);
+
+    private async Task OnFileSelectedAsync(ChangeEventArgs _)
+    {
+        var photo = new TripPhoto
+        {
+            StopId = StopId,
+            Author = Config.Travelers.FirstOrDefault(),
+            StoragePath = $"{StopId}/{Guid.NewGuid():N}.jpg"
+        };
+
+        var bytes = await Interop.CompressAndStorePhotoAsync(_inputId, PhotoKey(photo.Id), maxEdge: 1600, quality: 0.8);
+        if (bytes <= 0) return;
+
+        _pendingIds.Add(photo.Id);
+        await State.AddPhotoAsync(photo, PhotoKey(photo.Id));
+        _pendingIds.Remove(photo.Id);
+    }
+
+    private async Task DeleteViewingAsync()
+    {
+        if (_viewing is null) return;
+        var photo = _viewing;
+        _viewing = null;
+        await Interop.DeleteLocalPhotoAsync(PhotoKey(photo.Id));
+        _photoUrls.Remove(photo.Id);
+        await State.DeletePhotoAsync(photo);
+    }
+
+    private static string PhotoKey(Guid id) => $"photo-{id:N}";
+
+    public void Dispose() => State.Changed -= OnStateChanged;
+}

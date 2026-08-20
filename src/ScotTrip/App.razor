@@ -1,0 +1,16 @@
+<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        <FocusOnNavigate RouteData="@routeData" Selector="main" />
+    </Found>
+    <NotFound>
+        <PageTitle>Pagina non trovata</PageTitle>
+        <LayoutView Layout="@typeof(MainLayout)">
+            <div class="empty-state">
+                <CatDoodle Pose="CatPose.Curious" />
+                <p>Questa strada non porta da nessuna parte…</p>
+                <a class="btn btn-primary" href="">Torna all'itinerario</a>
+            </div>
+        </LayoutView>
+    </NotFound>
+</Router>

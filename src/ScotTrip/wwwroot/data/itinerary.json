@@ -1,0 +1,1100 @@
+{
+  "tripName": "Scozia, il nostro viaggio",
+  "days": [
+    {
+      "index": 1,
+      "date": "2026-09-04",
+      "title": "Benvenuti a Edimburgo",
+      "area": "Edimburgo · Old Town",
+      "stops": [
+        {
+          "id": "royal-mile",
+          "name": "Royal Mile",
+          "kind": "Sight",
+          "lat": 55.9502,
+          "lng": -3.1836,
+          "summary": "La spina dorsale della città vecchia: un chilometro e mezzo di pietra scura, vicoli stretti (i closes) e cortili nascosti tra il Castello e Holyrood. Vale la pena infilarsi nei vicoli laterali meno battuti, come White Horse Close in fondo alla strada.",
+          "practical": "Sempre accessibile e gratuita. I closes più belli si scoprono camminando senza fretta.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "Un miglio… ma scozzese",
+              "text": "La Royal Mile è lunga un miglio scozzese, che è più lungo di quello inglese: circa 1,8 km contro 1,6. L'unità fu abolita nel 1685, ma il nome della strada se l'è tenuta stretta."
+            },
+            {
+              "kind": "Weird",
+              "title": "La città sotto la città",
+              "text": "Sotto i vostri piedi c'è una strada del Seicento rimasta sigillata: Mary King's Close. Quando costruirono i palazzi del municipio ci edificarono letteralmente sopra, e oggi si visita come una città sotterranea congelata nel tempo."
+            },
+            {
+              "kind": "History",
+              "title": "La via dei re",
+              "text": "Per secoli è stata la passerella ufficiale dei sovrani scozzesi, che la percorrevano dal Castello al Palazzo di Holyrood. Ogni close porta il nome di un mestiere o di un personaggio che ci viveva: leggere le targhe è come sfogliare l'elenco telefonico del 1600."
+            }
+          ]
+        },
+        {
+          "id": "edinburgh-castle",
+          "name": "Edinburgh Castle",
+          "kind": "Castle",
+          "lat": 55.9486,
+          "lng": -3.1999,
+          "summary": "La fortezza simbolo della Scozia, appollaiata su un vulcano spento. Dentro ci sono i Gioielli della Corona scozzese e la Stone of Destiny; dalle mura, la vista migliore sulla New Town.",
+          "practical": "9:30–18:00 (ultimo ingresso 17:00). Circa £19,50–22 online. Prenotazione obbligatoria con largo anticipo: i biglietti sul posto quasi non esistono. Puntate all'ingresso delle 13:00 per lo sparo del cannone.",
+          "bookingRequired": true,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "Il cannone tirchio",
+              "text": "Il One O'Clock Gun spara ogni giorno alle 13:00 e non a mezzogiorno per pura avarizia vittoriana: un colpo solo costava meno di dodici. Serviva alle navi nel porto di Leith per regolare i cronometri."
+            },
+            {
+              "kind": "Weird",
+              "title": "Il cimitero dei cani soldato",
+              "text": "Su una terrazza del castello c'è un minuscolo cimitero dove dal 1840 vengono sepolti i cani mascotte dei reggimenti. È uno dei angoli più teneri di una fortezza assediata 26 volte."
+            },
+            {
+              "kind": "History",
+              "title": "Il record degli assedi",
+              "text": "Con 26 assedi documentati in 1100 anni, è uno dei luoghi più attaccati della Gran Bretagna. La rocca vulcanica su cui poggia è abitata da almeno 3000 anni: qui l'età del bronzo e i selfie convivono."
+            }
+          ]
+        },
+        {
+          "id": "st-giles-cathedral",
+          "name": "St Giles' Cathedral",
+          "kind": "Church",
+          "lat": 55.9495,
+          "lng": -3.1907,
+          "summary": "La chiesa madre del presbiterianesimo, con la celebre guglia a forma di corona imperiale. Dentro, la Thistle Chapel è un merletto di legno scolpito dedicato all'Ordine del Cardo.",
+          "practical": "Lun–Sab 10:00–18:00, domenica 13:00–17:00. Gratuita (donazione suggerita £5). Nessuna prenotazione.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "Il cuore su cui si sputa",
+              "text": "Nel selciato fuori dalla cattedrale c'è un cuore di pietra, l'Heart of Midlothian: segna l'ingresso della vecchia prigione demolita. Gli abitanti ci sputano sopra passando — nata come gesto di disprezzo verso il carcere, oggi è considerata un portafortuna. Mirate bene."
+            },
+            {
+              "kind": "History",
+              "title": "Lo sgabello che fece la storia",
+              "text": "Nel 1637 la venditrice Jenny Geddes, sentendo la nuova liturgia imposta da Londra, lanciò il suo sgabello contro il predicatore urlando. Il tumulto che ne seguì fu una delle scintille delle guerre religiose scozzesi: raramente un mobile ha fatto tanti danni."
+            }
+          ]
+        },
+        {
+          "id": "victoria-street",
+          "name": "Victoria Street",
+          "kind": "Sight",
+          "lat": 55.9486,
+          "lng": -3.193,
+          "summary": "La strada curva più fotografata di Edimburgo: facciate coloratissime su due livelli, botteghe indipendenti e la terrazza superiore da cui guardarle dall'alto.",
+          "practical": "Sempre accessibile. La luce migliore per le foto è al mattino presto, prima della folla.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Legend",
+              "title": "La vera Diagon Alley?",
+              "text": "In molti giurano che J.K. Rowling si sia ispirata proprio a questa curva colorata per la Diagon Alley di Harry Potter. Lei non l'ha mai confermato — ma scriveva nei caffè a due passi da qui, quindi il sospetto resta legittimo."
+            },
+            {
+              "kind": "History",
+              "title": "Lo stregone del West Bow",
+              "text": "Prima di Victoria Street qui passava il West Bow, dove abitava il maggiore Thomas Weir: cittadino rispettabilissimo finché nel 1670 confessò spontaneamente stregonerie e crimini vari. Fu giustiziato e la sua casa rimase disabitata per un secolo perché 'infestata'."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "date": "2026-09-05",
+      "title": "Edimburgo dall'alto",
+      "area": "Edimburgo · New Town e colline",
+      "stops": [
+        {
+          "id": "princes-street-gardens",
+          "name": "Princes Street Gardens",
+          "kind": "Nature",
+          "lat": 55.9508,
+          "lng": -3.202,
+          "summary": "Il grande parco che separa Old Town e New Town, con il castello che incombe sopra le scogliere. All'ingresso est c'è l'Orologio Floreale, il più antico del mondo nel suo genere.",
+          "practical": "7:00–21:35 circa (varia con la stagione). Gratuito.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "State passeggiando in una palude",
+              "text": "Dove ora fioriscono le aiuole c'era il Nor Loch: un lago artificiale trasformato in fogna a cielo aperto della Old Town, dove per giunta si praticava la 'prova dell'acqua' alle accusate di stregoneria. Fu bonificato nel Settecento. I giardini profumano decisamente meglio."
+            },
+            {
+              "kind": "History",
+              "title": "L'orologio che sboccia",
+              "text": "Il Floral Clock funziona dal 1903 ed è composto ogni anno da 30–40 mila piantine. Ha persino un cucù che canta ogni quarto d'ora: il giardiniere che lo cura ha uno dei lavori più poetici della città."
+            }
+          ]
+        },
+        {
+          "id": "scott-monument",
+          "name": "Scott Monument",
+          "kind": "Sight",
+          "lat": 55.9524,
+          "lng": -3.1932,
+          "summary": "Un razzo gotico nero di 61 metri dedicato a Walter Scott. Chi non teme le vertigini può salire i 287 gradini della scala a chiocciola fino alle terrazze panoramiche.",
+          "practical": "10:00–12:30 e 13:45–15:30. Circa £8 per salire; biglietti sul posto. La torre chiude con vento forte.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "Il primato mondiale",
+              "text": "È il monumento più grande mai dedicato a uno scrittore, in tutto il pianeta. Sessantuno metri di guglie per un romanziere: gli scozzesi prendono la letteratura molto sul serio."
+            },
+            {
+              "kind": "History",
+              "title": "L'architetto che non lo vide mai",
+              "text": "Lo progettò George Meikle Kemp, falegname autodidatta che vinse il concorso sotto pseudonimo temendo di non essere preso sul serio. Morì annegato in un canale, in una notte di nebbia, pochi mesi prima dell'inaugurazione."
+            }
+          ]
+        },
+        {
+          "id": "dean-village",
+          "name": "Dean Village",
+          "kind": "Village",
+          "lat": 55.9522,
+          "lng": -3.2192,
+          "summary": "Un ex villaggio di mugnai sul Water of Leith, a cinque minuti dal centro ma silenzioso come una fiaba. Case colorate, niente auto, e il sentiero lungo il fiume per rientrare in città.",
+          "practical": "Sempre accessibile, gratuito. Il Water of Leith Walkway è la via più bella per arrivarci o andarsene.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "History",
+              "title": "Ottocento anni di farina",
+              "text": "Per otto secoli qui hanno girato le macine: fino a undici mulini contemporaneamente, di proprietà della corporazione dei fornai di Edimburgo. Il nome antico era 'Water of Leith Village'."
+            },
+            {
+              "kind": "Weird",
+              "title": "Cercate le pagnotte di pietra",
+              "text": "Su alcune facciate sono scolpite pagnotte, pale da fornaio e spighe: erano il 'logo aziendale' dei fornai. Una specie di insegna pubblicitaria del Seicento, ancora perfettamente leggibile."
+            }
+          ]
+        },
+        {
+          "id": "calton-hill",
+          "name": "Calton Hill",
+          "kind": "Viewpoint",
+          "lat": 55.9552,
+          "lng": -3.1827,
+          "summary": "L'acropoli di Edimburgo: monumenti neoclassici, prati e il punto migliore della città per il tramonto, con la Old Town da una parte e il mare dall'altra.",
+          "practical": "Sempre accessibile, gratuita. Salita breve (10 minuti). Portate una felpa: in cima tira sempre vento.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "La vergogna di Edimburgo",
+              "text": "Il 'Partenone' incompiuto in cima è il National Monument: iniziato nel 1826 per celebrare i caduti delle guerre napoleoniche, si fermò a dodici colonne quando finirono i soldi. I cittadini lo soprannominarono 'Edinburgh's Disgrace' — e ora è il simbolo della collina."
+            },
+            {
+              "kind": "History",
+              "title": "L'Atene del Nord",
+              "text": "Fu proprio questo skyline di colonne e templi a far guadagnare a Edimburgo il soprannome di 'Atene del Nord' nell'Ottocento, quando la città si sentiva la capitale dell'Illuminismo europeo. Non era del tutto immodestia."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "date": "2026-09-06",
+      "title": "Verso le Highlands",
+      "area": "Da Edimburgo a Inverness",
+      "stops": [
+        {
+          "id": "kelpies",
+          "name": "The Kelpies",
+          "kind": "Sight",
+          "lat": 56.0198,
+          "lng": -3.7554,
+          "summary": "Due colossali teste di cavallo in acciaio alte 30 metri lungo il canale di Falkirk. Camminateci proprio sotto: la scala dell'opera si capisce solo da lì.",
+          "practical": "Parco sempre aperto, gratuito; centro visitatori 9:30–17:00. Tour interni a pagamento (~£8,50) su prenotazione.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Legend",
+              "title": "Occhio ai cavalli d'acqua",
+              "text": "I kelpie del folklore scozzese sono spiriti mutaforma che vivono nei laghi: assumono l'aspetto di splendidi cavalli per attirare i viandanti in groppa… e trascinarli sott'acqua. Se un cavallo bagnato vi fissa con troppa insistenza, declinate."
+            },
+            {
+              "kind": "History",
+              "title": "Duke e Baron, i modelli",
+              "text": "Le sculture sono l'omaggio ai cavalli da tiro Clydesdale che trainavano chiatte e aratri nella Scozia industriale. Lo scultore Andy Scott le modellò su due Clydesdale in carne e ossa, Duke e Baron: ogni testa pesa circa 300 tonnellate."
+            }
+          ]
+        },
+        {
+          "id": "stirling-castle",
+          "name": "Stirling Castle",
+          "kind": "Castle",
+          "lat": 56.124,
+          "lng": -3.947,
+          "summary": "Il grande rivale di Edimburgo: la corte rinascimentale scozzese restaurata nei minimi dettagli, su una rupe vulcanica che domina i campi di battaglia di Wallace e Bruce.",
+          "practical": "9:30–18:00 (ultimo ingresso 17:00). Circa £17,50–19 online. Prenotazione consigliata per l'orario che preferite.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "Il primo uomo volante (quasi)",
+              "text": "Nel 1507 l'alchimista di corte John Damian si lanciò dalle mura con ali di piume, convinto di volare fino in Francia. Atterrò nel letamaio sottostante rompendosi una gamba. Diede la colpa alle piume: erano di gallina, animale notoriamente poco incline al volo."
+            },
+            {
+              "kind": "History",
+              "title": "Una regina di nove mesi",
+              "text": "Maria Stuarda fu incoronata regina di Scozia qui nel 1543, a nove mesi d'età. Pianse per tutta la cerimonia — con il senno di poi, un presagio piuttosto accurato del suo regno."
+            }
+          ]
+        },
+        {
+          "id": "pitlochry",
+          "name": "Pitlochry",
+          "kind": "Village",
+          "lat": 56.7027,
+          "lng": -3.733,
+          "summary": "Un villaggio vittoriano perfettamente conservato, porta d'accesso alle Highlands centrali. Famoso per la 'scala dei salmoni' che aiuta i pesci a superare la diga.",
+          "practical": "Sosta libera. La scala dei salmoni (Pitlochry Dam) è gratuita, con centro visitatori.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "Un ascensore per salmoni",
+              "text": "La scala dei salmoni è una serie di 34 vasche a gradini che i pesci risalgono a colpi di coda per andare a deporre le uova. C'è perfino un contatore automatico: ogni salmone che passa viene registrato come a un tornello dello stadio."
+            },
+            {
+              "kind": "History",
+              "title": "Lanciata da una regina",
+              "text": "Pitlochry era un villaggio qualunque finché la regina Vittoria, di passaggio nel 1842, non ne parlò entusiasta. Con l'arrivo della ferrovia divenne la località di villeggiatura delle Highlands, e da allora vive elegantemente di quella fama."
+            }
+          ]
+        },
+        {
+          "id": "inverness",
+          "name": "Inverness",
+          "kind": "City",
+          "lat": 57.4778,
+          "lng": -4.2247,
+          "summary": "La capitale delle Highlands, adagiata sul fiume Ness: castello di arenaria rossa, cattedrale, il Victorian Market e la base perfetta per Culloden e Loch Ness.",
+          "practical": "Passeggiata sul lungofiume libera. Il castello è vittoriano e ospita uffici: si ammira da fuori.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "Un fiume corto ma famoso",
+              "text": "Il fiume Ness è lungo appena una decina di chilometri: nasce dal loch e sfocia subito in mare. In compenso scarica l'acqua di uno dei laghi più profondi d'Europa, quindi anche d'estate resta freddo e impetuoso."
+            },
+            {
+              "kind": "History",
+              "title": "Qui abitava Macbeth (più o meno)",
+              "text": "Secondo Shakespeare, il castello di Macbeth dove venne assassinato re Duncan era proprio a Inverness. Il Macbeth storico era davvero un signore di queste terre nell'XI secolo — ma il castello attuale è del 1836, quindi niente fantasmi shakespeariani: al massimo impiegati comunali."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "date": "2026-09-07",
+      "title": "Storia e mostri",
+      "area": "Culloden e Loch Ness",
+      "stops": [
+        {
+          "id": "culloden",
+          "name": "Culloden Battlefield",
+          "kind": "Sight",
+          "lat": 57.477,
+          "lng": -4.0967,
+          "summary": "La brughiera dove nel 1746 finì il sogno giacobita e con lui il mondo dei clan. Un sentiero circolare attraversa il campo, tra le pietre che ricordano i caduti clan per clan; il centro visitatori ricostruisce la battaglia in una sala a 360°.",
+          "practical": "Campo sempre accessibile e gratuito; centro visitatori 9:00–18:00, circa £14. Parcheggio £2 se non visitate il museo.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "History",
+              "title": "Un'ora che cambiò la Scozia",
+              "text": "La battaglia del 16 aprile 1746 durò meno di un'ora e fu l'ultima battaglia campale mai combattuta su suolo britannico. L'esercito giacobita di Charlie, stremato da una marcia notturna fallita, fu travolto dall'artiglieria governativa."
+            },
+            {
+              "kind": "Weird",
+              "title": "Quando il kilt era illegale",
+              "text": "Dopo Culloden, Londra vietò per legge kilt e tartan: il Dress Act del 1746 puniva chi li indossava con il carcere e, alla recidiva, con la deportazione nelle colonie. Il divieto durò 36 anni. Portare il kilt oggi è anche un piccolo atto di rivincita."
+            }
+          ]
+        },
+        {
+          "id": "clava-cairns",
+          "name": "Clava Cairns",
+          "kind": "Sight",
+          "lat": 57.4735,
+          "lng": -4.0748,
+          "summary": "A cinque minuti da Culloden, un salto indietro di 4000 anni: tombe a camera dell'età del bronzo e cerchi di pietre in un boschetto silenzioso.",
+          "practical": "Sempre accessibile, gratuito. La luce migliore è al mattino presto o verso il tramonto.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "Puntate al solstizio",
+              "text": "I corridoi delle tombe principali sono allineati con il tramonto del solstizio d'inverno: in quel momento la luce entra fino alla camera centrale. Quattromila anni fa, senza calcoli scritti, qualcuno ha orientato tonnellate di pietra al grado giusto."
+            },
+            {
+              "kind": "Legend",
+              "title": "Le pietre di Outlander",
+              "text": "Questo è il luogo che ha ispirato il cerchio di Craigh na Dun della saga Outlander, quello che catapulta Claire nel Settecento. Toccare le pietre è permesso; i viaggi nel tempo, a oggi, non risultano documentati."
+            }
+          ]
+        },
+        {
+          "id": "drumnadrochit",
+          "name": "Drumnadrochit",
+          "kind": "Village",
+          "lat": 57.335,
+          "lng": -4.478,
+          "summary": "Il villaggio-quartier generale dei cacciatori di Nessie, in posizione perfetta tra il lago e le rovine di Urquhart. Ideale per un pranzo veloce o per il Loch Ness Centre.",
+          "practical": "Villaggio sempre accessibile; mostre circa 10:00–17:00 (£10–15). Le crociere sul lago partono da qui: meglio prenotare online.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "Esiste un registro ufficiale",
+              "text": "Gli avvistamenti di Nessie vengono annotati in un registro ufficiale, tenuto con serietà britannica dal 1996 (e con casi che risalgono a decenni prima): data, ora, testimone, descrizione. Nel 2023 da qui è partita la più grande 'caccia' al mostro degli ultimi cinquant'anni, con droni e idrofoni."
+            },
+            {
+              "kind": "History",
+              "title": "La foto che ingannò il mondo",
+              "text": "La celebre 'foto del chirurgo' del 1934, quella con il collo che spunta dall'acqua, fu per sessant'anni la prova regina dell'esistenza di Nessie. Nel 1994 si scoprì che era un modellino montato su un sottomarino giocattolo: una vendetta orchestrata contro il Daily Mail. Il mito, però, non si è mai più fermato."
+            }
+          ]
+        },
+        {
+          "id": "loch-ness",
+          "name": "Loch Ness",
+          "kind": "Nature",
+          "lat": 57.3229,
+          "lng": -4.4244,
+          "summary": "Trentasette chilometri di acqua quasi nera lungo la faglia del Great Glen. Al di là del mostro, è la malinconia del paesaggio a restare addosso.",
+          "practical": "Sempre accessibile. Crociere £20–30 da Drumnadrochit o Fort Augustus, prenotazione consigliata. La sponda sud è la più tranquilla.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "Più acqua di Inghilterra e Galles insieme",
+              "text": "Il Loch Ness contiene più acqua dolce di tutti i laghi di Inghilterra e Galles messi insieme: circa 7,4 chilometri cubi. È profondo fino a 230 metri e la torba in sospensione rende l'acqua così scura che la visibilità è di pochi metri. Ecco perché è così facile crederci, al mostro."
+            },
+            {
+              "kind": "History",
+              "title": "Il primo avvistamento è del 565 d.C.",
+              "text": "La prima 'apparizione' di una bestia acquatica nel Ness è raccontata nella Vita di San Colombano: il santo l'avrebbe ricacciata con un segno della croce mentre minacciava un uomo a nuoto. Nessie ha quindi quasi 1500 anni di carriera, e ancora nessuna foto decente."
+            }
+          ]
+        },
+        {
+          "id": "urquhart-castle",
+          "name": "Urquhart Castle",
+          "kind": "Castle",
+          "lat": 57.3241,
+          "lng": -4.4421,
+          "summary": "Le rovine più fotogeniche della Scozia, su un promontorio proteso nel Loch Ness. Il filmato introduttivo del centro visitatori svela le rovine con un colpo di teatro.",
+          "practical": "9:30–18:00 (ultimo ingresso 17:15). Circa £14,50 online, prenotazione consigliata: è un sito ad altissima affluenza.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "History",
+              "title": "Distrutto dai suoi stessi difensori",
+              "text": "Nel 1692 i soldati governativi che lo presidiavano, dovendo abbandonarlo, lo fecero saltare in aria per non regalarlo ai giacobiti. Le rovine romantiche che vedete sono, tecnicamente, un atto di sabotaggio riuscito benissimo."
+            },
+            {
+              "kind": "Weird",
+              "title": "C'è una catapulta vera",
+              "text": "Sul prato del castello è piazzata una trebuchet a grandezza naturale, ricostruita con le tecniche medievali: una macchina d'assedio del genere poteva scagliare pietre di 100 chili contro le mura. Oggi si limita a essere lo sfondo fotografico più bellicoso del lago."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "date": "2026-09-08",
+      "title": "Mare e whisky",
+      "area": "Costa del Moray e Speyside",
+      "stops": [
+        {
+          "id": "elgin",
+          "name": "Elgin",
+          "kind": "City",
+          "lat": 57.6486,
+          "lng": -3.3151,
+          "summary": "L'antica capitale del Moray: arenaria bionda, botteghe storiche e un'atmosfera autentica, lontana dai circuiti più battuti. È il cuore dello Speyside, la terra del whisky.",
+          "practical": "Centro sempre accessibile. Perfetta per un caffè prima della cattedrale.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "I marmi di Elgin non sono di Elgin",
+              "text": "I famosi 'Elgin Marbles', le sculture del Partenone conservate al British Museum, non sono mai passati da qui: prendono il nome da Lord Elgin, il conte che li portò via da Atene, il cui titolo nobiliare deriva da questa cittadina. Elgin è così finita in una disputa internazionale senza aver toccato un marmo."
+            },
+            {
+              "kind": "History",
+              "title": "La capitale del single malt",
+              "text": "Lo Speyside, di cui Elgin è il capoluogo storico, concentra circa metà delle distillerie di whisky di tutta la Scozia: più di cinquanta in un raggio di pochi chilometri. Qui l'acqua del fiume Spey vale letteralmente oro liquido."
+            }
+          ]
+        },
+        {
+          "id": "elgin-cathedral",
+          "name": "Elgin Cathedral",
+          "kind": "Church",
+          "lat": 57.6529,
+          "lng": -3.3053,
+          "summary": "La 'Lanterna del Nord': una cattedrale del Duecento oggi in rovina ma ancora maestosa. Le due torri occidentali si possono salire, e la sala capitolare ottagonale è sopravvissuta quasi intatta.",
+          "practical": "10:00–16:00 (in estate a volte fino alle 17:00). Circa £10. Prenotazione non obbligatoria. Provate l'acustica nella sala capitolare.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "History",
+              "title": "Bruciata dal figlio del re",
+              "text": "Nel 1390 la cattedrale fu incendiata da Alexander Stewart, il 'Lupo di Badenoch', figlio del re: era stato scomunicato dal vescovo per aver abbandonato la moglie, e rispose dando fuoco a mezza diocesi. La pena? Una penitenza pubblica e il perdono. Altri tempi."
+            },
+            {
+              "kind": "Weird",
+              "title": "Il tetto maledetto",
+              "text": "Dopo la Riforma, nel 1567, il piombo del tetto fu strappato e venduto per finanziare le truppe. La nave che lo trasportava affondò con tutto il carico prima di arrivare in Olanda. A Elgin qualcuno lo chiamò giustizia divina."
+            }
+          ]
+        },
+        {
+          "id": "portknockie",
+          "name": "Portknockie",
+          "kind": "Village",
+          "lat": 57.703,
+          "lng": -2.858,
+          "summary": "Villaggio di pescatori aggrappato alla scogliera sul Moray Firth, con casette colorate e un porticciolo fermo nel tempo. Da qui parte il sentiero costiero per Bow Fiddle Rock.",
+          "practical": "Sempre accessibile. Occhi sul mare: questa costa è zona di delfini.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "I delfini giganti",
+              "text": "I tursiopi del Moray Firth sono tra i più grandi del mondo: in queste acque fredde arrivano a quasi quattro metri, un metro buono in più dei cugini mediterranei. Il grasso extra serve da piumino — e li rende inconfondibili quando saltano."
+            },
+            {
+              "kind": "History",
+              "title": "Un villaggio del 1677",
+              "text": "Portknockie fu fondato nel 1677 da famiglie di pescatori e per due secoli ha vissuto di aringhe. Le casette basse con il timpano verso il mare sono costruite così apposta: offrono meno presa al vento del Mare del Nord."
+            }
+          ]
+        },
+        {
+          "id": "bow-fiddle-rock",
+          "name": "Bow Fiddle Rock",
+          "kind": "Nature",
+          "lat": 57.7057,
+          "lng": -2.85,
+          "summary": "Un arco di quarzite scolpito dal mare a forma di archetto di violino, a due passi dal sentiero. Una delle foto simbolo della costa del Moray.",
+          "practical": "Accesso libero dal sentiero costiero di Portknockie (10 minuti a piedi). Attenzione al bordo scogliera.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "Roccia più vecchia dei dinosauri",
+              "text": "La quarzite dell'arco ha centinaia di milioni di anni: si formò come sabbia di un antico oceano, poi compressa e piegata quando i continenti si scontrarono. Il mare ha impiegato 'solo' qualche millennio a bucarla."
+            },
+            {
+              "kind": "Weird",
+              "title": "Il condominio dei gabbiani",
+              "text": "L'arco è una colonia nidificante: in primavera e estate gattici e cormorani lo occupano fino all'ultimo centimetro. Il concerto (e l'odore) fanno parte dell'esperienza."
+            }
+          ]
+        },
+        {
+          "id": "cullen",
+          "name": "Cullen",
+          "kind": "Village",
+          "lat": 57.69,
+          "lng": -2.821,
+          "summary": "Borgo costiero dominato dai grandi viadotti ferroviari in pietra, diviso tra la parte alta con i negozietti e la Seatown, l'antico quartiere dei pescatori. Patria della zuppa più famosa di Scozia.",
+          "practical": "Sosta libera. Se è ora di pranzo, il Cullen Skink va assaggiato dove è nato.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "La zuppa col nome strano",
+              "text": "Il Cullen Skink — eglefino affumicato, patate e latte — è nato proprio qui. 'Skink' in origine indicava un brodo di stinco di manzo: quando la carne mancava, i pescatori la sostituirono col pesce affumicato, e il nome rimase. Oggi c'è persino un campionato mondiale annuale."
+            },
+            {
+              "kind": "History",
+              "title": "I viadotti del capriccio",
+              "text": "I monumentali viadotti che scavalcano il paese esistono per un puntiglio aristocratico: la contessa di Seafield rifiutò il passaggio della ferrovia nelle terre di Cullen House, costringendo la compagnia a una costosissima deviazione ad archi sopra i tetti. Il treno non passa più, ma il capriccio è diventato monumento."
+            }
+          ]
+        },
+        {
+          "id": "cullen-beach",
+          "name": "Cullen Beach",
+          "kind": "Beach",
+          "lat": 57.693,
+          "lng": -2.829,
+          "summary": "Una lunga mezzaluna di sabbia chiara incorniciata da rocce e grotte marine. Con la bassa marea si allarga enormemente, lasciando pozze piene di vita tra gli scogli.",
+          "practical": "Accesso libero. Da qui parte il sentiero costiero verso est.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Legend",
+              "title": "I Tre Re",
+              "text": "I tre faraglioni piantati nella sabbia si chiamano 'Three Kings': la tradizione locale li lega a tre re — chi dice danesi, chi scozzesi — caduti in una battaglia sulla spiaggia. I geologi, meno romantici, parlano di quarzite particolarmente testarda."
+            },
+            {
+              "kind": "Weird",
+              "title": "Una spiaggia a orologeria",
+              "text": "L'escursione di marea qui è notevole: nel giro di poche ore la spiaggia raddoppia e le rocce si trasformano in un labirinto di pozze dove restano intrappolati granchi, anemoni e stelle marine. Il momento migliore per esplorarla è circa un'ora dopo il picco di bassa marea."
+            }
+          ]
+        },
+        {
+          "id": "macallan",
+          "name": "The Macallan Estate",
+          "kind": "Distillery",
+          "lat": 57.4849,
+          "lng": -3.2113,
+          "summary": "Più che una distilleria, un'astronave di legno e prato ondulato incastonata nelle colline dello Speyside. Dentro: un percorso espositivo, un bar leggendario e il tempio del single malt.",
+          "practical": "In genere 10:00–18:00 (verificare i giorni di chiusura sul sito). Tenuta e centro visitatori gratuiti previa disponibilità; tour e degustazioni da £50. Prenotazione obbligatoria con mesi di anticipo, spesso anche solo per bar e boutique.",
+          "bookingRequired": true,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "La bottiglia da 2,1 milioni",
+              "text": "Nel 2023 una bottiglia di Macallan 1926 è stata battuta all'asta per circa 2,1 milioni di sterline: il whisky più costoso mai venduto. Fa più o meno 30.000 sterline al sorso. A quel prezzo, il ghiaccio è un reato."
+            },
+            {
+              "kind": "Weird",
+              "title": "Il tetto che è un prato",
+              "text": "Il tetto ondulato della distilleria è una collina artificiale coperta da centinaia di migliaia di piante ed è una delle strutture in legno curvato più complesse del mondo: quasi 400.000 componenti, nessuno uguale all'altro. Da lontano l'edificio semplicemente scompare nel paesaggio."
+            },
+            {
+              "kind": "History",
+              "title": "Tra le prime distillerie legali",
+              "text": "Macallan ottenne la licenza nel 1824, tra le primissime dello Speyside dopo la legge che rese conveniente uscire dalla clandestinità. Prima di allora, in queste valli, la distillazione era uno sport notturno praticato lontano dagli esattori."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "date": "2026-09-09",
+      "title": "La strada per Skye",
+      "area": "Da Inverness all'Isola di Skye",
+      "stops": [
+        {
+          "id": "eilean-donan",
+          "name": "Eilean Donan Castle",
+          "kind": "Castle",
+          "lat": 57.274,
+          "lng": -5.5164,
+          "summary": "Il castello più fotografato di Scozia, su un isolotto dove si incontrano tre loch marini, unito alla riva da un ponte di pietra. L'essenza dell'immaginario scozzese in un colpo solo.",
+          "practical": "10:00–18:00 (ultimo ingresso 17:00), circa £11. Anche senza entrare, la foto dal parcheggio è d'obbligo: nel tardo pomeriggio la pietra diventa dorata.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "Bombardato con gli spagnoli dentro",
+              "text": "Nel 1719 tre fregate inglesi ridussero il castello in macerie: dentro c'era una guarnigione di 46 soldati spagnoli, arrivati per sostenere la causa giacobita in una delle alleanze più improbabili della storia. Restò un rudere per due secoli."
+            },
+            {
+              "kind": "History",
+              "title": "Il castello 'nuovo' di zecca",
+              "text": "Quello che vedete oggi è una ricostruzione del primo Novecento: il tenente colonnello MacRae-Gilstrap lo ricostruì tra il 1912 e il 1932 — anche il celebre ponte è di allora. Il risultato è così convincente che è diventato più iconico dell'originale, tra Highlander e mille pubblicità."
+            }
+          ]
+        },
+        {
+          "id": "eas-a-bhradain",
+          "name": "Eas a' Bhradain",
+          "kind": "Nature",
+          "lat": 57.265,
+          "lng": -6.1,
+          "summary": "Una cascata generosa proprio a bordo strada, dove l'acqua scivola a larghi gradoni sulla roccia scura scendendo dai Cuillin. La sosta perfetta per sgranchirsi appena arrivati sull'isola.",
+          "practical": "Piazzola lungo la A87, accesso libero e immediato.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "Il torrente dei sogni",
+              "text": "Il nome della cascata significa 'cascata del salmone', ma il torrente che la alimenta si chiama Allt Coire nam Bruadaran: 'ruscello della conca dei sogni'. I nomi gaelici di Skye sono spesso più poetici di qualunque guida turistica."
+            },
+            {
+              "kind": "History",
+              "title": "Rosse contro nere",
+              "text": "Da qui si vedono bene le due anime dei Cuillin: le Red Cuillin di granito rosato, tondeggianti, e le Black Cuillin di gabbro scuro, seghettate e temute dagli alpinisti. Due magmi diversi, raffreddati in modo diverso, a pochi chilometri di distanza."
+            }
+          ]
+        },
+        {
+          "id": "sligachan",
+          "name": "Sligachan Old Bridge",
+          "kind": "Sight",
+          "lat": 57.29,
+          "lng": -6.174,
+          "summary": "Il vecchio ponte di pietra con la vista più celebre sulle guglie dei Cuillin. È il crocevia geografico di Skye, dove si dividono le strade per il nord, l'ovest e il sud dell'isola.",
+          "practical": "Accesso libero, parcheggio accanto all'hotel. Foto migliore dal letto del fiume, sotto il ponte.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Legend",
+              "title": "Sette secondi per la bellezza eterna",
+              "text": "La leggenda dice che chi immerge il viso nell'acqua del fiume Sligachan per sette secondi otterrà la bellezza eterna. L'acqua è gelida tutto l'anno, quindi il vero premio è la faccia che farete uscendo. Provare per credere (e fotografarsi a vicenda)."
+            },
+            {
+              "kind": "History",
+              "title": "La culla dell'alpinismo scozzese",
+              "text": "L'hotel accanto al ponte è dal 1830 il campo base delle scalate ai Cuillin. Qui si ritrovavano i pionieri dell'alpinismo come il professor Norman Collie e la guida John Mackenzie, amici per la vita: le loro statue guardano ancora le cime, sedute una accanto all'altra."
+            }
+          ]
+        },
+        {
+          "id": "fairy-pools",
+          "name": "Fairy Pools",
+          "kind": "Nature",
+          "lat": 57.25,
+          "lng": -6.255,
+          "summary": "Una scalinata di pozze turchesi e cascatelle ai piedi dei Cuillin neri. Il sentiero risale il torrente: più si sale, più l'acqua si fa limpida e la folla si dirada.",
+          "practical": "Parcheggio a pagamento (~£6), poi 20–40 minuti a piedi su sentiero sassoso. Scarpe decenti e, dopo la pioggia, attenzione ai guadi.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "Il bagno dei coraggiosi",
+              "text": "L'acqua delle pozze non supera quasi mai i 10 gradi nemmeno d'estate, eppure i nuotatori 'selvaggi' ci si tuffano tutto l'anno, qualcuno perfino a Capodanno. La trasparenza da piscina è merito della roccia vulcanica levigata: niente fango, niente scuse."
+            },
+            {
+              "kind": "Legend",
+              "title": "Le fate ci mettono la firma",
+              "text": "Il folklore di Skye trabocca di fate — a pochi chilometri c'è pure il castello con la loro bandiera — e queste pozze perfette non potevano che essere attribuite a loro. Nessuna leggenda antica lo conferma, ma davanti a certi colori la spiegazione magica sembra la più ragionevole."
+            }
+          ]
+        },
+        {
+          "id": "portree",
+          "name": "Portree",
+          "kind": "Village",
+          "lat": 57.413,
+          "lng": -6.194,
+          "summary": "La capitale di Skye: il molo con le case color pastello riflesse nell'acqua, botteghe artigiane, pesce freschissimo e pub con musica dal vivo. La vostra base sull'isola.",
+          "practical": "Il belvedere sull'altura del Lump regala la vista classica sul porto. Ristoranti gettonati: meglio prenotare la cena.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "History",
+              "title": "Il porto del re",
+              "text": "Portree viene dal gaelico Port Rìgh, 'porto del re': il nome ricorda la visita di re Giacomo V nel 1540, arrivato con una flotta per convincere i clan delle isole a rigare dritto. Missione riuscita a metà, nome rimasto per sempre."
+            },
+            {
+              "kind": "History",
+              "title": "L'ultimo addio del principe",
+              "text": "In una locanda di Portree, nel 1746, Bonnie Prince Charlie salutò per l'ultima volta Flora MacDonald, che l'aveva portato in salvo travestito da domestica irlandese. Lui riparò in Francia, lei finì per un po' nella Torre di Londra: la storia ricorda molto meglio lei."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "date": "2026-09-10",
+      "title": "Il regno di pietra",
+      "area": "Skye · Penisola di Trotternish",
+      "stops": [
+        {
+          "id": "old-man-of-storr",
+          "name": "The Storr",
+          "kind": "Nature",
+          "lat": 57.507,
+          "lng": -6.173,
+          "summary": "Il monolite simbolo di Skye: un dito di basalto di quasi 50 metri in un paesaggio da altro pianeta. Salite presto, il sentiero all'alba è tutto vostro (e il parcheggio pure).",
+          "practical": "Parcheggio a pagamento. Salita 45–75 minuti, fondo a tratti fangoso. Partenza consigliata verso le 8:00.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "Figlio della frana più grande di Gran Bretagna",
+              "text": "L'Old Man e i pinnacoli intorno sono i detriti della frana di Trotternish, la più estesa della Gran Bretagna: interi strati di lava scivolati a valle su argille più deboli. Il paesaggio 'alieno' è, tecnicamente, un cantiere geologico crollato splendidamente."
+            },
+            {
+              "kind": "Legend",
+              "title": "Il gigante sepolto",
+              "text": "Per la leggenda, il monolite è il pollice di un gigante sepolto dove cadde: la terra lo ricoprì tutto tranne quello. Un'altra versione parla di un vecchio (lo 'Storr' appunto) pietrificato mentre fuggiva. In entrambi i casi: camminate con rispetto."
+            }
+          ]
+        },
+        {
+          "id": "lealt-falls",
+          "name": "Lealt Falls",
+          "kind": "Nature",
+          "lat": 57.5674,
+          "lng": -6.1417,
+          "summary": "Una cascata che precipita in una gola verde prima di correre al mare. Due belvedere: uno sul salto d'acqua, l'altro sulle scogliere e sui resti industriali della spiaggia sottostante. Più selvaggia e meno affollata di Kilt Rock.",
+          "practical": "Parcheggio lungo la A855, belvedere a 5 minuti a piedi.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "Da questa gola usciva la dinamite",
+              "text": "I ruderi in fondo alla gola sono di una fabbrica di diatomite, la 'farina fossile' di alghe microscopiche estratta dal vicino Loch Cuithir. Tra i suoi usi c'era l'assorbente per la nitroglicerina: in pratica, da questo angolo idilliaco di Skye passava un ingrediente della dinamite."
+            },
+            {
+              "kind": "History",
+              "title": "La ferrovia fantasma",
+              "text": "Per portare la diatomite dal lago alla costa fu costruita una piccola ferrovia attraverso la brughiera, attiva a inizio Novecento. Oggi ne restano tracce appena leggibili nel terreno: una linea industriale svanita in uno dei paesaggi più remoti d'Europa."
+            }
+          ]
+        },
+        {
+          "id": "kilt-rock",
+          "name": "Kilt Rock",
+          "kind": "Viewpoint",
+          "lat": 57.6106,
+          "lng": -6.1733,
+          "summary": "Una muraglia di basalto le cui colonne verticali ricordano le pieghe di un kilt, con la cascata di Mealt che si getta in mare accanto. Belvedere ad accesso immediato.",
+          "practical": "Parcheggio e belvedere gratuiti, a due passi dall'auto.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "La scogliera che suona",
+              "text": "Nelle giornate di vento forte le ringhiere del belvedere vibrano producendo un suono cupo e costante, come un organo. Non è un difetto: è il vento che 'suona' i tubi della recinzione, e ormai fa parte dell'esperienza quanto la vista."
+            },
+            {
+              "kind": "History",
+              "title": "Un kilt di 60 milioni di anni",
+              "text": "Le 'pieghe' sono colonne di dolerite formatesi quando il magma si insinuò tra gli strati di rocce sedimentarie e si raffreddò lentamente, contraendosi in prismi regolari. Lo stesso fenomeno del Selciato del Gigante in Irlanda: il sarto, in entrambi i casi, è il vulcanismo dell'Atlantico nascente."
+            }
+          ]
+        },
+        {
+          "id": "mealt-falls",
+          "name": "Mealt Falls",
+          "kind": "Nature",
+          "lat": 57.6108,
+          "lng": -6.173,
+          "summary": "Il salto di 55 metri con cui il Loch Mealt si svuota direttamente nell'oceano: uno dei rarissimi casi al mondo di cascata che finisce in mare. Con vento forte, lo spettacolo raddoppia.",
+          "practical": "Stesso belvedere di Kilt Rock.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "La cascata che sale",
+              "text": "Quando il vento da sud-ovest è abbastanza forte, le correnti ascensionali lungo la scogliera vincono la gravità: l'acqua della cascata viene nebulizzata e spinta verso l'alto in una nuvola bianca. Una cascata al contrario, letteralmente."
+            },
+            {
+              "kind": "Weird",
+              "title": "Dinosauri a due passi",
+              "text": "Poco più a nord, sulla spiaggia di An Corran presso Staffin, con la bassa marea affiorano impronte di dinosauro di 165 milioni di anni. Skye è così ricca di reperti giurassici che i paleontologi la chiamano 'l'isola dei dinosauri'."
+            }
+          ]
+        },
+        {
+          "id": "quiraing",
+          "name": "The Quiraing",
+          "kind": "Nature",
+          "lat": 57.6373,
+          "lng": -6.2665,
+          "summary": "L'anfiteatro finale della frana di Trotternish: pinnacoli, torrioni e prati sospesi in uno scenario drammatico. Il sentiero ad anello è tra i più belli di tutta la Scozia.",
+          "practical": "Parcheggio a pagamento al passo. Anello completo ~2 ore; anche solo il primo tratto ripaga.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "La frana non ha ancora finito",
+              "text": "Il Quiraing è l'unico tratto della grande frana di Trotternish ancora in movimento: il terreno scivola di qualche centimetro l'anno, e la strada ai suoi piedi va riparata regolarmente. State camminando su un paesaggio che non ha ancora deciso la sua forma."
+            },
+            {
+              "kind": "History",
+              "title": "Il nascondiglio delle mucche",
+              "text": "Il nome viene dal norreno e significa più o meno 'recinto rotondo': tra questi pinnacoli, in particolare sul prato sopraelevato detto 'the Table', gli abitanti nascondevano il bestiame durante le razzie vichinghe e le faide tra clan. Un caveau naturale a prova di predoni."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "date": "2026-09-11",
+      "title": "Fari e fate",
+      "area": "Skye occidentale",
+      "stops": [
+        {
+          "id": "dunvegan-castle",
+          "name": "Dunvegan Castle & Gardens",
+          "kind": "Castle",
+          "lat": 57.4486,
+          "lng": -6.59,
+          "summary": "La roccaforte del Clan MacLeod da otto secoli, su una roccia che domina un'insenatura marina. Dentro c'è la leggendaria Fairy Flag; fuori, giardini rigogliosi che sembrano rubati a un altro clima.",
+          "practical": "10:00–17:30 (ultimo ingresso 17:00), circa £16,50 castello + giardini. Dal molo partono brevi tour in barca per vedere le foche.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Legend",
+              "title": "La bandiera delle fate",
+              "text": "La Fairy Flag è un fragile drappo di seta che, secondo la leggenda, fu donato ai MacLeod dalle fate e può salvare il clan in battaglia per tre volte. È stata sventolata due: ne resta una, e i MacLeod non hanno alcuna fretta di usarla."
+            },
+            {
+              "kind": "Weird",
+              "title": "Una seta più antica del castello",
+              "text": "Gli studiosi hanno datato la seta della bandiera tra il IV e l'XI secolo, con origini probabilmente in Medio Oriente o a Rodi: è più antica del castello stesso. Come sia arrivata a Skye — crociate? bottino vichingo? — nessuno lo sa davvero, ed è questo il bello."
+            },
+            {
+              "kind": "History",
+              "title": "Il record di ospitalità",
+              "text": "Dunvegan è il castello scozzese abitato più a lungo senza interruzioni: la stessa famiglia, i MacLeod, ci vive da circa 800 anni. Trenta generazioni sotto lo stesso tetto: le riunioni di famiglia devono essere interminabili."
+            }
+          ]
+        },
+        {
+          "id": "neist-point",
+          "name": "Neist Point Lighthouse",
+          "kind": "Viewpoint",
+          "lat": 57.423,
+          "lng": -6.788,
+          "summary": "Il faro sulla punta più occidentale di Skye, in fondo a una scogliera vertiginosa. Il sentiero scende deciso (e risale ancora più deciso), ma il tramonto da qui non si dimentica.",
+          "practical": "Parcheggio libero. Discesa 20–30 minuti; la risalita è impegnativa. Vento quasi garantito.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "La dinastia dei fari",
+              "text": "Il faro (1909) fu progettato da David Alan Stevenson, membro della famiglia che costruì quasi tutti i fari di Scozia. Suo cugino era Robert Louis Stevenson, la pecora nera che invece di fari costruiva romanzi: L'isola del tesoro deve molto ai racconti di mare di famiglia."
+            },
+            {
+              "kind": "Weird",
+              "title": "Il posto giusto per i giganti del mare",
+              "text": "Dalle scogliere di Neist Point si avvistano delfini, focene, balenottere e persino lo squalo elefante, il secondo pesce più grande del mondo: fino a 10 metri di lunghezza, bocca spalancata, dieta a base di plancton. Spaventoso a vedersi, innocuo come una mucca."
+            }
+          ]
+        },
+        {
+          "id": "fairy-glen",
+          "name": "The Fairy Glen",
+          "kind": "Nature",
+          "lat": 57.58,
+          "lng": -6.345,
+          "summary": "Un paesaggio in miniatura sopra il villaggio di Uig: collinette coniche perfette, laghetti e una torre di roccia che sembra un castello in rovina. Surreale, silenzioso, bellissimo.",
+          "practical": "Parcheggio piccolo a pagamento, sentieri liberi. Un'ora abbondante per girarlo con calma.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "Le fate non c'entrano niente",
+              "text": "A dispetto del nome, non esiste alcuna leggenda tradizionale di fate legata a questo luogo: il paesaggio è così innaturalmente perfetto che il nome è nato da solo. È uno dei rari casi in cui la realtà ha battuto il folklore sul suo campo."
+            },
+            {
+              "kind": "Weird",
+              "title": "Il castello che non è un castello",
+              "text": "La torre rocciosa chiamata Castle Ewen sembra una fortezza in rovina, ma è basalto naturale scolpito dall'erosione: nessuno ci ha mai posato un mattone. Ci si arrampica facilmente sulla cima per la vista migliore su tutto il glen."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "date": "2026-09-12",
+      "title": "Traghetti e valli epiche",
+      "area": "Da Skye a Glencoe",
+      "stops": [
+        {
+          "id": "armadale",
+          "name": "Armadale",
+          "kind": "Village",
+          "lat": 57.067,
+          "lng": -5.895,
+          "summary": "Il porticciolo nella verdissima penisola di Sleat, 'il giardino di Skye', da cui salpa il traghetto per Mallaig: il modo più scenografico di lasciare l'isola.",
+          "practical": "Traghetto CalMac Armadale–Mallaig (~30 minuti): con l'auto la prenotazione è fortemente consigliata. Arrivare almeno 20 minuti prima dell'imbarco.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "History",
+              "title": "La capitale dei Lord delle Isole",
+              "text": "La penisola di Sleat è la terra del Clan Donald, i cui capi furono per secoli i 'Lord of the Isles': signori quasi indipendenti che governavano le isole occidentali trattando con i re di Scozia da pari a pari. I giardini di Armadale Castle custodiscono ancora la loro storia."
+            },
+            {
+              "kind": "Weird",
+              "title": "Il microclima del 'giardino'",
+              "text": "Sleat è soprannominata il giardino di Skye perché qui crescono boschi e piante che nel resto dell'isola non attecchiscono: merito della corrente del Golfo e del riparo dai venti del nord. Una serra naturale a 57 gradi di latitudine."
+            }
+          ]
+        },
+        {
+          "id": "mallaig",
+          "name": "Mallaig",
+          "kind": "Village",
+          "lat": 57.006,
+          "lng": -5.828,
+          "summary": "Porto di pescatori vero e vivace, capolinea della West Highland Line. Sosta gastronomica obbligata appena scesi dal traghetto: qui il fish and chips è una questione d'onore.",
+          "practical": "Diversi locali storici intorno al porto. Il pescato del giorno finisce dritto in friggitrice.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "History",
+              "title": "L'oro argentato delle aringhe",
+              "text": "A inizio Novecento Mallaig visse il boom delle aringhe e divenne uno dei porti più attivi d'Europa per il pesce affumicato: da qui i vagoni partivano carichi di 'silver darlings'. I kipper di Mallaig, affumicati come allora, sono ancora una piccola leggenda locale."
+            },
+            {
+              "kind": "Weird",
+              "title": "Capolinea da film",
+              "text": "La ferrovia che finisce qui, la West Highland Line, è votata regolarmente tra i viaggi in treno più belli del mondo — ed è quella percorsa dal treno a vapore Jacobite, l'Hogwarts Express dei film di Harry Potter. Arrivare in auto è comunque perdonabile."
+            }
+          ]
+        },
+        {
+          "id": "glenfinnan",
+          "name": "Glenfinnan Viaduct",
+          "kind": "Sight",
+          "lat": 56.876,
+          "lng": -5.431,
+          "summary": "Il ponte ferroviario a 21 archi reso immortale da Harry Potter, con il monumento giacobita sul loch poco sotto. Dal sentiero panoramico si vede il treno a vapore curvare sugli archi.",
+          "practical": "Parcheggio a pagamento (si riempie presto). Il treno Jacobite passa in orari variabili: il passaggio di metà mattina, verso le 10:45, è il classico. Verificate gli orari del giorno.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "Il cavallo dentro il pilone",
+              "text": "Per un secolo si raccontò che durante i lavori un cavallo con il suo carro fosse precipitato dentro un pilone cavo, rimanendoci sepolto. Nel 2001 le indagini col georadar lo trovarono davvero — non qui, ma nel vicino viadotto di Loch nan Uamh: la leggenda era vera, aveva solo sbagliato indirizzo."
+            },
+            {
+              "kind": "History",
+              "title": "Qui iniziò il '45",
+              "text": "Sulla riva del loch, il 19 agosto 1745, Bonnie Prince Charlie alzò lo stendardo e diede inizio all'ultima rivolta giacobita, quella finita a Culloden. Il monumento con l'highlander in cima ricorda il punto esatto: in un solo colpo d'occhio avete l'inizio della storia che avete incrociato per tutto il viaggio."
+            }
+          ]
+        },
+        {
+          "id": "glencoe",
+          "name": "Glencoe",
+          "kind": "Nature",
+          "lat": 56.666,
+          "lng": -5.07,
+          "summary": "La valle più drammatica di Scozia: pareti che si alzano verticali dalla strada, nuvole che corrono basse e una storia cupa che si sente nell'aria. Da percorrere lentamente, fermandosi spesso.",
+          "practical": "La A82 attraversa tutta la valle; piazzole e parcheggi panoramici lungo il percorso.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "History",
+              "title": "Il massacro sotto la fiducia",
+              "text": "Nel febbraio 1692 i soldati guidati da un Campbell, ospitati per dodici giorni dai MacDonald di Glencoe, li massacrarono nel sonno per ordine del governo. Il crimine scioccò la Scozia non per la strage in sé, ma perché violava l'ospitalità: 'murder under trust', omicidio sotto fiducia, un reato a parte nel diritto scozzese."
+            },
+            {
+              "kind": "Weird",
+              "title": "State guidando dentro un supervulcano",
+              "text": "Glencoe è ciò che resta di una caldera vulcanica collassata circa 420 milioni di anni fa: fu uno dei primi luoghi al mondo dove i geologi riconobbero questo fenomeno. Le pareti della valle sono, in pratica, l'interno sventrato di un antico supervulcano."
+            },
+            {
+              "kind": "Weird",
+              "title": "Vietato l'ingresso ai Campbell",
+              "text": "La memoria del massacro è così lunga che una storica locanda della valle, il Clachaig Inn, ha esposto per anni alla reception un cartello: 'No hawkers or Campbells' — vietato l'ingresso ai venditori ambulanti e ai Campbell. Più che rancore, ormai, è folklore. Più o meno."
+            }
+          ]
+        },
+        {
+          "id": "three-sisters",
+          "name": "Three Sisters Viewpoint",
+          "kind": "Viewpoint",
+          "lat": 56.6564,
+          "lng": -5.0361,
+          "summary": "Il belvedere sulle tre dorsali monumentali che scendono dal Bidean nam Bian. La vista più fotografata delle Highlands, e una delle poche all'altezza della propria fama.",
+          "practical": "Ampio parcheggio lungo la A82. Spesso c'è un suonatore di cornamusa: la colonna sonora è compresa.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "Tre sorelle, una sola madre",
+              "text": "Le Tre Sorelle — Beinn Fhada, Gearr Aonach e Aonach Dubh — non sono tre montagne ma tre speroni della stessa: il Bidean nam Bian, la vetta più alta dell'Argyll. Una montagna sola che si è fatta in tre per la foto."
+            },
+            {
+              "kind": "Legend",
+              "title": "La grotta del bardo",
+              "text": "Sulla parete di Aonach Dubh si apre una fessura scura chiamata Grotta di Ossian: la tradizione la lega al leggendario bardo guerriero che avrebbe cantato le gesta dei Fianna. Raggiungerla richiede un'arrampicata seria; ammirarla dal basso, solo un buon paio d'occhi."
+            }
+          ]
+        },
+        {
+          "id": "meeting-of-three-waters",
+          "name": "Meeting of Three Waters",
+          "kind": "Nature",
+          "lat": 56.654,
+          "lng": -5.01,
+          "summary": "Il punto in cui tre torrenti scesi dalle montagne si fondono in una serie di cascatelle su roccia scura e levigata, proprio sotto un vecchio ponte. Una sosta raccolta dopo la vastità delle Tre Sorelle.",
+          "practical": "Parcheggio sterrato lungo la A82, breve avvicinamento a piedi. Attenzione alle rocce bagnate.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "Il collo di bottiglia della valle",
+              "text": "Qui la valle si stringe nel passaggio più angusto di tutta Glencoe: per secoli chiunque attraversasse la valle — mandriani, soldati, fuggiaschi del massacro — doveva passare da questo imbuto. Le acque si incontrano dove si sono sempre incontrate anche le strade."
+            },
+            {
+              "kind": "History",
+              "title": "La scala del diavolo è dietro l'angolo",
+              "text": "Poco a est parte il Devil's Staircase, la 'scala del diavolo': il valico della vecchia strada militare del 1750, così soprannominato dai soldati che la costruirono maledicendone i tornanti. Oggi è uno dei tratti più amati della West Highland Way."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "index": 10,
+      "date": "2026-09-13",
+      "title": "Gran finale a Glasgow",
+      "area": "Glasgow",
+      "stops": [
+        {
+          "id": "university-of-glasgow",
+          "name": "University of Glasgow",
+          "kind": "Sight",
+          "lat": 55.8721,
+          "lng": -4.2882,
+          "summary": "Fondata nel 1451, con chiostri neogotici che sembrano usciti da Hogwarts. Nel cortile principale cercate la scala del Leone e dell'Unicorno.",
+          "practical": "Esterni e chiostri accessibili in genere 9:00–17:00, anche di domenica. Gratuito.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "La scala che ha traslocato",
+              "text": "Quando l'università si trasferì qui nel 1870, alcuni pezzi della sede seicentesca vennero smontati e portati via pietra per pietra: la scala del Leone e dell'Unicorno che vedete nel cortile ha quindi due secoli più dell'edificio che la ospita. Un trasloco fatto con criterio."
+            },
+            {
+              "kind": "History",
+              "title": "L'aula dei giganti",
+              "text": "Tra questi chiostri hanno studiato o insegnato Adam Smith, il padre dell'economia moderna, e Lord Kelvin, quello della scala delle temperature. E fu riparando uno strumento dell'università che James Watt iniziò a rimuginare sulla macchina a vapore che avrebbe acceso la Rivoluzione industriale."
+            }
+          ]
+        },
+        {
+          "id": "glasgow-cathedral",
+          "name": "Glasgow Cathedral",
+          "kind": "Church",
+          "lat": 55.8629,
+          "lng": -4.234,
+          "summary": "L'unica grande cattedrale medievale scozzese arrivata intatta ai giorni nostri, con la cripta di San Mungo. Alle sue spalle, la Necropoli vittoriana regala l'ultima grande vista del viaggio.",
+          "practical": "Domenica apertura pomeridiana per i visitatori (13:00–16:00 circa). Gratuita. La Necropoli è sempre accessibile.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "History",
+              "title": "Salvata dai suoi cittadini",
+              "text": "Durante la Riforma, quando le folle demolivano le cattedrali 'papiste' in tutta la Scozia, furono le corporazioni dei mestieri di Glasgow a schierarsi in armi per difendere la propria. È per questo che oggi è l'unica grande cattedrale medievale scozzese rimasta praticamente integra."
+            },
+            {
+              "kind": "Weird",
+              "title": "Il pesce con l'anello",
+              "text": "Nello stemma di Glasgow c'è un salmone con un anello in bocca: ricorda il miracolo di San Mungo, che salvò una regina accusata di adulterio facendo ritrovare nel ventre di un pesce l'anello che il re le aveva dato (e che il re stesso aveva gettato nel fiume per incastrarla). Cercatelo: è nascosto ovunque, dai lampioni ai portoni della città."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

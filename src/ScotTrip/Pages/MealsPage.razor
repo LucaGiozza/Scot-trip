@@ -1,0 +1,157 @@
+@page "/pasti"
+@implements IDisposable
+
+<PageTitle>Pasti · Scozia</PageTitle>
+
+<h1 class="day-heading">Dove abbiamo mangiato</h1>
+<p class="day-area">Haggis compreso, se avrete coraggio.</p>
+
+@if (State.Meals.Count == 0)
+{
+    <div class="empty-state">
+        <CatDoodle Pose="CatPose.Sleeping" />
+        <p>Ancora nessun pasto segnato.<br />Tocca + dopo la prima cena scozzese.</p>
+    </div>
+}
+else
+{
+    @foreach (var group in State.Meals.GroupBy(m => m.DayDate).OrderBy(g => g.Key))
+    {
+        <h2 class="group-date">@group.Key.ToString("dddd d MMMM")</h2>
+        @foreach (var meal in group)
+        {
+            <div class="entry-card">
+                <div class="entry-top">
+                    <h3>@meal.Name</h3>
+                    <span class="entry-tag">@meal.MealType</span>
+                </div>
+                <p class="entry-sub">
+                    @meal.Place@(meal.Cost is decimal cost ? $" · {cost:0.##} £" : "")
+                </p>
+                @if (!string.IsNullOrWhiteSpace(meal.Note))
+                {
+                    <p class="entry-note">"@meal.Note"</p>
+                }
+                <RatingBlock TargetKind="RatingTarget.Meal" TargetId="@meal.Id.ToString()" />
+                <div class="entry-actions">
+                    <button type="button" class="btn-ghost" @onclick="() => OpenEdit(meal)">Modifica</button>
+                    <button type="button" class="btn-danger-ghost" @onclick="() => DeleteAsync(meal)">Elimina</button>
+                </div>
+            </div>
+        }
+    }
+}
+
+<button type="button" class="fab" @onclick="OpenNew" aria-label="Aggiungi pasto">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+        <path d="M12 5 V19 M5 12 H19" stroke-linecap="round" />
+    </svg>
+</button>
+
+@if (_editing is not null)
+{
+    <div class="sheet-backdrop" @onclick="CloseSheet">
+        <div class="sheet" @onclick:stopPropagation="true">
+            <div class="sheet-grip"></div>
+            <h2>@(_isNew ? "Nuovo pasto" : "Modifica pasto")</h2>
+
+            <div class="form-field">
+                <label for="meal-name">Locale o piatto</label>
+                <input id="meal-name" @bind="_editing.Name" placeholder="Es. The Witchery" />
+            </div>
+            <div class="form-field">
+                <label for="meal-place">Dove</label>
+                <input id="meal-place" @bind="_editing.Place" placeholder="Es. Edimburgo, Royal Mile" />
+            </div>
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="meal-date">Giorno</label>
+                    <input id="meal-date" type="date" @bind="_editing.DayDate" />
+                </div>
+                <div class="form-field">
+                    <label for="meal-type">Pasto</label>
+                    <select id="meal-type" @bind="_editing.MealType">
+                        <option value="@MealType.Colazione">Colazione</option>
+                        <option value="@MealType.Pranzo">Pranzo</option>
+                        <option value="@MealType.Cena">Cena</option>
+                        <option value="@MealType.Spuntino">Spuntino</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-field">
+                <label for="meal-cost">Costo in sterline (facoltativo)</label>
+                <input id="meal-cost" type="number" inputmode="decimal" step="0.5" min="0" @bind="_editing.Cost" />
+            </div>
+            <div class="form-field">
+                <label for="meal-note">Nota</label>
+                <textarea id="meal-note" rows="2" @bind="_editing.Note" placeholder="Com'era? Cosa rifareste?"></textarea>
+            </div>
+
+            @if (_error is not null)
+            {
+                <p class="form-error">@_error</p>
+            }
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" @onclick="CloseSheet">Annulla</button>
+                <button type="button" class="btn btn-primary" @onclick="SaveAsync">Salva</button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Inject] public required TripState State { get; set; }
+    [Inject] public required ItineraryService Itinerary { get; set; }
+
+    private Meal? _editing;
+    private bool _isNew;
+    private string? _error;
+
+    protected override void OnInitialized() => State.Changed += StateHasChanged;
+
+    private void OpenNew()
+    {
+        var today = DateOnly.FromDateTime(DateTime.Now);
+        var tripDay = Itinerary.CurrentDay(today);
+        _editing = new Meal { DayDate = tripDay.Date == default ? today : tripDay.Date };
+        _isNew = true;
+        _error = null;
+    }
+
+    private void OpenEdit(Meal meal)
+    {
+        // copia di lavoro: se l'utente annulla, l'originale resta intatto
+        _editing = new Meal
+        {
+            Id = meal.Id, Name = meal.Name, Place = meal.Place, DayDate = meal.DayDate,
+            MealType = meal.MealType, Cost = meal.Cost, Note = meal.Note, UpdatedAt = meal.UpdatedAt
+        };
+        _isNew = false;
+        _error = null;
+    }
+
+    private async Task SaveAsync()
+    {
+        if (_editing is null) return;
+        if (string.IsNullOrWhiteSpace(_editing.Name))
+        {
+            _error = "Serve almeno il nome del locale o del piatto.";
+            return;
+        }
+        _editing.Name = _editing.Name.Trim();
+        _editing.Place = _editing.Place?.Trim() ?? "";
+        await State.SaveMealAsync(_editing);
+        CloseSheet();
+    }
+
+    private Task DeleteAsync(Meal meal) => State.DeleteMealAsync(meal);
+
+    private void CloseSheet()
+    {
+        _editing = null;
+        _error = null;
+    }
+
+    public void Dispose() => State.Changed -= StateHasChanged;
+}

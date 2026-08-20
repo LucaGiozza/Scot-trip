@@ -1,0 +1,27 @@
+@implements IDisposable
+
+<button type="button" class="sync-badge @CssClass" @onclick="() => Sync.TrySyncAsync()" aria-label="Stato sincronizzazione: @Label">
+    <span class="dot"></span>@Label
+</button>
+
+@code {
+    [Inject] public required SyncService Sync { get; set; }
+
+    private string Label => Sync.Status switch
+    {
+        SyncStatus.Syncing => "Sincronizzo…",
+        SyncStatus.Offline => Sync.PendingCount > 0 ? $"Offline · {Sync.PendingCount} in coda" : "Offline",
+        SyncStatus.NeedsLogin => "Accedi per condividere",
+        _ => Sync.PendingCount > 0 ? $"{Sync.PendingCount} in coda" : "Tutto salvato"
+    };
+
+    private string CssClass => Sync.Status switch
+    {
+        SyncStatus.Offline => "offline",
+        SyncStatus.NeedsLogin => "error",
+        _ => Sync.PendingCount > 0 ? "pending" : ""
+    };
+
+    protected override void OnInitialized() => Sync.Changed += StateHasChanged;
+    public void Dispose() => Sync.Changed -= StateHasChanged;
+}
