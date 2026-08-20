@@ -36,8 +36,8 @@
         <img src="@_photoUrls.GetValueOrDefault(_viewing.Id)" alt="@(_viewing.Caption ?? "Foto")" />
         <div class="viewer-bar" @onclick:stopPropagation="true">
             <span>@_viewing.TakenAt.ToLocalTime().ToString("d MMM · HH:mm")@(string.IsNullOrEmpty(_viewing.Author) ? "" : $" · {_viewing.Author}")</span>
-            <div>
-                <button type="button" class="btn-danger-ghost" @onclick="DeleteViewingAsync">Elimina</button>
+            <div class="viewer-actions">
+                <button type="button" class="icon-btn viewer-icon" aria-label="Elimina foto" @onclick="DeleteViewingAsync"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4.5 6.5 H19.5 M9.5 6.5 V4.8 A1.3 1.3 0 0 1 10.8 3.5 H13.2 A1.3 1.3 0 0 1 14.5 4.8 V6.5 M6.5 6.5 L7.3 19 A1.5 1.5 0 0 0 8.8 20.4 H15.2 A1.5 1.5 0 0 0 16.7 19 L17.5 6.5 M10 10 V16.5 M14 10 V16.5" /></svg></button>
                 <button type="button" class="btn-ghost" style="color:var(--mist)" @onclick="() => _viewing = null">Chiudi</button>
             </div>
         </div>

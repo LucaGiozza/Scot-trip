@@ -94,9 +94,9 @@
           "bookingRequired": false,
           "curiosities": [
             {
-              "kind": "Legend",
-              "title": "La vera Diagon Alley?",
-              "text": "In molti giurano che J.K. Rowling si sia ispirata proprio a questa curva colorata per la Diagon Alley di Harry Potter. Lei non l'ha mai confermato — ma scriveva nei caffè a due passi da qui, quindi il sospetto resta legittimo."
+              "kind": "History",
+              "title": "L'ultimo bicchiere",
+              "text": "Ai piedi della strada si apre il Grassmarket, che fino al 1784 fu il luogo delle esecuzioni pubbliche di Edimburgo. La tradizione vuole che ai condannati fosse concessa un'ultima bevuta in una locanda lungo il percorso: il pub The Last Drop, ancora lì, gioca proprio su quel doppio senso."
             },
             {
               "kind": "History",
@@ -343,9 +343,9 @@
               "text": "I corridoi delle tombe principali sono allineati con il tramonto del solstizio d'inverno: in quel momento la luce entra fino alla camera centrale. Quattromila anni fa, senza calcoli scritti, qualcuno ha orientato tonnellate di pietra al grado giusto."
             },
             {
-              "kind": "Legend",
-              "title": "Le pietre di Outlander",
-              "text": "Questo è il luogo che ha ispirato il cerchio di Craigh na Dun della saga Outlander, quello che catapulta Claire nel Settecento. Toccare le pietre è permesso; i viaggi nel tempo, a oggi, non risultano documentati."
+              "kind": "Weird",
+              "title": "Le pietre che tornano per posta",
+              "text": "Portarsi via una pietra da qui porta sfortuna, dicono. E qualcuno ci crede sul serio: è cronaca che turisti pentiti abbiano rispedito per posta le pietre sottratte, con lettere di scuse in cui raccontavano anni di guai. Il sito le riaccoglie senza fare domande."
             }
           ]
         },
@@ -383,8 +383,8 @@
           "curiosities": [
             {
               "kind": "Weird",
-              "title": "Più acqua di Inghilterra e Galles insieme",
-              "text": "Il Loch Ness contiene più acqua dolce di tutti i laghi di Inghilterra e Galles messi insieme: circa 7,4 chilometri cubi. È profondo fino a 230 metri e la torba in sospensione rende l'acqua così scura che la visibilità è di pochi metri. Ecco perché è così facile crederci, al mostro."
+              "title": "Il lago che non gela mai",
+              "text": "Con i suoi 230 metri di profondità, il Loch Ness accumula così tanto calore che in memoria d'uomo non è mai gelato: nemmeno negli inverni più duri. Anzi, nelle mattine più fredde 'fuma', avvolto da nebbie di vapore che non aiutano certo a smentire le leggende."
             },
             {
               "kind": "History",
@@ -507,7 +507,7 @@
             {
               "kind": "Weird",
               "title": "Il condominio dei gabbiani",
-              "text": "L'arco è una colonia nidificante: in primavera e estate gattici e cormorani lo occupano fino all'ultimo centimetro. Il concerto (e l'odore) fanno parte dell'esperienza."
+              "text": "L'arco è una colonia nidificante: in primavera e estate gabbiani e cormorani lo occupano fino all'ultimo centimetro. Il concerto (e l'odore) fanno parte dell'esperienza."
             }
           ]
         },
@@ -606,9 +606,9 @@
               "text": "Nel 1719 tre fregate inglesi ridussero il castello in macerie: dentro c'era una guarnigione di 46 soldati spagnoli, arrivati per sostenere la causa giacobita in una delle alleanze più improbabili della storia. Restò un rudere per due secoli."
             },
             {
-              "kind": "History",
-              "title": "Il castello 'nuovo' di zecca",
-              "text": "Quello che vedete oggi è una ricostruzione del primo Novecento: il tenente colonnello MacRae-Gilstrap lo ricostruì tra il 1912 e il 1932 — anche il celebre ponte è di allora. Il risultato è così convincente che è diventato più iconico dell'originale, tra Highlander e mille pubblicità."
+              "kind": "Legend",
+              "title": "Il castello sognato",
+              "text": "Si racconta che Farquhar MacRae, incaricato della ricostruzione, avesse 'visto in sogno' l'aspetto originale del castello e avesse guidato i lavori su quella visione. Anni dopo saltarono fuori dei piani antichi che, dicono, corrispondevano in modo inquietante. Leggenda di famiglia? Certo. Ma raccontata benissimo."
             }
           ]
         },
@@ -625,7 +625,7 @@
             {
               "kind": "Weird",
               "title": "Il torrente dei sogni",
-              "text": "Il nome della cascata significa 'cascata del salmone', ma il torrente che la alimenta si chiama Allt Coire nam Bruadaran: 'ruscello della conca dei sogni'. I nomi gaelici di Skye sono spesso più poetici di qualunque guida turistica."
+              "text": "Il torrente che alimenta la cascata si chiama Allt Coire nam Bruadaran: 'ruscello della conca dei sogni'. Nessuno sa con certezza chi sognasse cosa, lassù — ma i nomi gaelici di Skye sono spesso più poetici di qualunque guida turistica."
             },
             {
               "kind": "History",
@@ -645,9 +645,9 @@
           "bookingRequired": false,
           "curiosities": [
             {
-              "kind": "Legend",
-              "title": "Sette secondi per la bellezza eterna",
-              "text": "La leggenda dice che chi immerge il viso nell'acqua del fiume Sligachan per sette secondi otterrà la bellezza eterna. L'acqua è gelida tutto l'anno, quindi il vero premio è la faccia che farete uscendo. Provare per credere (e fotografarsi a vicenda)."
+              "kind": "History",
+              "title": "Il ponte dell'età delle strade",
+              "text": "Il vecchio ponte a tre arcate fu costruito tra il 1810 e il 1818, nella grande stagione delle strade delle Highlands legata all'ingegnere Thomas Telford: fu quella rete a trasformare Skye da isola remota a meta raggiungibile. Il ponte nuovo gli passa accanto, ma le foto le ruba tutte lui."
             },
             {
               "kind": "History",
@@ -690,8 +690,8 @@
           "curiosities": [
             {
               "kind": "History",
-              "title": "Il porto del re",
-              "text": "Portree viene dal gaelico Port Rìgh, 'porto del re': il nome ricorda la visita di re Giacomo V nel 1540, arrivato con una flotta per convincere i clan delle isole a rigare dritto. Missione riuscita a metà, nome rimasto per sempre."
+              "title": "Il re che diede il nome",
+              "text": "Il re del nome è Giacomo V, che nel 1540 arrivò qui con un'intera flotta per convincere i clan delle isole a rigare dritto: più una dimostrazione di forza che una visita di cortesia. Missione riuscita a metà, nome rimasto per sempre."
             },
             {
               "kind": "History",
@@ -764,8 +764,8 @@
           "curiosities": [
             {
               "kind": "Weird",
-              "title": "La scogliera che suona",
-              "text": "Nelle giornate di vento forte le ringhiere del belvedere vibrano producendo un suono cupo e costante, come un organo. Non è un difetto: è il vento che 'suona' i tubi della recinzione, e ormai fa parte dell'esperienza quanto la vista."
+              "title": "I pesci dell'era glaciale",
+              "text": "Nel Loch Mealt, il laghetto proprio sopra la scogliera, vive una popolazione di salmerino artico: pesci d'acqua fredda rimasti intrappolati qui alla fine dell'ultima era glaciale, oltre 10.000 anni fa. Una specie di acquario preistorico a due passi dal parcheggio."
             },
             {
               "kind": "History",
@@ -786,8 +786,8 @@
           "curiosities": [
             {
               "kind": "Weird",
-              "title": "La cascata che sale",
-              "text": "Quando il vento da sud-ovest è abbastanza forte, le correnti ascensionali lungo la scogliera vincono la gravità: l'acqua della cascata viene nebulizzata e spinta verso l'alto in una nuvola bianca. Una cascata al contrario, letteralmente."
+              "title": "L'unica uscita del lago",
+              "text": "Il Loch Mealt non ha emissari tranquilli: l'unico modo che ha la sua acqua di raggiungere il mare è buttarsi giù dai 55 metri della scogliera. Ogni goccia che entra nel laghetto, prima o poi, fa il grande salto."
             },
             {
               "kind": "Weird",
@@ -808,8 +808,8 @@
           "curiosities": [
             {
               "kind": "Weird",
-              "title": "La frana non ha ancora finito",
-              "text": "Il Quiraing è l'unico tratto della grande frana di Trotternish ancora in movimento: il terreno scivola di qualche centimetro l'anno, e la strada ai suoi piedi va riparata regolarmente. State camminando su un paesaggio che non ha ancora deciso la sua forma."
+              "title": "La strada da riparare ogni anno",
+              "text": "Il terreno del Quiraing scivola ancora di qualche centimetro l'anno, e la strada ai suoi piedi va sistemata regolarmente perché la montagna, letteralmente, se la porta via. Gli operai la conoscono per nome, praticamente."
             },
             {
               "kind": "History",
@@ -837,9 +837,9 @@
           "bookingRequired": false,
           "curiosities": [
             {
-              "kind": "Legend",
-              "title": "La bandiera delle fate",
-              "text": "La Fairy Flag è un fragile drappo di seta che, secondo la leggenda, fu donato ai MacLeod dalle fate e può salvare il clan in battaglia per tre volte. È stata sventolata due: ne resta una, e i MacLeod non hanno alcuna fretta di usarla."
+              "kind": "Weird",
+              "title": "In missione con la bandiera",
+              "text": "Dei tre 'salvataggi' che la Fairy Flag garantirebbe al clan, due risultano già spesi in antiche battaglie: ne resta uno, custodito con cura. E durante la Seconda guerra mondiale alcuni piloti del clan MacLeod portarono in missione una foto della bandiera come protezione personale. Nel dubbio, meglio non sprecare l'originale."
             },
             {
               "kind": "Weird",
@@ -847,9 +847,9 @@
               "text": "Gli studiosi hanno datato la seta della bandiera tra il IV e l'XI secolo, con origini probabilmente in Medio Oriente o a Rodi: è più antica del castello stesso. Come sia arrivata a Skye — crociate? bottino vichingo? — nessuno lo sa davvero, ed è questo il bello."
             },
             {
-              "kind": "History",
-              "title": "Il record di ospitalità",
-              "text": "Dunvegan è il castello scozzese abitato più a lungo senza interruzioni: la stessa famiglia, i MacLeod, ci vive da circa 800 anni. Trenta generazioni sotto lo stesso tetto: le riunioni di famiglia devono essere interminabili."
+              "kind": "Weird",
+              "title": "Il corno del capoclan",
+              "text": "Ogni nuovo capo dei MacLeod deve bere d'un fiato il corno di Rory Mor colmo di vino rosso — circa due litri — 'senza posarlo e senza cadere'. L'ultimo capo a superare la prova lo scolò in un minuto e cinquantasette secondi, orgogliosamente cronometrati. Tradizioni serie, gestite seriamente."
             }
           ]
         },
@@ -887,8 +887,8 @@
           "curiosities": [
             {
               "kind": "Weird",
-              "title": "Le fate non c'entrano niente",
-              "text": "A dispetto del nome, non esiste alcuna leggenda tradizionale di fate legata a questo luogo: il paesaggio è così innaturalmente perfetto che il nome è nato da solo. È uno dei rari casi in cui la realtà ha battuto il folklore sul suo campo."
+              "title": "Le spirali che non dovreste fare",
+              "text": "Le spirali di sassi che forse troverete sul prato non sono antiche né magiche: le fanno i turisti, e gli abitanti le smontano regolarmente perché rovinano il tappeto erboso e non c'entrano nulla col luogo. Ammiratele pure, ma la più bella cortesia è non aggiungerne."
             },
             {
               "kind": "Weird",
@@ -1009,9 +1009,9 @@
           "bookingRequired": false,
           "curiosities": [
             {
-              "kind": "Weird",
-              "title": "Tre sorelle, una sola madre",
-              "text": "Le Tre Sorelle — Beinn Fhada, Gearr Aonach e Aonach Dubh — non sono tre montagne ma tre speroni della stessa: il Bidean nam Bian, la vetta più alta dell'Argyll. Una montagna sola che si è fatta in tre per la foto."
+              "kind": "History",
+              "title": "La valle perduta",
+              "text": "Tra due delle Sorelle si nasconde il Coire Gabhail, la 'valle perduta': un pianoro segreto chiuso da una frana dove i MacDonald di Glencoe nascondevano il bestiame — incluso quello rubato ai vicini. L'ingresso è così ben mascherato che dal fondovalle non si indovina nemmeno."
             },
             {
               "kind": "Legend",
@@ -1084,8 +1084,8 @@
           "curiosities": [
             {
               "kind": "History",
-              "title": "Salvata dai suoi cittadini",
-              "text": "Durante la Riforma, quando le folle demolivano le cattedrali 'papiste' in tutta la Scozia, furono le corporazioni dei mestieri di Glasgow a schierarsi in armi per difendere la propria. È per questo che oggi è l'unica grande cattedrale medievale scozzese rimasta praticamente integra."
+              "title": "Chi la salvò davvero",
+              "text": "Se è arrivata intatta a oggi, il merito è delle corporazioni dei mestieri di Glasgow: quando durante la Riforma le folle demolivano le cattedrali 'papiste', artigiani e commercianti si schierarono in armi per difendere la propria. Un caso rarissimo di monumento salvato dal sindacato."
             },
             {
               "kind": "Weird",

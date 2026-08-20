@@ -1,26 +1,46 @@
 @implements IDisposable
+@inject NavigationManager Nav
 
-<button type="button" class="sync-badge @CssClass" @onclick="() => Sync.TrySyncAsync()" aria-label="Stato sincronizzazione: @Label">
+<button type="button" class="sync-badge @CssClass" @onclick="HandleTap" aria-label="Stato sincronizzazione: @Label">
     <span class="dot"></span>@Label
 </button>
 
 @code {
     [Inject] public required SyncService Sync { get; set; }
+    [Inject] public required AppConfigService Config { get; set; }
 
-    private string Label => Sync.Status switch
-    {
-        SyncStatus.Syncing => "Sincronizzo…",
-        SyncStatus.Offline => Sync.PendingCount > 0 ? $"Offline · {Sync.PendingCount} in coda" : "Offline",
-        SyncStatus.NeedsLogin => "Accedi per condividere",
-        _ => Sync.PendingCount > 0 ? $"{Sync.PendingCount} in coda" : "Tutto salvato"
-    };
+    // Tre situazioni ben distinte:
+    //  1. Supabase non configurato → i dati vivono solo su questo telefono
+    //  2. Configurato ma senza login → serve accedere (tap → impostazioni)
+    //  3. Tutto pronto → stato della coda (tap → sincronizza)
+    private string Label =>
+        !Config.IsConfigured ? "Solo su questo telefono"
+        : Sync.Status switch
+        {
+            SyncStatus.Syncing => "Sincronizzo…",
+            SyncStatus.Offline => Sync.PendingCount > 0 ? $"Offline · {Sync.PendingCount} in coda" : "Offline",
+            SyncStatus.NeedsLogin => "Accedi per condividere",
+            _ => Sync.PendingCount > 0 ? $"{Sync.PendingCount} in coda" : "Tutto salvato"
+        };
 
-    private string CssClass => Sync.Status switch
+    private string CssClass =>
+        !Config.IsConfigured ? "offline"
+        : Sync.Status switch
+        {
+            SyncStatus.Offline => "offline",
+            SyncStatus.NeedsLogin => "error",
+            _ => Sync.PendingCount > 0 ? "pending" : ""
+        };
+
+    private Task HandleTap()
     {
-        SyncStatus.Offline => "offline",
-        SyncStatus.NeedsLogin => "error",
-        _ => Sync.PendingCount > 0 ? "pending" : ""
-    };
+        if (!Config.IsConfigured || Sync.Status == SyncStatus.NeedsLogin)
+        {
+            Nav.NavigateTo("impostazioni");
+            return Task.CompletedTask;
+        }
+        return Sync.TrySyncAsync();
+    }
 
     protected override void OnInitialized() => Sync.Changed += StateHasChanged;
     public void Dispose() => Sync.Changed -= StateHasChanged;

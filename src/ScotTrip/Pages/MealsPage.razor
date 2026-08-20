@@ -44,8 +44,8 @@ else
 
                 <div class="entry-actions">
                     <button type="button" class="btn btn-secondary btn-vote" @onclick="() => _rating = meal">★ Vota</button>
-                    <button type="button" class="btn-ghost" @onclick="() => OpenEdit(meal)">Modifica</button>
-                    <button type="button" class="btn-danger-ghost" @onclick="() => DeleteAsync(meal)">Elimina</button>
+                    <button type="button" class="icon-btn entry-icon" aria-label="Modifica pasto" title="Modifica" @onclick="() => OpenEdit(meal)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 20 L4.8 16.2 L16.4 4.6 A1.9 1.9 0 0 1 19.1 4.9 A1.9 1.9 0 0 1 19.4 7.6 L7.8 19.2 Z" /><path d="M14.6 6.4 L17.6 9.4" /></svg></button>
+                    <button type="button" class="icon-btn entry-icon danger" aria-label="Elimina pasto" title="Elimina" @onclick="() => DeleteAsync(meal)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4.5 6.5 H19.5 M9.5 6.5 V4.8 A1.3 1.3 0 0 1 10.8 3.5 H13.2 A1.3 1.3 0 0 1 14.5 4.8 V6.5 M6.5 6.5 L7.3 19 A1.5 1.5 0 0 0 8.8 20.4 H15.2 A1.5 1.5 0 0 0 16.7 19 L17.5 6.5 M10 10 V16.5 M14 10 V16.5" /></svg></button>
                 </div>
             </div>
         }

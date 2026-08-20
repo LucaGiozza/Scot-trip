@@ -67,17 +67,32 @@
 <div class="settings-block">
     <h2>Sincronizzazione</h2>
     <p class="settings-hint" style="margin-top:0">
-        Stato: <strong>@StatusLabel</strong>
-        @if (Sync.PendingCount > 0)
-        {
-            <text> · @Sync.PendingCount modifiche in attesa</text>
-        }
+        La sincronizzazione serve a UNA cosa: far vedere foto e voti di un telefono
+        anche sull'altro. Senza, l'app funziona lo stesso, ma ognuno vede solo il suo.
     </p>
-    <button type="button" class="btn btn-secondary btn-block" @onclick="() => Sync.TrySyncAsync()">Sincronizza ora</button>
-    <p class="settings-hint">
-        Tutto quello che fate offline resta al sicuro sul telefono
-        e parte da solo appena torna la rete.
-    </p>
+    @if (!Config.IsConfigured)
+    {
+        <p class="settings-hint"><strong>Ora è spenta</strong>: manca la configurazione di Supabase (vedi il blocco qui sopra e il README).</p>
+    }
+    else if (!Auth.IsLoggedIn)
+    {
+        <p class="settings-hint"><strong>Ora è in attesa</strong>: fate l'accesso qui sopra e partirà da sola.</p>
+    }
+    else
+    {
+        <p class="settings-hint">
+            Stato: <strong>@StatusLabel</strong>
+            @if (Sync.PendingCount > 0)
+            {
+                <text> · @Sync.PendingCount modifiche in attesa</text>
+            }
+        </p>
+        <button type="button" class="btn btn-secondary btn-block" @onclick="() => Sync.TrySyncAsync()">Sincronizza ora</button>
+        <p class="settings-hint">
+            In realtà non serve quasi mai premerlo: la sync parte da sola a ogni salvataggio,
+            al ritorno della rete e quando riaprite l'app.
+        </p>
+    }
 </div>
 
 @code {

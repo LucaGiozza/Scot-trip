@@ -931,3 +931,17 @@ main.app-main {
     .best-grid, .stats-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
     .stat-value { font-size: 23px; }
 }
+
+/* ---------- icone azione sulle card (matita / cestino) ---------- */
+.entry-icon {
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink-soft);
+    border-radius: 11px;
+}
+.entry-icon svg { width: 19px; height: 19px; }
+.entry-icon.danger { color: var(--danger); border-color: #E4CBC8; }
+.entry-icon:active { background: var(--mist); }
+
+.viewer-icon { color: #E0897F; }
+.viewer-actions { display: flex; align-items: center; gap: 4px; }
