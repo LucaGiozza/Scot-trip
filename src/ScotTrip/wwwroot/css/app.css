@@ -106,110 +106,118 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-
     outline-offset: 2px;
 }
 
-/* ---------- schermata di avvio: mattina nelle Highlands ---------- */
+/* ---------- schermata di avvio: il gatto che corre nel prato ---------- */
 .boot-screen {
+    position: relative;
     min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background: linear-gradient(#EAF0EB 0%, #DCE7DE 55%, #CFE0D3 100%);
-    color: var(--ink);
-    text-align: center;
-}
-
-.boot-tartan {
-    height: 9px;
-    background: var(--tartan);
-    opacity: .9;
-    flex: 0 0 auto;
-}
-
-.boot-center {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    padding: 18px 0 26px;
-    min-height: 0;
-}
-
-.boot-scene {
-    width: min(430px, 100vw);
-    height: auto;
-    flex: 0 1 auto;
-    margin-bottom: 6px;
-}
-
-.boot-cat-body {
-    animation: boot-bob 2.4s ease-in-out infinite;
-    transform-origin: 178px 234px;
-}
-
-.boot-flag {
-    animation: boot-wave 2.4s ease-in-out infinite;
-    transform-origin: 230px 212px;
-}
-
-.cloud { animation: boot-drift 14s ease-in-out infinite alternate; }
-.cloud-2 { animation-duration: 18s; animation-delay: -6s; }
-
-.sheep { animation: boot-graze 5s ease-in-out infinite; transform-origin: 86px 184px; }
-.sheep-2 { animation-delay: -2.4s; transform-origin: 118px 166px; }
-
-@keyframes boot-bob {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-4px) rotate(-1.2deg); }
-}
-
-@keyframes boot-wave {
-    0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(4deg); }
-}
-
-@keyframes boot-drift {
-    from { transform: translateX(-14px); }
-    to { transform: translateX(20px); }
-}
-
-@keyframes boot-graze {
-    0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(2.5deg); }
-}
-
-.boot-title {
-    font-family: var(--font-display);
-    font-size: 23px;
-    color: var(--pine);
-    margin-top: 2px;
-}
-
-.boot-sub { font-size: 13.5px; color: var(--ink-soft); }
-
-.boot-bar {
-    width: min(190px, 52vw);
-    height: 5px;
-    border-radius: 3px;
-    background: rgba(30, 59, 51, .14);
     overflow: hidden;
-    margin-top: 16px;
+    /* un'unica scena: cielo che sfuma nel prato, senza stacchi */
+    background: linear-gradient(#E3EDE5 0%, #CFE2D2 34%, #8FAE93 46%, #6E9479 58%, #4E7A63 100%);
 }
 
-.boot-bar span {
-    display: block;
+/* strisce che scorrono: due copie affiancate del pattern → loop senza salti */
+.boot-strip {
+    position: absolute;
+    top: 0;
     height: 100%;
-    width: 38%;
-    border-radius: 3px;
-    background: linear-gradient(90deg, transparent, var(--heather) 30%, var(--gorse) 70%, transparent);
-    animation: boot-slide 1.5s linear infinite;
-    will-change: transform;
+    width: 50%;
+    display: block;
 }
 
-/* scorrimento continuo in una direzione sola: fluido, mai a scatti */
-@keyframes boot-slide {
-    from { transform: translateX(-110%); }
-    to { transform: translateX(380%); }
+.boot-sky {
+    position: absolute;
+    left: 0; top: 8%;
+    width: 200%;
+    height: 12%;
+    animation: boot-scroll 26s linear infinite;
+}
+
+.boot-ground {
+    position: absolute;
+    left: 0;
+    top: 55.5%;
+    width: 200%;
+    height: 10%;
+    animation: boot-scroll 3.2s linear infinite;
+}
+
+.boot-sky .boot-strip:first-child, .boot-ground .boot-strip:first-child { left: 0; }
+.boot-sky .boot-strip:last-child, .boot-ground .boot-strip:last-child { left: 50%; }
+
+@keyframes boot-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+/* il gatto: al centro, galoppo sul posto mentre il mondo gli scorre sotto */
+.boot-runner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(240px, 60vw);
+    transform: translate(-50%, -55%);
+}
+
+/* orizzonte fisso: il castello resta lontano mentre il prato corre */
+.boot-horizon {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 39%;
+    height: 9%;
+}
+.boot-horizon svg { width: 100%; height: 100%; display: block; }
+
+.boot-runner svg { width: 100%; height: auto; overflow: visible; }
+
+.run-cat {
+    animation: run-bob .42s ease-in-out infinite;
+    transform-origin: 80px 78px;
+}
+
+.run-legs-a { animation: run-kick .42s ease-in-out infinite; transform-origin: 80px 68px; }
+.run-legs-b { animation: run-kick .42s ease-in-out infinite reverse; transform-origin: 80px 68px; }
+.run-tail { animation: run-tail .84s ease-in-out infinite; transform-origin: 46px 56px; }
+.run-scarf { animation: run-scarf .84s ease-in-out infinite; transform-origin: 102px 44px; }
+
+@keyframes run-bob {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-5px) rotate(-2deg); }
+}
+
+@keyframes run-kick {
+    0%, 100% { transform: rotate(16deg); }
+    50% { transform: rotate(-16deg); }
+}
+
+@keyframes run-tail {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(9deg); }
+}
+
+@keyframes run-scarf {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(6deg) translateY(1.5px); }
+}
+
+.boot-loading {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 72%;
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 21px;
+    color: #FBFBF7;
+    text-shadow: 0 1px 2px rgba(30, 59, 51, .35);
+    letter-spacing: .02em;
+    animation: boot-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes boot-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .55; }
+}
 }
 
 /* ---------- struttura pagina ---------- */

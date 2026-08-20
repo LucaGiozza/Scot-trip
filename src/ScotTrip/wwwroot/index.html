@@ -16,98 +16,172 @@
     <link rel="apple-touch-icon" href="icons/icon-192.png" />
     <link rel="icon" type="image/png" href="icons/icon-192.png" />
     <link rel="manifest" href="manifest.webmanifest" />
-    <link href="css/app.css?v=6" rel="stylesheet" />
+    <link href="css/app.css?v=9" rel="stylesheet" />
 </head>
 
 <body>
     <div id="app">
         <!-- Splash mostrato mentre il runtime WASM si scarica (solo la prima volta: poi è in cache) -->
         <div class="boot-screen">
-            <div class="boot-tartan"></div>
-            <div class="boot-center">
-                <svg class="boot-scene" viewBox="0 0 390 265" aria-hidden="true" preserveAspectRatio="xMidYMax meet">
-                    <!-- nuvole in lento movimento -->
-                    <g class="cloud cloud-1" fill="#FFFFFF" opacity="0.75">
-                        <ellipse cx="80" cy="38" rx="34" ry="12" />
-                        <ellipse cx="108" cy="32" rx="24" ry="10" />
+            <!-- nuvole che scorrono (due copie per il loop continuo) -->
+            <div class="boot-sky">
+                <svg class="boot-strip clouds" viewBox="0 0 800 90" preserveAspectRatio="none" aria-hidden="true">
+                    <g fill="#FFFFFF" opacity=".8">
+                        <ellipse cx="90" cy="42" rx="36" ry="12" /><ellipse cx="120" cy="35" rx="24" ry="9" />
+                        <ellipse cx="330" cy="26" rx="30" ry="10" /><ellipse cx="356" cy="21" rx="19" ry="7" />
+                        <ellipse cx="580" cy="46" rx="34" ry="11" /><ellipse cx="608" cy="39" rx="22" ry="8" />
+                        <ellipse cx="490" cy="66" rx="42" ry="13" /><ellipse cx="524" cy="59" rx="26" ry="9" />
+                        <ellipse cx="730" cy="30" rx="28" ry="9" />
                     </g>
-                    <g class="cloud cloud-2" fill="#FFFFFF" opacity="0.6">
-                        <ellipse cx="290" cy="22" rx="30" ry="10" />
-                        <ellipse cx="315" cy="17" rx="20" ry="8" />
-                    </g>
-
-                    <!-- collina lontana con castello -->
-                    <path d="M0 150 Q90 96 200 128 Q300 156 390 118 L390 265 L0 265 Z" fill="#9DB8A4" />
-                    <g fill="#57705F">
-                        <rect x="292" y="93" width="9" height="30" />
-                        <rect x="316" y="93" width="9" height="30" />
-                        <rect x="299" y="103" width="19" height="22" />
-                        <path d="M291 93 h11 v-5 h-3 v3 h-2 v-3 h-3 v3 h-3 Z M315 93 h11 v-5 h-3 v3 h-2 v-3 h-3 v3 h-3 Z" />
-                        <rect x="305.5" y="111" width="5" height="9" fill="#9DB8A4" />
-                    </g>
-
-                    <!-- collina di mezzo con pecore -->
-                    <path d="M0 190 Q120 138 240 168 Q330 190 390 172 L390 265 L0 265 Z" fill="#6E9479" />
-                    <g class="sheep">
-                        <ellipse cx="86" cy="176" rx="13" ry="9" fill="#F6F5EF" />
-                        <circle cx="97" cy="172" r="5" fill="#3A4A40" />
-                        <path d="M80 184 v7 M92 184 v7" stroke="#3A4A40" stroke-width="2.4" stroke-linecap="round" />
-                    </g>
-                    <g class="sheep sheep-2">
-                        <ellipse cx="118" cy="160" rx="10" ry="7" fill="#F6F5EF" />
-                        <circle cx="126" cy="157" r="4" fill="#3A4A40" />
-                        <path d="M114 166 v5 M122 166 v5" stroke="#3A4A40" stroke-width="2" stroke-linecap="round" />
-                    </g>
-
-                    <!-- prato in primo piano -->
-                    <path d="M0 232 Q130 196 260 220 Q340 234 390 226 L390 265 L0 265 Z" fill="#4E7A63" />
-
-                    <!-- cardi -->
-                    <g stroke-linecap="round">
-                        <path d="M46 232 L46 202 M46 214 Q38 212 36 204 M46 219 Q54 217 56 210" stroke="#3B6B5B" stroke-width="3" fill="none" />
-                        <path d="M40 200 Q39 194 41.5 191 L46 195 L50.5 191 Q53 194 52 200 Z" fill="#3B6B5B" />
-                        <path d="M46 198 L46 186 M42 198 L39.5 189 M50 198 L52.5 189" stroke="#8A6FA8" stroke-width="3.4" fill="none" />
-                        <path d="M62 238 L62 216 M62 226 Q56 225 55 219" stroke="#3B6B5B" stroke-width="2.6" fill="none" />
-                        <path d="M58 214 Q57.5 210 59 208 L62 210.5 L65 208 Q66.5 210 66 214 Z" fill="#3B6B5B" />
-                        <path d="M62 212.5 L62 204 M59.4 212.5 L58 206 M64.6 212.5 L66 206" stroke="#8A6FA8" stroke-width="2.6" fill="none" />
-                    </g>
-
-                    <!-- gatto con sciarpa e bandierina -->
-                    <g class="boot-flag">
-                        <line x1="230" y1="148" x2="230" y2="212" stroke="#B49B66" stroke-width="3.5" stroke-linecap="round" />
-                        <rect x="230" y="148" width="36" height="25" rx="2.5" fill="#2A4E7E" />
-                        <path d="M230 148 L266 173 M266 148 L230 173" stroke="#F6F5EF" stroke-width="4" />
-                    </g>
-                    <g class="boot-cat-body">
-                        <path d="M186 222 Q214 238 230 210" fill="none" stroke="#F6F5EF" stroke-width="6" stroke-linecap="round" />
-                        <path fill="#F6F5EF" d="M164 172 Q161 157 169 154 L176 162 Q178 161.5 180 162 L187 154 Q195 157 192 172 Q198 177 197.5 185 Q196.5 198 178 198.5 Q159.5 198 158.5 185 Q158 177 164 172 Z" />
-                        <path fill="#E9B7B0" d="M166.5 168 Q165 161 168.6 159.5 L173.6 165 Z M189.5 168 Q191 161 187.4 159.5 L182.4 165 Z" opacity=".85" />
-                        <ellipse cx="171" cy="181" rx="3" ry="3.6" fill="#1E3B33" />
-                        <ellipse cx="185" cy="181" rx="3" ry="3.6" fill="#1E3B33" />
-                        <circle cx="172" cy="179.6" r="1" fill="#fff" />
-                        <circle cx="186" cy="179.6" r="1" fill="#fff" />
-                        <path d="M176.6 186.5 L179.4 186.5 L178 188.4 Z" fill="#E9968C" />
-                        <path d="M175 190 Q176.5 191.6 178 190 Q179.5 191.6 181 190" stroke="#1E3B33" stroke-width="1.6" fill="none" stroke-linecap="round" />
-                        <path d="M162 184 L154 182.5 M162 188 L154.5 189 M194 184 L202 182.5 M194 188 L201.5 189" stroke="#F6F5EF" stroke-width="1.6" stroke-linecap="round" opacity=".8" />
-                        <path fill="#F6F5EF" d="M167 197 Q161 218 166 234 Q178 237 190 234 Q195 218 189 197 Z" />
-                        <rect x="163" y="195" width="30" height="9" rx="4.5" fill="#7A5F9E" />
-                        <rect x="169" y="195" width="3" height="9" fill="#5E4880" />
-                        <rect x="179" y="195" width="3" height="9" fill="#5E4880" />
-                        <rect x="187" y="195" width="2.2" height="9" fill="#C9A227" />
-                        <rect x="182" y="200" width="9" height="17" rx="4.5" fill="#7A5F9E" />
-                        <rect x="182" y="206" width="9" height="2.6" fill="#5E4880" />
-                        <rect x="182" y="212" width="9" height="2.2" fill="#C9A227" />
-                    </g>
-
-                    <!-- erba davanti a tutti -->
-                    <path d="M0 246 Q140 226 390 244 L390 265 L0 265 Z" fill="#3E6A54" />
                 </svg>
-
-                <p class="boot-title">Si parte per la Scozia…</p>
-                <p class="boot-sub">Preparo mappe, tappe e curiosità</p>
-                <div class="boot-bar"><span></span></div>
+                <svg class="boot-strip clouds" viewBox="0 0 800 90" preserveAspectRatio="none" aria-hidden="true">
+                    <g fill="#FFFFFF" opacity=".8">
+                        <ellipse cx="90" cy="42" rx="36" ry="12" /><ellipse cx="120" cy="35" rx="24" ry="9" />
+                        <ellipse cx="330" cy="26" rx="30" ry="10" /><ellipse cx="356" cy="21" rx="19" ry="7" />
+                        <ellipse cx="580" cy="46" rx="34" ry="11" /><ellipse cx="608" cy="39" rx="22" ry="8" />
+                        <ellipse cx="490" cy="66" rx="42" ry="13" /><ellipse cx="524" cy="59" rx="26" ry="9" />
+                        <ellipse cx="730" cy="30" rx="28" ry="9" />
+                    </g>
+                </svg>
             </div>
-            <div class="boot-tartan"></div>
+
+            <!-- orizzonte: castello con la bandiera scozzese -->
+            <div class="boot-horizon">
+                <svg viewBox="0 0 390 70" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+                    <path d="M0 70 Q100 52 200 62 Q300 70 390 58 L390 70 Z" fill="#7FA089" opacity=".55" />
+                    <g fill="#57705F">
+                        <rect x="56" y="26" width="8" height="26" />
+                        <rect x="78" y="26" width="8" height="26" />
+                        <rect x="63" y="35" width="16" height="17" />
+                        <path d="M55 26 h10 v-4.5 h-2.8 v2.6 h-2 v-2.6 h-2.6 v2.6 h-2.6 Z M77 26 h10 v-4.5 h-2.8 v2.6 h-2 v-2.6 h-2.6 v2.6 h-2.6 Z" />
+                    </g>
+                    <line x1="60" y1="21" x2="60" y2="10" stroke="#57705F" stroke-width="1.8" />
+                    <rect x="60" y="10" width="12" height="8" fill="#2A4E7E" />
+                    <path d="M60 10 L72 18 M72 10 L60 18" stroke="#EDF0EA" stroke-width="1.6" />
+                </svg>
+            </div>
+
+            <!-- il gatto che corre -->
+            <div class="boot-runner">
+                <svg viewBox="0 0 170 110" aria-hidden="true">
+                    <ellipse class="run-shadow" cx="80" cy="100" rx="46" ry="6" fill="#1E3B33" opacity=".16" />
+                    <g class="run-cat">
+                        <!-- coda -->
+                        <path class="run-tail" d="M46 56 Q30 48 28 34" fill="none" stroke="#F6F5EF" stroke-width="8" stroke-linecap="round" />
+                        <!-- zampe (due coppie in controfase) -->
+                        <g class="run-legs-a" stroke="#F6F5EF" stroke-width="8.5" stroke-linecap="round">
+                            <path d="M60 70 L51 90" />
+                            <path d="M96 70 L105 90" />
+                        </g>
+                        <g class="run-legs-b" stroke="#EDE7DA" stroke-width="8.5" stroke-linecap="round">
+                            <path d="M67 71 L65 92" />
+                            <path d="M102 71 L100 92" />
+                        </g>
+                        <!-- corpo: schiena morbida, pancia tonda -->
+                        <path fill="#F6F5EF" d="M49 57 Q48 42 63 38 Q80 34 97 40 Q110 45 109 58 Q108 70 92 73 Q73 75.5 59 71.5 Q49 68 49 57 Z" />
+                        <!-- fascia della sciarpa al collo -->
+                        <g transform="rotate(-22 103 54)">
+                            <rect x="97" y="41" width="12" height="27" rx="6" fill="#7A5F9E" />
+                            <rect x="97" y="48" width="12" height="3" fill="#5E4880" />
+                            <rect x="97" y="58" width="12" height="2.6" fill="#C9A227" />
+                        </g>
+                        <!-- lembo che sventola sopra la schiena -->
+                        <g class="run-scarf">
+                            <path d="M100 42 Q84 22 62 25 Q78 35 98 47 Z" fill="#7A5F9E" />
+                            <path d="M78 28 l2.6 7.4 M88 31 l2.2 6.6" stroke="#5E4880" stroke-width="2.4" />
+                            <path d="M69 26.5 l2.2 6.4" stroke="#C9A227" stroke-width="1.8" />
+                        </g>
+                        <!-- testa -->
+                        <g class="run-head" transform="translate(-8 10)">
+                            <path fill="#F6F5EF" d="M116 26 Q114 14 121 11.5 L128 19 Q131.5 18.4 135 19 L142 11.5 Q149 14 147 26 Q153 31 152.5 39 Q151.5 51 131.5 51.5 Q111.5 51 110.5 39 Q110 31 116 26 Z" />
+                            <path fill="#E9B7B0" d="M118.5 22.5 Q117.5 16 121 14.6 L126 20 Z M144.5 22.5 Q145.5 16 142 14.6 L137 20 Z" opacity=".85" />
+                            <ellipse cx="126" cy="34" rx="2.9" ry="3.5" fill="#1E3B33" />
+                            <ellipse cx="140" cy="34" rx="2.9" ry="3.5" fill="#1E3B33" />
+                            <circle cx="127" cy="32.6" r="1" fill="#fff" />
+                            <circle cx="141" cy="32.6" r="1" fill="#fff" />
+                            <path d="M131.6 39.5 L134.4 39.5 L133 41.4 Z" fill="#E9968C" />
+                            <path d="M130 43 Q131.5 44.6 133 43 Q134.5 44.6 136 43" stroke="#1E3B33" stroke-width="1.6" fill="none" stroke-linecap="round" />
+                            <path d="M149 37 L157 36 M149 41 L156.5 42" stroke="#F6F5EF" stroke-width="1.5" stroke-linecap="round" opacity=".85" />
+                        </g>
+                    </g>
+                </svg>
+            </div>
+
+            <!-- prato che scorre sotto le zampe (due copie per il loop) -->
+            <div class="boot-ground">
+                <svg class="boot-strip grass" viewBox="0 0 800 70" preserveAspectRatio="none" aria-hidden="true">
+                    <g>
+                        <line x1="250" y1="36" x2="250" y2="12" stroke="#B49B66" stroke-width="2.6" stroke-linecap="round" />
+                        <rect x="250" y="12" width="16" height="11" rx="1.5" fill="#2A4E7E" />
+                        <path d="M250 12 L266 23 M266 12 L250 23" stroke="#F6F5EF" stroke-width="1.8" />
+                    </g>
+                    <g>
+                        <line x1="690" y1="34" x2="690" y2="10" stroke="#B49B66" stroke-width="2.6" stroke-linecap="round" />
+                        <rect x="690" y="10" width="16" height="11" rx="1.5" fill="#2A4E7E" />
+                        <path d="M690 10 L706 21 M706 10 L690 21" stroke="#F6F5EF" stroke-width="1.8" />
+                    </g>
+                    <g>
+                        <ellipse cx="420" cy="24" rx="13" ry="9" fill="#F6F5EF" />
+                        <circle cx="431" cy="20" r="5" fill="#3A4A40" />
+                        <path d="M414 32 v6 M426 32 v6" stroke="#3A4A40" stroke-width="2.4" stroke-linecap="round" />
+                    </g>
+                    <g stroke="#3E6A54" stroke-width="3" stroke-linecap="round" fill="none">
+                        <path d="M40 34 q3 -12 0 -20 M48 34 q4 -9 2 -16" />
+                        <path d="M180 30 q3 -12 0 -20 M188 30 q4 -9 2 -16" />
+                        <path d="M330 36 q3 -12 0 -20 M338 36 q4 -9 2 -16" />
+                        <path d="M470 30 q3 -12 0 -20 M478 30 q4 -9 2 -16" />
+                        <path d="M620 34 q3 -12 0 -20 M628 34 q4 -9 2 -16" />
+                        <path d="M750 30 q3 -12 0 -20 M758 30 q4 -9 2 -16" />
+                    </g>
+                    <g>
+                        <path d="M110 32 L110 12 M110 20 Q103 19 102 12" stroke="#2E5B4E" stroke-width="2.6" fill="none" stroke-linecap="round" />
+                        <path d="M106.5 10 Q106 5.6 108 3.6 L110 6 L112 3.6 Q114 5.6 113.5 10 Z" fill="#3B6B5B" />
+                        <path d="M110 8 L110 0 M107 8 L105.6 2 M113 8 L114.4 2" stroke="#8A6FA8" stroke-width="2.6" fill="none" stroke-linecap="round" />
+                    </g>
+                    <g>
+                        <path d="M540 34 L540 16 M540 24 Q534 23 533 17" stroke="#2E5B4E" stroke-width="2.4" fill="none" stroke-linecap="round" />
+                        <path d="M537 14 Q536.5 10.4 538.2 8.8 L540 10.8 L541.8 8.8 Q543.5 10.4 543 14 Z" fill="#3B6B5B" />
+                        <path d="M540 12.4 L540 5.4 M537.4 12.4 L536.2 7 M542.6 12.4 L543.8 7" stroke="#8A6FA8" stroke-width="2.2" fill="none" stroke-linecap="round" />
+                    </g>
+                </svg>
+                <svg class="boot-strip grass" viewBox="0 0 800 70" preserveAspectRatio="none" aria-hidden="true">
+                    <g>
+                        <line x1="250" y1="36" x2="250" y2="12" stroke="#B49B66" stroke-width="2.6" stroke-linecap="round" />
+                        <rect x="250" y="12" width="16" height="11" rx="1.5" fill="#2A4E7E" />
+                        <path d="M250 12 L266 23 M266 12 L250 23" stroke="#F6F5EF" stroke-width="1.8" />
+                    </g>
+                    <g>
+                        <line x1="690" y1="34" x2="690" y2="10" stroke="#B49B66" stroke-width="2.6" stroke-linecap="round" />
+                        <rect x="690" y="10" width="16" height="11" rx="1.5" fill="#2A4E7E" />
+                        <path d="M690 10 L706 21 M706 10 L690 21" stroke="#F6F5EF" stroke-width="1.8" />
+                    </g>
+                    <g>
+                        <ellipse cx="420" cy="24" rx="13" ry="9" fill="#F6F5EF" />
+                        <circle cx="431" cy="20" r="5" fill="#3A4A40" />
+                        <path d="M414 32 v6 M426 32 v6" stroke="#3A4A40" stroke-width="2.4" stroke-linecap="round" />
+                    </g>
+                    <g stroke="#3E6A54" stroke-width="3" stroke-linecap="round" fill="none">
+                        <path d="M40 34 q3 -12 0 -20 M48 34 q4 -9 2 -16" />
+                        <path d="M180 30 q3 -12 0 -20 M188 30 q4 -9 2 -16" />
+                        <path d="M330 36 q3 -12 0 -20 M338 36 q4 -9 2 -16" />
+                        <path d="M470 30 q3 -12 0 -20 M478 30 q4 -9 2 -16" />
+                        <path d="M620 34 q3 -12 0 -20 M628 34 q4 -9 2 -16" />
+                        <path d="M750 30 q3 -12 0 -20 M758 30 q4 -9 2 -16" />
+                    </g>
+                    <g>
+                        <path d="M110 32 L110 12 M110 20 Q103 19 102 12" stroke="#2E5B4E" stroke-width="2.6" fill="none" stroke-linecap="round" />
+                        <path d="M106.5 10 Q106 5.6 108 3.6 L110 6 L112 3.6 Q114 5.6 113.5 10 Z" fill="#3B6B5B" />
+                        <path d="M110 8 L110 0 M107 8 L105.6 2 M113 8 L114.4 2" stroke="#8A6FA8" stroke-width="2.6" fill="none" stroke-linecap="round" />
+                    </g>
+                    <g>
+                        <path d="M540 34 L540 16 M540 24 Q534 23 533 17" stroke="#2E5B4E" stroke-width="2.4" fill="none" stroke-linecap="round" />
+                        <path d="M537 14 Q536.5 10.4 538.2 8.8 L540 10.8 L541.8 8.8 Q543.5 10.4 543 14 Z" fill="#3B6B5B" />
+                        <path d="M540 12.4 L540 5.4 M537.4 12.4 L536.2 7 M542.6 12.4 L543.8 7" stroke="#8A6FA8" stroke-width="2.2" fill="none" stroke-linecap="round" />
+                    </g>
+                </svg>
+            </div>
+
+            <p class="boot-loading">Caricamento…</p>
         </div>
     </div>
 
