@@ -12,15 +12,21 @@ else
 {
     <PageTitle>@_stop.Name · Scozia</PageTitle>
 
-    <div class="stop-hero">
+    <div class="stop-hero" style="--kind-accent:@_stop.Kind.Accent()">
         @if (_day is not null)
         {
-            <a class="btn-ghost" href="giorno/@_day.Index">← @_day.Title</a>
+            <a class="back-btn" href="giorno/@_day.Index">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
+                    <path d="M14.5 5.5 L8 12 L14.5 18.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                Giorno @_day.Index
+            </a>
         }
+        <KindScene Kind="@_stop.Kind" />
         <h1>@_stop.Name @if (State.HasAnyRating(RatingTarget.Stop, _stop.Id) || State.PhotosFor(RatingTarget.Stop, _stop.Id).Count > 0)
             {<span class="visited-chip">✓ Visto</span>}</h1>
         <p class="stop-day-ref">
-            @DayView.KindLabel(_stop.Kind)@(_day is null ? "" : $" · giorno {_day.Index} · {_day.Date:ddd d MMMM}")
+            @_stop.Kind.Icon() @_stop.Kind.Label()@(_day is null ? "" : $" · giorno {_day.Index} · {_day.Date:ddd d MMMM}")
         </p>
         <p class="stop-body">@_stop.Summary</p>
 

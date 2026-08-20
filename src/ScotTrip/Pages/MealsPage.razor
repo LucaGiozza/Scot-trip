@@ -4,13 +4,13 @@
 <PageTitle>Pasti · Scozia</PageTitle>
 
 <h1 class="day-heading">Dove abbiamo mangiato</h1>
-<p class="day-area">Haggis compreso, se avrete coraggio.</p>
+<p class="day-area">I ristoranti e i locali del viaggio.</p>
 
 @if (State.Meals.Count == 0)
 {
     <div class="empty-state">
         <CatDoodle Pose="CatPose.Sleeping" />
-        <p>Ancora nessun pasto segnato.<br />Tocca + dopo la prima cena scozzese.</p>
+        <p>Nessun pasto ancora.<br />Aggiungete il primo con il tasto +.</p>
     </div>
 }
 else
@@ -63,7 +63,7 @@ else
     <RateSheet TargetKind="RatingTarget.Meal"
                TargetId="@_rating.Id.ToString()"
                Title="@_rating.Name"
-               Subtitle="Location, prezzo, qualità e personale: un voto a testa."
+               Subtitle="Un voto a testa per ogni categoria."
                OnClose="() => _rating = null" />
 }
 
@@ -107,7 +107,7 @@ else
             </div>
             <div class="form-field">
                 <label for="meal-note">Nota</label>
-                <textarea id="meal-note" rows="2" @bind="_editing.Note" placeholder="Com'era? Cosa rifareste?"></textarea>
+                <textarea id="meal-note" rows="2" @bind="_editing.Note" placeholder="Note e ricordi"></textarea>
             </div>
 
             @if (_error is not null)

@@ -47,7 +47,7 @@
                 {
                     <span class="kind-badge">Da vedere</span>
                 }
-                <span class="kind-badge kind-type">@KindLabel(stop.Kind)</span>
+                <span class="kind-badge kind-type">@stop.Kind.Icon() @stop.Kind.Label()</span>
                 @if (stop.BookingRequired)
                 {
                     <span class="booking-flag">⚠ prenotazione</span>
@@ -76,19 +76,6 @@
     private bool IsVisited(TripStop stop) =>
         State.HasAnyRating(RatingTarget.Stop, stop.Id) ||
         State.PhotosFor(RatingTarget.Stop, stop.Id).Count > 0;
-
-    internal static string KindLabel(StopKind kind) => kind switch
-    {
-        StopKind.Castle => "Castello",
-        StopKind.Nature => "Natura",
-        StopKind.Village => "Borgo",
-        StopKind.Beach => "Spiaggia",
-        StopKind.Distillery => "Distilleria",
-        StopKind.Church => "Cattedrale",
-        StopKind.Viewpoint => "Panorama",
-        StopKind.City => "Città",
-        _ => "Da vedere"
-    };
 
     private static string Stars(double avg)
     {

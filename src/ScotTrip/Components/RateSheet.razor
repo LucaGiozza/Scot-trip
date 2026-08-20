@@ -48,7 +48,7 @@
     [Parameter, EditorRequired] public RatingTarget TargetKind { get; set; }
     [Parameter, EditorRequired] public string TargetId { get; set; } = "";
     [Parameter] public string Title { get; set; } = "Votiamo!";
-    [Parameter] public string Subtitle { get; set; } = "Un voto a testa, per ogni categoria.";
+    [Parameter] public string Subtitle { get; set; } = "Un voto a testa per ogni categoria.";
     [Parameter] public EventCallback OnClose { get; set; }
 
     protected override void OnInitialized() => State.Changed += StateHasChanged;

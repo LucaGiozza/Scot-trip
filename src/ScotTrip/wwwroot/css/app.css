@@ -60,7 +60,11 @@ body {
     font-size: 16px;
     line-height: 1.5;
     color: var(--ink);
-    background: var(--mist);
+    background-color: var(--mist);
+    /* trama tartan appena percepibile: dà calore senza disturbare la lettura */
+    background-image:
+        repeating-linear-gradient(0deg, rgba(30, 59, 51, .016) 0 2px, transparent 2px 36px),
+        repeating-linear-gradient(90deg, rgba(34, 56, 78, .016) 0 2px, transparent 2px 36px);
     -webkit-font-smoothing: antialiased;
     -webkit-tap-highlight-color: transparent;
     overflow-x: hidden;               /* mai scroll orizzontale accidentale */
@@ -102,41 +106,106 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-
     outline-offset: 2px;
 }
 
-/* ---------- schermata di avvio ---------- */
+/* ---------- schermata di avvio: mattina nelle Highlands ---------- */
 .boot-screen {
     min-height: 100dvh;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-    background: var(--pine);
-    color: var(--mist);
-    font-family: var(--font-display);
-    padding: 24px;
+    justify-content: space-between;
+    background: linear-gradient(#EAF0EB 0%, #DCE7DE 55%, #CFE0D3 100%);
+    color: var(--ink);
     text-align: center;
 }
 
-.boot-cat { width: 76px; height: 76px; color: var(--mist); opacity: .92; }
+.boot-tartan {
+    height: 9px;
+    background: var(--tartan);
+    opacity: .9;
+    flex: 0 0 auto;
+}
+
+.boot-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 18px 0 26px;
+    min-height: 0;
+}
+
+.boot-scene {
+    width: min(430px, 100vw);
+    height: auto;
+    flex: 0 1 auto;
+    margin-bottom: 6px;
+}
+
+.boot-cat-body {
+    animation: boot-bob 2.4s ease-in-out infinite;
+    transform-origin: 178px 234px;
+}
+
+.boot-flag {
+    animation: boot-wave 2.4s ease-in-out infinite;
+    transform-origin: 230px 212px;
+}
+
+.cloud { animation: boot-drift 14s ease-in-out infinite alternate; }
+.cloud-2 { animation-duration: 18s; animation-delay: -6s; }
+
+.sheep { animation: boot-graze 5s ease-in-out infinite; transform-origin: 86px 184px; }
+.sheep-2 { animation-delay: -2.4s; transform-origin: 118px 166px; }
+
+@keyframes boot-bob {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-4px) rotate(-1.2deg); }
+}
+
+@keyframes boot-wave {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(4deg); }
+}
+
+@keyframes boot-drift {
+    from { transform: translateX(-14px); }
+    to { transform: translateX(20px); }
+}
+
+@keyframes boot-graze {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(2.5deg); }
+}
+
+.boot-title {
+    font-family: var(--font-display);
+    font-size: 23px;
+    color: var(--pine);
+    margin-top: 2px;
+}
+
+.boot-sub { font-size: 13.5px; color: var(--ink-soft); }
 
 .boot-bar {
-    width: min(220px, 60vw);
-    height: 4px;
-    border-radius: 2px;
-    background: rgba(237, 240, 234, .25);
+    width: min(190px, 52vw);
+    height: 5px;
+    border-radius: 3px;
+    background: rgba(30, 59, 51, .14);
     overflow: hidden;
+    margin-top: 16px;
 }
 
 .boot-bar span {
     display: block;
     height: 100%;
-    width: 40%;
-    border-radius: 2px;
-    background: var(--gorse);
-    animation: boot-slide 1.2s ease-in-out infinite alternate;
+    width: 45%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--heather), var(--gorse));
+    animation: boot-slide 1.3s ease-in-out infinite alternate;
 }
 
-@keyframes boot-slide { from { transform: translateX(-30%); } to { transform: translateX(180%); } }
+@keyframes boot-slide { from { transform: translateX(-30%); } to { transform: translateX(160%); } }
 
 /* ---------- struttura pagina ---------- */
 .app-shell {
@@ -187,7 +256,7 @@ main.app-main {
     width: 100%;
     max-width: 640px;               /* su tablet/desktop resta leggibile, centrata */
     margin: 0 auto;
-    padding: 16px 16px calc(var(--tabbar-h) + var(--safe-bottom) + 20px);
+    padding: 20px 18px calc(var(--tabbar-h) + var(--safe-bottom) + 26px);
 }
 
 /* ---------- tab bar inferiore ---------- */
@@ -254,7 +323,18 @@ main.app-main {
 .day-chip.active .dow { color: rgba(237, 240, 234, .7); }
 
 .day-heading { margin: 6px 0 2px; font-size: 22px; }
-.day-area { color: var(--ink-soft); font-size: 14px; margin-bottom: 14px; }
+
+.day-heading::after {
+    content: "";
+    display: block;
+    width: 58px;
+    height: 4px;
+    margin-top: 7px;
+    border-radius: 2px;
+    background: var(--tartan);
+    opacity: .9;
+}
+.day-area { color: var(--ink-soft); font-size: 14px; margin: 10px 0 18px; }
 
 /* ---------- timeline delle tappe ---------- */
 .timeline { position: relative; padding-left: 22px; }
@@ -273,8 +353,8 @@ main.app-main {
     background: var(--paper);
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    padding: 13px 14px;
-    margin-bottom: 12px;
+    padding: 16px;
+    margin-bottom: 14px;
     text-decoration: none;
     color: var(--ink);
     box-shadow: 0 1px 2px rgba(30, 43, 38, .05);
@@ -305,7 +385,7 @@ main.app-main {
     overflow: hidden;
 }
 
-.stop-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 9px; }
+.stop-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin-top: 12px; }
 
 .kind-badge {
     font-size: 11px;
@@ -324,6 +404,24 @@ main.app-main {
 .mini-count { font-size: 12px; color: var(--ink-soft); }
 
 /* ---------- pagina tappa ---------- */
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 38px;
+    padding: 0 15px 0 10px;
+    margin-bottom: 12px;
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    background: var(--paper);
+    color: var(--pine);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+}
+.back-btn svg { width: 17px; height: 17px; }
+.back-btn:active { background: var(--mist); }
+
 .stop-hero { padding: 4px 0 2px; }
 .stop-hero h1 { font-size: 26px; line-height: 1.2; overflow-wrap: anywhere; }
 .stop-hero .stop-day-ref { color: var(--ink-soft); font-size: 14px; margin-top: 4px; }
@@ -347,7 +445,7 @@ main.app-main {
     color: var(--ink-soft);
     font-family: var(--font-body);
     font-weight: 600;
-    margin: 22px 0 10px;
+    margin: 26px 0 13px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -360,8 +458,8 @@ main.app-main {
     background: var(--paper-warm);
     border: 1px solid #E4DECB;
     border-radius: var(--radius);
-    padding: 14px 15px 14px 20px;
-    margin-bottom: 12px;
+    padding: 16px 16px 16px 22px;
+    margin-bottom: 14px;
     box-shadow: 0 1px 3px rgba(30, 43, 38, .07);
 }
 
@@ -410,8 +508,8 @@ main.app-main {
     background: var(--paper);
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    padding: 12px 14px;
-    margin-bottom: 10px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
 }
 
 .rating-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
@@ -436,7 +534,7 @@ main.app-main {
 .photo-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
+    gap: 10px;
 }
 
 .photo-cell {
@@ -585,14 +683,14 @@ main.app-main {
     background: var(--paper);
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    padding: 13px 14px;
-    margin-bottom: 11px;
+    padding: 17px 16px;
+    margin-bottom: 15px;
 }
 
 .entry-card .entry-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
 .entry-card h3 { font-size: 16.5px; overflow-wrap: anywhere; }
 .entry-card .entry-sub { color: var(--ink-soft); font-size: 13.5px; margin-top: 2px; overflow-wrap: anywhere; }
-.entry-card .entry-note { font-size: 14px; margin-top: 7px; font-style: italic; color: #47554F; overflow-wrap: anywhere; }
+.entry-card .entry-note { font-size: 14px; margin-top: 9px; font-style: italic; color: #47554F; overflow-wrap: anywhere; }
 .entry-tag {
     font-size: 11px;
     text-transform: uppercase;
@@ -603,7 +701,7 @@ main.app-main {
     border-radius: 99px;
     white-space: nowrap;
 }
-.entry-actions { display: flex; justify-content: flex-end; gap: 4px; margin-top: 4px; }
+.entry-actions { display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-top: 14px; }
 
 .group-date {
     font-family: var(--font-display);
@@ -734,8 +832,8 @@ main.app-main {
 .category-chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
-    margin: 10px 0;
+    gap: 7px;
+    margin: 13px 0 12px;
 }
 
 .category-chip {
@@ -758,8 +856,8 @@ main.app-main {
     background: var(--paper);
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    padding: 10px 13px;
-    margin-bottom: 10px;
+    padding: 13px 15px;
+    margin-bottom: 12px;
 }
 
 .category-head {
@@ -781,7 +879,7 @@ main.app-main {
 
 .btn-vote { min-height: 40px; padding: 0 14px; font-size: 14px; }
 .entry-dishes { font-size: 14px; margin-top: 6px; color: #3C4A43; overflow-wrap: anywhere; }
-.entry-card .photo-grid { margin-top: 4px; }
+.entry-card .photo-grid { margin-top: 12px; }
 .entry-card .photo-cell, .entry-card .photo-add { border-radius: 8px; }
 
 /* ---------- controllo segmentato (classifiche) ---------- */
@@ -945,3 +1043,29 @@ main.app-main {
 
 .viewer-icon { color: #E0897F; }
 .viewer-actions { display: flex; align-items: center; gap: 4px; }
+
+/* ---------- scenetta per tipo di tappa ---------- */
+.kind-scene {
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--line);
+    margin-bottom: 16px;
+    line-height: 0;
+}
+
+.kind-scene svg { width: 100%; height: 96px; display: block; }
+
+.kind-scene.kind-castle    { background: linear-gradient(#E9EDF2, #DDE4EC); }
+.kind-scene.kind-nature    { background: linear-gradient(#E6F0E8, #D8E9DC); }
+.kind-scene.kind-beach     { background: linear-gradient(#EAF3F4, #DCEDEF); }
+.kind-scene.kind-distillery{ background: linear-gradient(#F4EEE1, #EDE2CC); }
+.kind-scene.kind-church    { background: linear-gradient(#EFEDF4, #E4DFEE); }
+.kind-scene.kind-viewpoint { background: linear-gradient(#F6F0DF, #EFE6CB); }
+.kind-scene.kind-village   { background: linear-gradient(#F3EEE5, #EAE2D3); }
+.kind-scene.kind-city      { background: linear-gradient(#EDEFF1, #E1E4E8); }
+.kind-scene.kind-sight     { background: linear-gradient(#F0EDF3, #E6E1ED); }
+
+/* l'accento del tipo colora i dettagli della pagina tappa */
+.stop-hero .practical-box { border-left-color: var(--kind-accent, var(--navy)); }
+.stop-hero .stop-day-ref { color: var(--kind-accent, var(--ink-soft)); font-weight: 600; }
+.stop-hero .btn-secondary { border-color: var(--kind-accent, var(--pine-mid)); color: var(--kind-accent, var(--pine)); }

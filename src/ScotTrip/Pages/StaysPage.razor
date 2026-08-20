@@ -4,7 +4,7 @@
 <PageTitle>Alloggi · Scozia</PageTitle>
 
 <h1 class="day-heading">Dove abbiamo dormito</h1>
-<p class="day-area">Dal B&amp;B con vista loch al letto un po' così.</p>
+<p class="day-area">Le camere e i B&amp;B del viaggio.</p>
 
 @if (State.Stays.Count == 0)
 {
@@ -53,7 +53,7 @@ else
     <RateSheet TargetKind="RatingTarget.Stay"
                TargetId="@_rating.Id.ToString()"
                Title="@_rating.Name"
-               Subtitle="Location, prezzo, qualità e personale: un voto a testa."
+               Subtitle="Un voto a testa per ogni categoria."
                OnClose="() => _rating = null" />
 }
 
@@ -84,7 +84,7 @@ else
             </div>
             <div class="form-field">
                 <label for="stay-note">Nota</label>
-                <textarea id="stay-note" rows="2" @bind="_editing.Note" placeholder="Colazione? Vista? Doccia che funziona?"></textarea>
+                <textarea id="stay-note" rows="2" @bind="_editing.Note" placeholder="Note e ricordi"></textarea>
             </div>
 
             @if (_error is not null)

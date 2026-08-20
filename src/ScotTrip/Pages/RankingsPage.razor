@@ -4,7 +4,7 @@
 <PageTitle>Classifiche · Scozia</PageTitle>
 
 <h1 class="day-heading">Le classifiche</h1>
-<p class="day-area">Il verdetto insindacabile della giuria (voi due).</p>
+<p class="day-area">Le medie dei vostri voti, sempre aggiornate.</p>
 
 <div class="segmented" role="tablist" aria-label="Tipo di classifica">
     <button type="button" role="tab" class="@(_showMeals ? "active" : "")"
@@ -33,7 +33,7 @@
 {
     <div class="empty-state">
         <CatDoodle Pose="CatPose.Curious" />
-        <p>La giuria non si è ancora espressa.<br />Votate @(_showMeals ? "il primo ristorante" : "il primo alloggio") e la classifica prende vita.</p>
+        <p>Ancora nessun voto.<br />Votate @(_showMeals ? "un ristorante" : "un alloggio") e la classifica apparirà qui.</p>
     </div>
 }
 else
