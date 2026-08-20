@@ -52,6 +52,7 @@
 html {
     -webkit-text-size-adjust: 100%;   /* iOS: niente auto-ingrandimenti in landscape */
     text-size-adjust: 100%;
+    background: var(--mist);          /* evita lampi di bianco nel rimbalzo iOS */
 }
 
 body {
@@ -222,6 +223,9 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-
 
 /* ---------- struttura pagina ---------- */
 .app-shell {
+    min-height: 100dvh;
+    /* fallback per browser senza dvh (vecchi iOS): usa vh */
+    min-height: 100vh;
     min-height: 100dvh;
     display: flex;
     flex-direction: column;
@@ -731,7 +735,9 @@ main.app-main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 14px;
+    min-height: 46vh;   /* riempie lo spazio → niente buco sopra la tabbar */
 }
 .empty-state svg { width: 68px; height: 68px; color: var(--pine-mid); opacity: .7; }
 
