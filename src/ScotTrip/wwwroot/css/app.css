@@ -702,3 +702,232 @@ main.app-main {
     .photo-grid { grid-template-columns: repeat(2, 1fr); }
     .stop-hero h1 { font-size: 23px; }
 }
+
+/* ============================================================
+   Estensioni v2: voti a categorie, classifiche, Altro, badge Visto
+   ============================================================ */
+
+/* ---------- badge Visto / Da vedere ---------- */
+.visited-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--heather);
+    border-radius: 99px;
+    padding: 3px 9px;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.stop-hero h1 .visited-chip { font-size: 12px; margin-left: 6px; }
+
+.kind-badge.kind-type { background: transparent; border: 1px solid var(--line); color: var(--ink-soft); }
+
+.day-progress { color: var(--heather); font-weight: 600; }
+
+/* ---------- chip medie per categoria ---------- */
+.category-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 10px 0;
+}
+
+.category-chip {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--navy);
+    background: #E9EDF1;
+    border-radius: 99px;
+    padding: 4px 10px;
+    white-space: nowrap;
+}
+
+.category-chip.overall { background: var(--pine); color: var(--mist); }
+.category-chip.empty { background: transparent; border: 1px dashed var(--line); color: var(--ink-soft); font-weight: 400; }
+
+/* ---------- foglio di voto a categorie ---------- */
+.sheet-sub { color: var(--ink-soft); font-size: 13.5px; margin: -8px 0 14px; }
+
+.category-block {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 10px 13px;
+    margin-bottom: 10px;
+}
+
+.category-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2px;
+}
+
+.category-name { font-weight: 700; font-size: 14px; color: var(--pine); }
+.category-avg { font-size: 12.5px; color: var(--gorse); font-weight: 700; }
+
+.overall-line {
+    text-align: center;
+    font-size: 15px;
+    color: var(--pine);
+    margin: 6px 0 2px;
+}
+
+.btn-vote { min-height: 40px; padding: 0 14px; font-size: 14px; }
+.entry-dishes { font-size: 14px; margin-top: 6px; color: #3C4A43; overflow-wrap: anywhere; }
+.entry-card .photo-grid { margin-top: 4px; }
+.entry-card .photo-cell, .entry-card .photo-add { border-radius: 8px; }
+
+/* ---------- controllo segmentato (classifiche) ---------- */
+.segmented {
+    display: flex;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 4px;
+    margin-bottom: 18px;
+}
+
+.segmented button {
+    flex: 1;
+    min-height: 40px;
+    border-radius: 9px;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--ink-soft);
+}
+
+.segmented button.active {
+    background: var(--pine);
+    color: var(--mist);
+}
+
+/* ---------- classifica ---------- */
+.ranking-list { margin-bottom: 6px; }
+
+.ranking-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 11px 14px;
+    margin-bottom: 9px;
+}
+
+.ranking-row.first {
+    border-color: var(--gorse);
+    box-shadow: 0 1px 6px rgba(201, 162, 39, .18);
+    position: relative;
+    overflow: hidden;
+}
+
+.ranking-row.first::before {
+    /* filo di tartan sul vincitore */
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--tartan);
+}
+
+.rank-pos { font-size: 22px; min-width: 34px; text-align: center; font-family: var(--font-display); }
+.rank-body { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.rank-name { font-weight: 700; font-size: 15.5px; overflow-wrap: anywhere; }
+.rank-sub { font-size: 12.5px; color: var(--ink-soft); overflow-wrap: anywhere; }
+.rank-score { font-weight: 700; color: var(--gorse); white-space: nowrap; }
+
+.best-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.best-card {
+    background: var(--paper-warm);
+    border: 1px solid #E4DECB;
+    border-radius: var(--radius);
+    padding: 11px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.best-cat { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--navy); }
+.best-name { font-family: var(--font-display); font-size: 15px; overflow-wrap: anywhere; }
+.best-name.muted { color: var(--ink-soft); font-style: italic; font-size: 13.5px; }
+.best-score { font-size: 13px; color: var(--gorse); font-weight: 700; }
+
+.title-thistle { width: 16px; height: 21px; flex: 0 0 auto; }
+
+/* ---------- pagina Altro ---------- */
+.menu-card {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 15px;
+    margin-bottom: 12px;
+    text-decoration: none;
+    color: var(--ink);
+    min-height: var(--tap);
+}
+
+.menu-icon { font-size: 24px; }
+.menu-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.menu-title { font-family: var(--font-display); font-weight: 600; font-size: 17px; }
+.menu-sub { font-size: 13px; color: var(--ink-soft); }
+.menu-arrow { font-size: 24px; color: var(--line); }
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.stat-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 13px 12px;
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 27px;
+    color: var(--pine);
+    line-height: 1.1;
+}
+
+.stat-total { font-size: 16px; color: var(--ink-soft); }
+.stat-label { font-size: 12px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .06em; }
+
+.stats-footnote { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 16px; }
+
+.altro-footer {
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 13px;
+    padding: 26px 12px 8px;
+}
+
+.altro-footer .footer-cat { width: 62px; height: 42px; color: var(--pine-mid); opacity: .65; margin: 0 auto 6px; }
+.altro-footer em { color: var(--heather); font-style: italic; }
+
+/* schermi piccoli */
+@media (max-width: 359px) {
+    .best-grid, .stats-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .stat-value { font-size: 23px; }
+}

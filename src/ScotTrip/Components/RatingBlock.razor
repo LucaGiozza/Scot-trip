@@ -3,7 +3,7 @@
 <div class="rating-block">
     @foreach (var traveler in Config.Travelers)
     {
-        var current = State.RatingFor(TargetKind, TargetId, traveler)?.Stars ?? 0;
+        var current = State.RatingFor(TargetKind, TargetId, traveler, Category)?.Stars ?? 0;
         <div class="rating-row">
             <span class="rater-name">@traveler</span>
             <RatingStars RaterName="@traveler"
@@ -11,7 +11,7 @@
                          ValueChanged="stars => SetAsync(traveler, stars)" />
         </div>
     }
-    @if (State.AverageFor(TargetKind, TargetId) is double avg)
+    @if (State.AverageFor(TargetKind, TargetId, Category) is double avg)
     {
         <div class="avg-line">Media di coppia: @avg.ToString("0.#") ★</div>
     }
@@ -23,11 +23,12 @@
 
     [Parameter, EditorRequired] public RatingTarget TargetKind { get; set; }
     [Parameter, EditorRequired] public string TargetId { get; set; } = "";
+    [Parameter] public RatingCategory Category { get; set; } = RatingCategory.Generale;
 
     protected override void OnInitialized() => State.Changed += StateHasChanged;
 
     private Task SetAsync(string traveler, int stars)
-        => State.SetRatingAsync(TargetKind, TargetId, traveler, stars);
+        => State.SetRatingAsync(TargetKind, TargetId, traveler, stars, Category);
 
     public void Dispose() => State.Changed -= StateHasChanged;
 }

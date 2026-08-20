@@ -1,7 +1,7 @@
 @implements IDisposable
 
 <div class="photo-grid">
-    @foreach (var photo in State.PhotosForStop(StopId))
+    @foreach (var photo in State.PhotosFor(TargetKind, TargetId))
     {
         var url = _photoUrls.GetValueOrDefault(photo.Id);
         <button type="button" class="photo-cell" @onclick="() => _viewing = photo" aria-label="Apri foto">
@@ -51,7 +51,8 @@
     [Inject] public required AppConfigService Config { get; set; }
     [Inject] public required IJSRuntime Js { get; set; }
 
-    [Parameter, EditorRequired] public string StopId { get; set; } = "";
+    [Parameter, EditorRequired] public RatingTarget TargetKind { get; set; }
+    [Parameter, EditorRequired] public string TargetId { get; set; } = "";
 
     private readonly string _inputId = $"photo-input-{Guid.NewGuid():N}";
     private readonly Dictionary<Guid, string> _photoUrls = new();
@@ -70,7 +71,7 @@
 
     private async Task RefreshUrlsAsync()
     {
-        foreach (var photo in State.PhotosForStop(StopId))
+        foreach (var photo in State.PhotosFor(TargetKind, TargetId))
         {
             if (_photoUrls.ContainsKey(photo.Id)) continue;
 
@@ -94,9 +95,10 @@
     {
         var photo = new TripPhoto
         {
-            StopId = StopId,
+            TargetKind = TargetKind,
+            TargetId = TargetId,
             Author = Config.Travelers.FirstOrDefault(),
-            StoragePath = $"{StopId}/{Guid.NewGuid():N}.jpg"
+            StoragePath = $"{TargetKind.ToString().ToLowerInvariant()}/{TargetId}/{Guid.NewGuid():N}.jpg"
         };
 
         var bytes = await Interop.CompressAndStorePhotoAsync(_inputId, PhotoKey(photo.Id), maxEdge: 1600, quality: 0.8);

@@ -1,0 +1,62 @@
+@* Bottom sheet di voto: 4 categorie × 2 persone, con media in tempo reale. *@
+@implements IDisposable
+
+<div class="sheet-backdrop" @onclick="Close">
+    <div class="sheet" @onclick:stopPropagation="true">
+        <div class="sheet-grip"></div>
+        <h2>@Title</h2>
+        <p class="sheet-sub">@Subtitle</p>
+
+        @foreach (var category in RatingCategoryInfo.ForPlaces)
+        {
+            <div class="category-block">
+                <div class="category-head">
+                    <span class="category-name">@category.Icon() @category.Label()</span>
+                    @if (State.AverageFor(TargetKind, TargetId, category) is double avg)
+                    {
+                        <span class="category-avg">@avg.ToString("0.#") ★</span>
+                    }
+                </div>
+                @foreach (var traveler in Config.Travelers)
+                {
+                    var current = State.RatingFor(TargetKind, TargetId, traveler, category)?.Stars ?? 0;
+                    <div class="rating-row">
+                        <span class="rater-name">@traveler</span>
+                        <RatingStars RaterName="@traveler"
+                                     Value="current"
+                                     ValueChanged="stars => SetAsync(traveler, category, stars)" />
+                    </div>
+                }
+            </div>
+        }
+
+        @if (State.OverallAverage(TargetKind, TargetId) is double overall)
+        {
+            <div class="overall-line">Voto complessivo: <strong>@overall.ToString("0.##") ★</strong></div>
+        }
+
+        <div class="form-actions">
+            <button type="button" class="btn btn-primary btn-block" @onclick="Close">Fatto</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Inject] public required TripState State { get; set; }
+    [Inject] public required AppConfigService Config { get; set; }
+
+    [Parameter, EditorRequired] public RatingTarget TargetKind { get; set; }
+    [Parameter, EditorRequired] public string TargetId { get; set; } = "";
+    [Parameter] public string Title { get; set; } = "Votiamo!";
+    [Parameter] public string Subtitle { get; set; } = "Un voto a testa, per ogni categoria.";
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    protected override void OnInitialized() => State.Changed += StateHasChanged;
+
+    private Task SetAsync(string traveler, RatingCategory category, int stars)
+        => State.SetRatingAsync(TargetKind, TargetId, traveler, stars, category);
+
+    private Task Close() => OnClose.InvokeAsync();
+
+    public void Dispose() => State.Changed -= StateHasChanged;
+}

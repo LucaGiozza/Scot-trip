@@ -15,21 +15,39 @@
     }
 </div>
 
+@{
+    var visitedCount = Day.Stops.Count(IsVisited);
+}
 <h1 class="day-heading">@Day.Title</h1>
-<p class="day-area">@Day.Date.ToString("dddd d MMMM") · @Day.Area</p>
+<p class="day-area">
+    @Day.Date.ToString("dddd d MMMM") · @Day.Area
+    @if (visitedCount > 0)
+    {
+        <span class="day-progress">· @visitedCount/@Day.Stops.Count viste</span>
+    }
+</p>
 
 <div class="timeline">
     @foreach (var stop in Day.Stops)
     {
         var avg = State.AverageFor(RatingTarget.Stop, stop.Id);
-        var photoCount = State.PhotosForStop(stop.Id).Count;
-        <a class="stop-card @(avg is not null || photoCount > 0 ? "visited" : "")" href="tappa/@stop.Id">
+        var photoCount = State.PhotosFor(RatingTarget.Stop, stop.Id).Count;
+        var visited = IsVisited(stop);
+        <a class="stop-card @(visited ? "visited" : "")" href="tappa/@stop.Id">
             <div class="stop-top">
                 <h3>@stop.Name</h3>
             </div>
             <p class="stop-summary">@stop.Summary</p>
             <div class="stop-meta">
-                <span class="kind-badge">@KindLabel(stop.Kind)</span>
+                @if (visited)
+                {
+                    <span class="visited-chip">✓ Visto</span>
+                }
+                else
+                {
+                    <span class="kind-badge">Da vedere</span>
+                }
+                <span class="kind-badge kind-type">@KindLabel(stop.Kind)</span>
                 @if (stop.BookingRequired)
                 {
                     <span class="booking-flag">⚠ prenotazione</span>
@@ -54,6 +72,10 @@
     [Parameter, EditorRequired] public TripDay Day { get; set; } = new();
 
     protected override void OnInitialized() => State.Changed += StateHasChanged;
+
+    private bool IsVisited(TripStop stop) =>
+        State.HasAnyRating(RatingTarget.Stop, stop.Id) ||
+        State.PhotosFor(RatingTarget.Stop, stop.Id).Count > 0;
 
     internal static string KindLabel(StopKind kind) => kind switch
     {

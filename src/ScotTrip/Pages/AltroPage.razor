@@ -1,0 +1,94 @@
+@page "/altro"
+@implements IDisposable
+
+<PageTitle>Altro · Scozia</PageTitle>
+
+<h1 class="day-heading">Altro</h1>
+<p class="day-area">Classifiche, numeri del viaggio e impostazioni.</p>
+
+<a class="menu-card" href="classifiche">
+    <span class="menu-icon">🏆</span>
+    <div class="menu-body">
+        <span class="menu-title">Le classifiche</span>
+        <span class="menu-sub">Il podio di ristoranti e alloggi, categoria per categoria</span>
+    </div>
+    <span class="menu-arrow">›</span>
+</a>
+
+<h2 class="section-title"><ThistleDoodle CssClass="title-thistle" /> Il viaggio in numeri</h2>
+<div class="stats-grid">
+    <div class="stat-card">
+        <span class="stat-value">@_visitedStops<span class="stat-total">/@_totalStops</span></span>
+        <span class="stat-label">tappe viste</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-value">@State.Photos.Count</span>
+        <span class="stat-label">foto scattate</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-value">@State.Meals.Count</span>
+        <span class="stat-label">pasti ricordati</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-value">@State.Ratings.Count</span>
+        <span class="stat-label">stelle assegnate</span>
+    </div>
+</div>
+
+@if (_bestDayTitle is not null)
+{
+    <p class="stats-footnote">Il giorno più fotografato finora: <strong>@_bestDayTitle</strong> 📷</p>
+}
+
+<a class="menu-card" href="impostazioni">
+    <span class="menu-icon">⚙️</span>
+    <div class="menu-body">
+        <span class="menu-title">Impostazioni</span>
+        <span class="menu-sub">Nomi, account condiviso e sincronizzazione</span>
+    </div>
+    <span class="menu-arrow">›</span>
+</a>
+
+<div class="altro-footer">
+    <CatDoodle Pose="CatPose.Sleeping" CssClass="footer-cat" />
+    <p>Fatto in casa per il nostro viaggio in Scozia<br />4 – 13 settembre 2026 · <em>Alba gu bràth</em> 🏴󠁧󠁢󠁳󠁣󠁴󠁿</p>
+</div>
+
+@code {
+    [Inject] public required TripState State { get; set; }
+    [Inject] public required ItineraryService Itinerary { get; set; }
+
+    private int _totalStops;
+    private int _visitedStops;
+    private string? _bestDayTitle;
+
+    protected override void OnInitialized()
+    {
+        State.Changed += OnStateChanged;
+        Recompute();
+    }
+
+    private void OnStateChanged()
+    {
+        Recompute();
+        StateHasChanged();
+    }
+
+    private void Recompute()
+    {
+        var allStops = Itinerary.Trip.Days.SelectMany(d => d.Stops).ToList();
+        _totalStops = allStops.Count;
+        _visitedStops = allStops.Count(s =>
+            State.HasAnyRating(RatingTarget.Stop, s.Id) ||
+            State.PhotosFor(RatingTarget.Stop, s.Id).Count > 0);
+
+        // il giorno con più foto (solo se almeno una foto di tappa esiste)
+        var best = Itinerary.Trip.Days
+            .Select(d => (Day: d, Count: d.Stops.Sum(s => State.PhotosFor(RatingTarget.Stop, s.Id).Count)))
+            .OrderByDescending(x => x.Count)
+            .FirstOrDefault();
+        _bestDayTitle = best.Count > 0 ? $"{best.Day.Title} ({best.Count} foto)" : null;
+    }
+
+    public void Dispose() => State.Changed -= OnStateChanged;
+}

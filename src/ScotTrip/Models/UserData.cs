@@ -14,7 +14,7 @@ public abstract class UserEntity
     [JsonPropertyName("deleted")] public bool Deleted { get; set; }
 }
 
-/// <summary>Un voto (1–5) dato da una persona a una tappa, un pasto o un alloggio.</summary>
+/// <summary>Un voto (1–5) dato da una persona a una tappa, un pasto o un alloggio, per una categoria.</summary>
 public sealed class Rating : UserEntity
 {
     [JsonPropertyName("target_kind")] public RatingTarget TargetKind { get; set; }
@@ -22,17 +22,20 @@ public sealed class Rating : UserEntity
     [JsonPropertyName("target_id")] public string TargetId { get; set; } = "";
     /// <summary>Nome di chi vota, es. "Luca". Due persone → due righe.</summary>
     [JsonPropertyName("rater")] public string Rater { get; set; } = "";
+    /// <summary>Le tappe usano Generale; pasti e alloggi votano le 4 categorie.</summary>
+    [JsonPropertyName("category")] public RatingCategory Category { get; set; } = RatingCategory.Generale;
     [JsonPropertyName("stars")] public int Stars { get; set; }
     [JsonPropertyName("note")] public string? Note { get; set; }
 
     /// <summary>
-    /// Id DETERMINISTICO: lo stesso (target, persona) produce lo stesso uuid su qualsiasi telefono.
-    /// Così se entrambi votano la stessa cosa offline, i due upsert convergono sulla stessa riga
-    /// e il conflitto lo risolve il last-write-wins, invece del vincolo di unicità.
+    /// Id DETERMINISTICO: lo stesso (target, persona, categoria) produce lo stesso uuid
+    /// su qualsiasi telefono. Così se entrambi votano la stessa cosa offline, i due upsert
+    /// convergono sulla stessa riga e il conflitto lo risolve il last-write-wins.
     /// </summary>
-    public static Guid DeterministicId(RatingTarget kind, string targetId, string rater)
+    public static Guid DeterministicId(RatingTarget kind, string targetId, string rater, RatingCategory category)
     {
-        var bytes = System.Text.Encoding.UTF8.GetBytes($"rating|{kind}|{targetId}|{rater.Trim().ToLowerInvariant()}");
+        var bytes = System.Text.Encoding.UTF8.GetBytes(
+            $"rating|{kind}|{targetId}|{rater.Trim().ToLowerInvariant()}|{category}");
         var hash = System.Security.Cryptography.SHA256.HashData(bytes);
         var guidBytes = hash[..16];
         // marca versione/variant per ottenere un uuid formalmente valido (v4-like)
@@ -40,6 +43,37 @@ public sealed class Rating : UserEntity
         guidBytes[8] = (byte)((guidBytes[8] & 0x3F) | 0x80);
         return new Guid(guidBytes);
     }
+}
+
+[JsonConverter(typeof(JsonStringEnumConverter<RatingCategory>))]
+public enum RatingCategory
+{
+    Generale, Location, Prezzo, Qualita, Personale
+}
+
+public static class RatingCategoryInfo
+{
+    /// <summary>Le categorie votabili per pasti e alloggi, nell'ordine di visualizzazione.</summary>
+    public static readonly RatingCategory[] ForPlaces =
+        [RatingCategory.Location, RatingCategory.Prezzo, RatingCategory.Qualita, RatingCategory.Personale];
+
+    public static string Label(this RatingCategory c) => c switch
+    {
+        RatingCategory.Location => "Location",
+        RatingCategory.Prezzo => "Prezzo",
+        RatingCategory.Qualita => "Qualità",
+        RatingCategory.Personale => "Personale",
+        _ => "Generale"
+    };
+
+    public static string Icon(this RatingCategory c) => c switch
+    {
+        RatingCategory.Location => "📍",
+        RatingCategory.Prezzo => "💷",
+        RatingCategory.Qualita => "✨",
+        RatingCategory.Personale => "🤝",
+        _ => "★"
+    };
 }
 
 [JsonConverter(typeof(JsonStringEnumConverter<RatingTarget>))]
@@ -52,6 +86,8 @@ public sealed class Meal : UserEntity
     [JsonPropertyName("day_date")] public DateOnly DayDate { get; set; }
     [JsonPropertyName("meal_type")] public MealType MealType { get; set; } = MealType.Cena;
     [JsonPropertyName("cost")] public decimal? Cost { get; set; }
+    /// <summary>Cosa abbiamo mangiato: i piatti da ricordare.</summary>
+    [JsonPropertyName("dishes")] public string? Dishes { get; set; }
     [JsonPropertyName("note")] public string? Note { get; set; }
 }
 
@@ -68,12 +104,13 @@ public sealed class Stay : UserEntity
 }
 
 /// <summary>
-/// Metadati di una foto. Il file binario vive in IndexedDB finché non viene
-/// caricato su Supabase Storage; StoragePath resta la fonte di verità remota.
+/// Metadati di una foto, agganciata a una tappa, un pasto o un alloggio.
+/// Il file binario vive in IndexedDB finché non viene caricato su Supabase Storage.
 /// </summary>
 public sealed class TripPhoto : UserEntity
 {
-    [JsonPropertyName("stop_id")] public string StopId { get; set; } = "";
+    [JsonPropertyName("target_kind")] public RatingTarget TargetKind { get; set; } = RatingTarget.Stop;
+    [JsonPropertyName("target_id")] public string TargetId { get; set; } = "";
     [JsonPropertyName("taken_at")] public DateTimeOffset TakenAt { get; set; } = DateTimeOffset.UtcNow;
     [JsonPropertyName("storage_path")] public string? StoragePath { get; set; }
     [JsonPropertyName("caption")] public string? Caption { get; set; }

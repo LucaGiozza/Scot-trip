@@ -1,0 +1,39 @@
+@* Riepilogo compatto dei voti per categoria: 📍 4.5 · 💷 3 · ✨ 5 · 🤝 4 *@
+@implements IDisposable
+
+@{
+    var chips = RatingCategoryInfo.ForPlaces
+        .Select(c => (Category: c, Avg: State.AverageFor(TargetKind, TargetId, c)))
+        .Where(x => x.Avg is not null)
+        .ToList();
+}
+
+@if (chips.Count > 0)
+{
+    <div class="category-chips">
+        @foreach (var (category, avg) in chips)
+        {
+            <span class="category-chip" title="@category.Label()">
+                @category.Icon() @avg!.Value.ToString("0.#")
+            </span>
+        }
+        @if (State.OverallAverage(TargetKind, TargetId) is double overall)
+        {
+            <span class="category-chip overall">★ @overall.ToString("0.#")</span>
+        }
+    </div>
+}
+else
+{
+    <div class="category-chips"><span class="category-chip empty">Ancora nessun voto</span></div>
+}
+
+@code {
+    [Inject] public required TripState State { get; set; }
+
+    [Parameter, EditorRequired] public RatingTarget TargetKind { get; set; }
+    [Parameter, EditorRequired] public string TargetId { get; set; } = "";
+
+    protected override void OnInitialized() => State.Changed += StateHasChanged;
+    public void Dispose() => State.Changed -= StateHasChanged;
+}

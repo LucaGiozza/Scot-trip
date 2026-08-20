@@ -17,7 +17,8 @@ else
         {
             <a class="btn-ghost" href="giorno/@_day.Index">← @_day.Title</a>
         }
-        <h1>@_stop.Name</h1>
+        <h1>@_stop.Name @if (State.HasAnyRating(RatingTarget.Stop, _stop.Id) || State.PhotosFor(RatingTarget.Stop, _stop.Id).Count > 0)
+            {<span class="visited-chip">✓ Visto</span>}</h1>
         <p class="stop-day-ref">
             @DayView.KindLabel(_stop.Kind)@(_day is null ? "" : $" · giorno {_day.Index} · {_day.Date:ddd d MMMM}")
         </p>
@@ -52,7 +53,7 @@ else
     }
 
     <h2 class="section-title">Le nostre foto</h2>
-    <PhotoGallery StopId="@_stop.Id" />
+    <PhotoGallery TargetKind="RatingTarget.Stop" TargetId="@_stop.Id" />
 
     <h2 class="section-title">Il nostro voto</h2>
     <RatingBlock TargetKind="RatingTarget.Stop" TargetId="@_stop.Id" />
@@ -60,6 +61,7 @@ else
 
 @code {
     [Inject] public required ItineraryService Itinerary { get; set; }
+    [Inject] public required TripState State { get; set; }
 
     [Parameter] public string Id { get; set; } = "";
 

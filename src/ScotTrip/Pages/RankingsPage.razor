@@ -1,0 +1,97 @@
+@page "/classifiche"
+@implements IDisposable
+
+<PageTitle>Classifiche · Scozia</PageTitle>
+
+<h1 class="day-heading">Le classifiche</h1>
+<p class="day-area">Il verdetto insindacabile della giuria (voi due).</p>
+
+<div class="segmented" role="tablist" aria-label="Tipo di classifica">
+    <button type="button" role="tab" class="@(_showMeals ? "active" : "")"
+            aria-selected="@(_showMeals ? "true" : "false")"
+            @onclick="() => _showMeals = true">🍽 Ristoranti</button>
+    <button type="button" role="tab" class="@(!_showMeals ? "active" : "")"
+            aria-selected="@(!_showMeals ? "true" : "false")"
+            @onclick="() => _showMeals = false">🛏 Alloggi</button>
+</div>
+
+@{
+    var kind = _showMeals ? RatingTarget.Meal : RatingTarget.Stay;
+    var entries = _showMeals
+        ? State.Meals.Select(m => (Id: m.Id.ToString(), Name: m.Name, Sub: m.Place)).ToList()
+        : State.Stays.Select(s => (Id: s.Id.ToString(), Name: s.Name, Sub: s.Location)).ToList();
+
+    var ranked = entries
+        .Select(e => (e.Id, e.Name, e.Sub, Score: State.OverallAverage(kind, e.Id)))
+        .Where(e => e.Score is not null)
+        .OrderByDescending(e => e.Score)
+        .ThenBy(e => e.Name)
+        .ToList();
+}
+
+@if (ranked.Count == 0)
+{
+    <div class="empty-state">
+        <CatDoodle Pose="CatPose.Curious" />
+        <p>La giuria non si è ancora espressa.<br />Votate @(_showMeals ? "il primo ristorante" : "il primo alloggio") e la classifica prende vita.</p>
+    </div>
+}
+else
+{
+    <h2 class="section-title"><ThistleDoodle CssClass="title-thistle" /> Classifica generale</h2>
+    <div class="ranking-list">
+        @foreach (var (entry, index) in ranked.Select((e, i) => (e, i)))
+        {
+            <div class="ranking-row @(index == 0 ? "first" : "")">
+                <span class="rank-pos">@Medal(index)</span>
+                <div class="rank-body">
+                    <span class="rank-name">@entry.Name</span>
+                    <span class="rank-sub">@entry.Sub</span>
+                </div>
+                <span class="rank-score">@entry.Score!.Value.ToString("0.##") ★</span>
+            </div>
+        }
+    </div>
+
+    <h2 class="section-title"><ThistleDoodle CssClass="title-thistle" /> I migliori per categoria</h2>
+    <div class="best-grid">
+        @foreach (var category in RatingCategoryInfo.ForPlaces)
+        {
+            var best = entries
+                .Select(e => (e.Name, Avg: State.AverageFor(kind, e.Id, category)))
+                .Where(e => e.Avg is not null)
+                .OrderByDescending(e => e.Avg)
+                .FirstOrDefault();
+            <div class="best-card">
+                <span class="best-cat">@category.Icon() @category.Label()</span>
+                @if (best.Name is not null)
+                {
+                    <span class="best-name">@best.Name</span>
+                    <span class="best-score">@best.Avg!.Value.ToString("0.#") ★</span>
+                }
+                else
+                {
+                    <span class="best-name muted">Ancora da assegnare</span>
+                }
+            </div>
+        }
+    </div>
+}
+
+@code {
+    [Inject] public required TripState State { get; set; }
+
+    private bool _showMeals = true;
+
+    protected override void OnInitialized() => State.Changed += StateHasChanged;
+
+    private static string Medal(int index) => index switch
+    {
+        0 => "🥇",
+        1 => "🥈",
+        2 => "🥉",
+        _ => (index + 1).ToString()
+    };
+
+    public void Dispose() => State.Changed -= StateHasChanged;
+}

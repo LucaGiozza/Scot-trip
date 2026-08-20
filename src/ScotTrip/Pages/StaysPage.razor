@@ -17,6 +17,7 @@ else
 {
     @foreach (var stay in State.Stays)
     {
+        var id = stay.Id.ToString();
         <div class="entry-card">
             <div class="entry-top">
                 <h3>@stay.Name</h3>
@@ -27,8 +28,13 @@ else
             {
                 <p class="entry-note">"@stay.Note"</p>
             }
-            <RatingBlock TargetKind="RatingTarget.Stay" TargetId="@stay.Id.ToString()" />
+
+            <CategoryChips TargetKind="RatingTarget.Stay" TargetId="@id" />
+
+            <PhotoGallery TargetKind="RatingTarget.Stay" TargetId="@id" />
+
             <div class="entry-actions">
+                <button type="button" class="btn btn-secondary btn-vote" @onclick="() => _rating = stay">★ Vota</button>
                 <button type="button" class="btn-ghost" @onclick="() => OpenEdit(stay)">Modifica</button>
                 <button type="button" class="btn-danger-ghost" @onclick="() => DeleteAsync(stay)">Elimina</button>
             </div>
@@ -41,6 +47,15 @@ else
         <path d="M12 5 V19 M5 12 H19" stroke-linecap="round" />
     </svg>
 </button>
+
+@if (_rating is not null)
+{
+    <RateSheet TargetKind="RatingTarget.Stay"
+               TargetId="@_rating.Id.ToString()"
+               Title="@_rating.Name"
+               Subtitle="Location, prezzo, qualità e personale: un voto a testa."
+               OnClose="() => _rating = null" />
+}
 
 @if (_editing is not null)
 {
@@ -89,6 +104,7 @@ else
     [Inject] public required TripState State { get; set; }
 
     private Stay? _editing;
+    private Stay? _rating;
     private bool _isNew;
     private string? _error;
 
@@ -130,8 +146,11 @@ else
         }
         _editing.Name = _editing.Name.Trim();
         _editing.Location = _editing.Location?.Trim() ?? "";
-        await State.SaveStayAsync(_editing);
+        var isNew = _isNew;
+        var saved = _editing;
+        await State.SaveStayAsync(saved);
         CloseSheet();
+        if (isNew) _rating = saved; // appena creato → apriamo subito il voto
     }
 
     private Task DeleteAsync(Stay stay) => State.DeleteStayAsync(stay);

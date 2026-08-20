@@ -49,23 +49,40 @@ public sealed class TripState : IDisposable
     private async void OnRemoteMerged() => await ReloadAsync();
 
     // ---------- voti ----------
-    public Rating? RatingFor(RatingTarget kind, string targetId, string rater) =>
-        Ratings.FirstOrDefault(r => r.TargetKind == kind && r.TargetId == targetId && r.Rater == rater);
+    public Rating? RatingFor(RatingTarget kind, string targetId, string rater, RatingCategory category = RatingCategory.Generale) =>
+        Ratings.FirstOrDefault(r => r.TargetKind == kind && r.TargetId == targetId && r.Rater == rater && r.Category == category);
 
-    public double? AverageFor(RatingTarget kind, string targetId)
+    /// <summary>Media di una singola categoria (o del voto Generale per le tappe).</summary>
+    public double? AverageFor(RatingTarget kind, string targetId, RatingCategory category = RatingCategory.Generale)
     {
-        var stars = Ratings.Where(r => r.TargetKind == kind && r.TargetId == targetId).Select(r => r.Stars).ToList();
+        var stars = Ratings
+            .Where(r => r.TargetKind == kind && r.TargetId == targetId && r.Category == category)
+            .Select(r => r.Stars).ToList();
         return stars.Count == 0 ? null : stars.Average();
     }
 
-    public async Task SetRatingAsync(RatingTarget kind, string targetId, string rater, int stars, string? note = null)
+    /// <summary>Media complessiva su TUTTE le categorie e le persone: il punteggio da classifica.</summary>
+    public double? OverallAverage(RatingTarget kind, string targetId)
     {
-        var existing = RatingFor(kind, targetId, rater) ?? new Rating
+        var stars = Ratings
+            .Where(r => r.TargetKind == kind && r.TargetId == targetId)
+            .Select(r => r.Stars).ToList();
+        return stars.Count == 0 ? null : stars.Average();
+    }
+
+    public bool HasAnyRating(RatingTarget kind, string targetId) =>
+        Ratings.Any(r => r.TargetKind == kind && r.TargetId == targetId);
+
+    public async Task SetRatingAsync(RatingTarget kind, string targetId, string rater, int stars,
+        RatingCategory category = RatingCategory.Generale, string? note = null)
+    {
+        var existing = RatingFor(kind, targetId, rater, category) ?? new Rating
         {
-            Id = Rating.DeterministicId(kind, targetId, rater),
+            Id = Rating.DeterministicId(kind, targetId, rater, category),
             TargetKind = kind,
             TargetId = targetId,
-            Rater = rater
+            Rater = rater,
+            Category = category
         };
         existing.Stars = Math.Clamp(stars, 1, 5);
         if (note is not null) existing.Note = string.IsNullOrWhiteSpace(note) ? null : note.Trim();
@@ -105,8 +122,8 @@ public sealed class TripState : IDisposable
     }
 
     // ---------- foto ----------
-    public List<TripPhoto> PhotosForStop(string stopId) =>
-        Photos.Where(p => p.StopId == stopId).ToList();
+    public List<TripPhoto> PhotosFor(RatingTarget kind, string targetId) =>
+        Photos.Where(p => p.TargetKind == kind && p.TargetId == targetId).ToList();
 
     public async Task AddPhotoAsync(TripPhoto photo, string photoKey)
     {

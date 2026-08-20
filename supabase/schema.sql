@@ -14,6 +14,8 @@ create table if not exists public.ratings (
     target_kind text        not null check (target_kind in ('Stop', 'Meal', 'Stay')),
     target_id   text        not null,
     rater       text        not null,
+    category    text        not null default 'Generale'
+                            check (category in ('Generale', 'Location', 'Prezzo', 'Qualita', 'Personale')),
     stars       int         not null check (stars between 1 and 5),
     note        text,
     deleted     boolean     not null default false,
@@ -27,6 +29,7 @@ create table if not exists public.meals (
     day_date   date        not null,
     meal_type  text        not null check (meal_type in ('Colazione', 'Pranzo', 'Cena', 'Spuntino')),
     cost       numeric(8, 2),
+    dishes     text,
     note       text,
     deleted    boolean     not null default false,
     updated_at timestamptz not null default now()
@@ -45,7 +48,8 @@ create table if not exists public.stays (
 
 create table if not exists public.photos (
     id           uuid primary key,
-    stop_id      text        not null,
+    target_kind  text        not null default 'Stop' check (target_kind in ('Stop', 'Meal', 'Stay')),
+    target_id    text        not null,
     taken_at     timestamptz not null default now(),
     storage_path text,
     caption      text,
@@ -54,11 +58,12 @@ create table if not exists public.photos (
     updated_at   timestamptz not null default now()
 );
 
--- Un solo voto per persona per ogni cosa votata (l'upsert del client aggiorna quello esistente).
+-- Un solo voto per persona per ogni cosa votata E per categoria
+-- (l'upsert del client, con id deterministico, aggiorna quello esistente).
 create unique index if not exists ratings_unique_vote
-    on public.ratings (target_kind, target_id, rater);
+    on public.ratings (target_kind, target_id, rater, category);
 
-create index if not exists photos_by_stop on public.photos (stop_id);
+create index if not exists photos_by_target on public.photos (target_kind, target_id);
 create index if not exists meals_by_date on public.meals (day_date);
 
 -- ---------- last-write-wins lato server ----------

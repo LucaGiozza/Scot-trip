@@ -20,6 +20,7 @@ else
         <h2 class="group-date">@group.Key.ToString("dddd d MMMM")</h2>
         @foreach (var meal in group)
         {
+            var id = meal.Id.ToString();
             <div class="entry-card">
                 <div class="entry-top">
                     <h3>@meal.Name</h3>
@@ -28,12 +29,21 @@ else
                 <p class="entry-sub">
                     @meal.Place@(meal.Cost is decimal cost ? $" · {cost:0.##} £" : "")
                 </p>
+                @if (!string.IsNullOrWhiteSpace(meal.Dishes))
+                {
+                    <p class="entry-dishes">🍽 @meal.Dishes</p>
+                }
                 @if (!string.IsNullOrWhiteSpace(meal.Note))
                 {
                     <p class="entry-note">"@meal.Note"</p>
                 }
-                <RatingBlock TargetKind="RatingTarget.Meal" TargetId="@meal.Id.ToString()" />
+
+                <CategoryChips TargetKind="RatingTarget.Meal" TargetId="@id" />
+
+                <PhotoGallery TargetKind="RatingTarget.Meal" TargetId="@id" />
+
                 <div class="entry-actions">
+                    <button type="button" class="btn btn-secondary btn-vote" @onclick="() => _rating = meal">★ Vota</button>
                     <button type="button" class="btn-ghost" @onclick="() => OpenEdit(meal)">Modifica</button>
                     <button type="button" class="btn-danger-ghost" @onclick="() => DeleteAsync(meal)">Elimina</button>
                 </div>
@@ -48,6 +58,15 @@ else
     </svg>
 </button>
 
+@if (_rating is not null)
+{
+    <RateSheet TargetKind="RatingTarget.Meal"
+               TargetId="@_rating.Id.ToString()"
+               Title="@_rating.Name"
+               Subtitle="Location, prezzo, qualità e personale: un voto a testa."
+               OnClose="() => _rating = null" />
+}
+
 @if (_editing is not null)
 {
     <div class="sheet-backdrop" @onclick="CloseSheet">
@@ -56,7 +75,7 @@ else
             <h2>@(_isNew ? "Nuovo pasto" : "Modifica pasto")</h2>
 
             <div class="form-field">
-                <label for="meal-name">Locale o piatto</label>
+                <label for="meal-name">Locale</label>
                 <input id="meal-name" @bind="_editing.Name" placeholder="Es. The Witchery" />
             </div>
             <div class="form-field">
@@ -77,6 +96,10 @@ else
                         <option value="@MealType.Spuntino">Spuntino</option>
                     </select>
                 </div>
+            </div>
+            <div class="form-field">
+                <label for="meal-dishes">Cosa abbiamo mangiato</label>
+                <input id="meal-dishes" @bind="_editing.Dishes" placeholder="Es. Cullen Skink, fish and chips" />
             </div>
             <div class="form-field">
                 <label for="meal-cost">Costo in sterline (facoltativo)</label>
@@ -105,6 +128,7 @@ else
     [Inject] public required ItineraryService Itinerary { get; set; }
 
     private Meal? _editing;
+    private Meal? _rating;
     private bool _isNew;
     private string? _error;
 
@@ -125,7 +149,8 @@ else
         _editing = new Meal
         {
             Id = meal.Id, Name = meal.Name, Place = meal.Place, DayDate = meal.DayDate,
-            MealType = meal.MealType, Cost = meal.Cost, Note = meal.Note, UpdatedAt = meal.UpdatedAt
+            MealType = meal.MealType, Cost = meal.Cost, Dishes = meal.Dishes,
+            Note = meal.Note, UpdatedAt = meal.UpdatedAt
         };
         _isNew = false;
         _error = null;
@@ -136,13 +161,16 @@ else
         if (_editing is null) return;
         if (string.IsNullOrWhiteSpace(_editing.Name))
         {
-            _error = "Serve almeno il nome del locale o del piatto.";
+            _error = "Serve almeno il nome del locale.";
             return;
         }
         _editing.Name = _editing.Name.Trim();
         _editing.Place = _editing.Place?.Trim() ?? "";
-        await State.SaveMealAsync(_editing);
+        var isNew = _isNew;
+        var saved = _editing;
+        await State.SaveMealAsync(saved);
         CloseSheet();
+        if (isNew) _rating = saved; // appena creato → apriamo subito il voto
     }
 
     private Task DeleteAsync(Meal meal) => State.DeleteMealAsync(meal);
