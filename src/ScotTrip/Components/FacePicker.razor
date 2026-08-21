@@ -1,0 +1,96 @@
+@* Carica o cambia la foto del viso di un viaggiatore, usata negli spicchi della ruota. *@
+@implements IDisposable
+
+<div class="face-picker">
+    <button type="button" class="face-slot @(_url is null ? "empty" : "")" @onclick="OpenPicker" aria-label="Carica foto di @Traveler">
+        @if (_url is not null)
+        {
+            <img src="@_url" alt="Foto di @Traveler" />
+        }
+        else
+        {
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                <circle cx="12" cy="9" r="4" />
+                <path d="M4.5 20 a7.5 7.5 0 0 1 15 0" />
+            </svg>
+        }
+    </button>
+    <span class="face-name">@Traveler</span>
+    <button type="button" class="btn-ghost face-change" @onclick="OpenPicker">
+        @(_url is null ? "Carica foto" : "Cambia")
+    </button>
+</div>
+
+<input id="@_inputId" type="file" accept="image/*" class="visually-hidden"
+       @onchange="OnFileSelectedAsync" tabindex="-1" aria-hidden="true" />
+
+@code {
+    [Inject] public required TripState State { get; set; }
+    [Inject] public required AppInterop Interop { get; set; }
+    [Inject] public required SupabaseApiService Api { get; set; }
+    [Inject] public required IJSRuntime Js { get; set; }
+
+    [Parameter, EditorRequired] public string Traveler { get; set; } = "";
+
+    private readonly string _inputId = $"face-input-{Guid.NewGuid():N}";
+    private string? _url;
+
+    private string TargetId => $"face:{Traveler}";
+
+    protected override void OnInitialized() => State.Changed += OnStateChanged;
+
+    protected override async Task OnParametersSetAsync() => await RefreshUrlAsync();
+
+    private async void OnStateChanged()
+    {
+        await RefreshUrlAsync();
+        StateHasChanged();
+    }
+
+    private async Task RefreshUrlAsync()
+    {
+        var face = State.FaceFor(Traveler);
+        if (face is null) { _url = null; return; }
+
+        var local = await Interop.GetLocalPhotoUrlAsync(PhotoKey(face.Id));
+        if (local is not null) { _url = local; return; }
+        if (face.StoragePath is not null)
+        {
+            var signed = await Api.CreateSignedPhotoUrlAsync(face.StoragePath);
+            if (signed is not null) _url = signed;
+        }
+    }
+
+    private async Task OpenPicker()
+        => await Js.InvokeVoidAsync("scotTrip.clickElement", _inputId);
+
+    private async Task OnFileSelectedAsync(ChangeEventArgs _)
+    {
+        // se esiste già una faccia, la sostituiamo (soft delete + nuova)
+        var existing = State.FaceFor(Traveler);
+        if (existing is not null)
+        {
+            await Interop.DeleteLocalPhotoAsync(PhotoKey(existing.Id));
+            await State.DeletePhotoAsync(existing);
+        }
+
+        var photo = new TripPhoto
+        {
+            TargetKind = RatingTarget.Stop,
+            TargetId = TargetId,
+            Author = Traveler,
+            StoragePath = $"faces/{Traveler}/{Guid.NewGuid():N}.jpg"
+        };
+
+        var bytes = await Interop.CompressAndStorePhotoAsync(_inputId, PhotoKey(photo.Id), maxEdge: 600, quality: 0.85);
+        if (bytes <= 0) return;
+
+        await State.AddPhotoAsync(photo, PhotoKey(photo.Id));
+        await RefreshUrlAsync();
+        StateHasChanged();
+    }
+
+    private static string PhotoKey(Guid id) => $"photo-{id:N}";
+
+    public void Dispose() => State.Changed -= OnStateChanged;
+}

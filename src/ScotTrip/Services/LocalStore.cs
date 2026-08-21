@@ -13,6 +13,7 @@ public sealed class LocalStore(AppInterop interop)
     public const string MealsStore = "meals";
     public const string StaysStore = "stays";
     public const string PhotosStore = "photos";
+    public const string SpinsStore = "spins";
     public const string QueueStore = "queue";
 
     private static string TableFor(string store) => store; // nomi tabella Supabase = nomi store

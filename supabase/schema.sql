@@ -63,7 +63,17 @@ create table if not exists public.photos (
 create unique index if not exists ratings_unique_vote
     on public.ratings (target_kind, target_id, rater, category);
 
+create table if not exists public.spins (
+    id         uuid primary key,
+    spin_date  date        not null,
+    person     text        not null,
+    challenge  text        not null,
+    deleted    boolean     not null default false,
+    updated_at timestamptz not null default now()
+);
+
 create index if not exists photos_by_target on public.photos (target_kind, target_id);
+create unique index if not exists spins_unique_day on public.spins (spin_date);
 create index if not exists meals_by_date on public.meals (day_date);
 
 -- ---------- last-write-wins lato server ----------
@@ -97,6 +107,10 @@ drop trigger if exists lww_photos on public.photos;
 create trigger lww_photos before update on public.photos
     for each row execute function public.lww_guard();
 
+drop trigger if exists lww_spins on public.spins;
+create trigger lww_spins before update on public.spins
+    for each row execute function public.lww_guard();
+
 -- ---------- Row Level Security ----------
 -- L'app è pubblicata su GitHub Pages, quindi la anon key è visibile a chiunque:
 -- per questo TUTTO richiede un utente autenticato (i vostri due account).
@@ -104,6 +118,7 @@ alter table public.ratings enable row level security;
 alter table public.meals   enable row level security;
 alter table public.stays   enable row level security;
 alter table public.photos  enable row level security;
+alter table public.spins   enable row level security;
 
 drop policy if exists "coppia_ratings" on public.ratings;
 create policy "coppia_ratings" on public.ratings
@@ -119,6 +134,10 @@ create policy "coppia_stays" on public.stays
 
 drop policy if exists "coppia_photos" on public.photos;
 create policy "coppia_photos" on public.photos
+    for all to authenticated using (true) with check (true);
+
+drop policy if exists "coppia_spins" on public.spins;
+create policy "coppia_spins" on public.spins
     for all to authenticated using (true) with check (true);
 
 -- ---------- Storage: bucket privato per le foto ----------

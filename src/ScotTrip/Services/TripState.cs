@@ -16,6 +16,7 @@ public sealed class TripState : IDisposable
     public List<Meal> Meals { get; private set; } = [];
     public List<Stay> Stays { get; private set; } = [];
     public List<TripPhoto> Photos { get; private set; } = [];
+    public List<Spin> Spins { get; private set; } = [];
 
     public event Action? Changed;
 
@@ -43,6 +44,8 @@ public sealed class TripState : IDisposable
             .OrderBy(s => s.CheckIn).ToList();
         Photos = (await _store.GetAllAsync<TripPhoto>(LocalStore.PhotosStore))
             .OrderBy(p => p.TakenAt).ToList();
+        Spins = (await _store.GetAllAsync<Spin>(LocalStore.SpinsStore))
+            .OrderByDescending(s => s.Date).ToList();
         Changed?.Invoke();
     }
 
@@ -138,6 +141,27 @@ public sealed class TripState : IDisposable
         await ReloadAsync();
         _ = _sync.TrySyncAsync();
     }
+
+    // ---------- ruota della fortuna ----------
+    public Spin? SpinFor(DateOnly date) => Spins.FirstOrDefault(s => s.Date == date);
+
+    /// <summary>Salva (o sovrascrive, se si ri-gira) l'esito del giorno.</summary>
+    public async Task SaveSpinAsync(DateOnly date, string person, string challenge)
+    {
+        var spin = SpinFor(date) ?? new Spin { Id = Spin.DeterministicId(date), Date = date };
+        spin.Person = person;
+        spin.Challenge = challenge;
+        await _store.UpsertAsync(LocalStore.SpinsStore, spin);
+        await ReloadAsync();
+        _ = _sync.TrySyncAsync();
+    }
+
+    // ---------- facce dei viaggiatori (foto per la ruota) ----------
+    // Riusa l'infrastruttura foto: target speciale "face:<nome>".
+    public TripPhoto? FaceFor(string traveler) =>
+        Photos.FirstOrDefault(p => p.TargetKind == RatingTarget.Stop && p.TargetId == $"face:{traveler}");
+
+    public bool HasAllFaces(IEnumerable<string> travelers) => travelers.All(t => FaceFor(t) is not null);
 
     public void Dispose() => _sync.RemoteDataMerged -= OnRemoteMerged;
 }

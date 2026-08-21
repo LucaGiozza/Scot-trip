@@ -4,8 +4,8 @@
   "use strict";
 
   const DB_NAME = "scot-trip";
-  const DB_VERSION = 1;
-  const STORES = ["ratings", "meals", "stays", "photos", "queue", "blobs"];
+  const DB_VERSION = 2;
+  const STORES = ["ratings", "meals", "stays", "photos", "spins", "queue", "blobs"];
 
   let dbPromise = null;
 

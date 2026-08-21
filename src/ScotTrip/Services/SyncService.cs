@@ -24,7 +24,7 @@ public sealed class SyncService : IDisposable
     private DotNetObjectReference<SyncService>? _selfRef;
 
     private const string LastPullKey = "scotTrip.lastPull";
-    private static readonly string[] Tables = [LocalStore.RatingsStore, LocalStore.MealsStore, LocalStore.StaysStore, LocalStore.PhotosStore];
+    private static readonly string[] Tables = [LocalStore.RatingsStore, LocalStore.MealsStore, LocalStore.StaysStore, LocalStore.PhotosStore, LocalStore.SpinsStore];
 
     public SyncStatus Status { get; private set; } = SyncStatus.Idle;
     public int PendingCount { get; private set; }

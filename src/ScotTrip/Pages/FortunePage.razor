@@ -1,0 +1,222 @@
+@page "/fortuna"
+@implements IDisposable
+@inject AppInterop Interop
+@inject SupabaseApiService Api
+
+<PageTitle>Fortuna · Scozia</PageTitle>
+
+<h1 class="day-heading">La ruota della fortuna</h1>
+<p class="day-area">Ogni giorno la sorte decide chi fa cosa.</p>
+
+@{
+    var today = DateOnly.FromDateTime(DateTime.Now);
+    var todaySpin = State.SpinFor(today);
+    var hasFaces = State.HasAllFaces(Config.Travelers);
+}
+
+@if (!hasFaces)
+{
+    @* --- Setup iniziale: caricare le due facce --- *@
+    <div class="fortune-setup">
+        <p class="setup-hint">Prima di giocare, caricate una foto a testa: finiranno negli spicchi della ruota.</p>
+        <div class="faces-row">
+            @foreach (var traveler in Config.Travelers)
+            {
+                <FacePicker Traveler="@traveler" />
+            }
+        </div>
+    </div>
+}
+else if (todaySpin is not null && !_rerolling)
+{
+    @* --- Esito di oggi già deciso --- *@
+    <div class="spin-result-card">
+        <span class="result-day">Oggi, @today.ToString("dddd d MMMM")</span>
+        <div class="result-face">
+            @if (FaceUrl(todaySpin.Person) is string u)
+            {
+                <img src="@u" alt="@todaySpin.Person" />
+            }
+            <span class="result-person">@todaySpin.Person</span>
+        </div>
+        <p class="result-challenge">@todaySpin.Challenge</p>
+        <button type="button" class="btn btn-secondary" @onclick="AskReroll">Gira di nuovo</button>
+    </div>
+}
+else
+{
+    @* --- Sessione di gioco: due ruote in sequenza --- *@
+    @if (_phase == Phase.Who)
+    {
+        <h2 class="wheel-title">1 · Chi?</h2>
+        <FortuneWheel Slices="_people"
+                      FaceMode="true"
+                      SliceImages="_peopleImages"
+                      OnResult="OnWhoChosen" />
+    }
+    else if (_phase == Phase.What)
+    {
+        <div class="chosen-banner">
+            Tocca a <strong>@_chosenPerson</strong> 🎉
+        </div>
+        <h2 class="wheel-title">2 · Cosa?</h2>
+        <FortuneWheel Slices="_challenges"
+                      OnResult="OnWhatChosen" />
+    }
+    else if (_phase == Phase.Reveal)
+    {
+        <div class="spin-result-card reveal">
+            <span class="result-day">Il verdetto</span>
+            <div class="result-face">
+                @if (FaceUrl(_chosenPerson) is string u)
+                {
+                    <img src="@u" alt="@_chosenPerson" />
+                }
+                <span class="result-person">@_chosenPerson</span>
+            </div>
+            <p class="result-challenge">@_chosenChallenge</p>
+            <p class="reveal-hint">Salvato per oggi. Buona fortuna! 🍀</p>
+        </div>
+    }
+}
+
+@* --- Storico --- *@
+@{
+    var past = State.Spins.Where(s => s.Date < today).ToList();
+}
+@if (past.Count > 0)
+{
+    <h2 class="section-title"><ThistleDoodle CssClass="title-thistle" /> I giorni scorsi</h2>
+    <div class="history-list">
+        @foreach (var s in past)
+        {
+            <div class="history-row">
+                <span class="history-date">@s.Date.ToString("ddd d MMM")</span>
+                <span class="history-person">@s.Person</span>
+                <span class="history-challenge">@s.Challenge</span>
+            </div>
+        }
+    </div>
+}
+
+@* --- Conferma ri-gira --- *@
+@if (_confirmReroll)
+{
+    <div class="sheet-backdrop" @ref="_sheetEl" @onclick="CancelReroll">
+        <div class="sheet" @onclick:stopPropagation="true">
+            <div class="sheet-grip"></div>
+            <h2>Girare di nuovo?</h2>
+            <p class="sheet-sub">L'esito di oggi verrà sostituito con quello nuovo. Sei sicuro?</p>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" @onclick="CancelReroll">Annulla</button>
+                <button type="button" class="btn btn-primary" @onclick="ConfirmReroll">Sì, rigira</button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Inject] public required TripState State { get; set; }
+    [Inject] public required AppConfigService Config { get; set; }
+
+    private enum Phase { Who, What, Reveal }
+    private Phase _phase = Phase.Who;
+
+    private List<string> _people = [];
+    private List<string?> _peopleImages = [];
+    private List<string> _challenges = [];
+
+    private string _chosenPerson = "";
+    private string _chosenChallenge = "";
+    private bool _rerolling;
+    private bool _confirmReroll;
+    private ElementReference _sheetEl;
+    private bool _sheetWasOpen;
+
+    private readonly Dictionary<string, string> _faceUrls = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        State.Changed += OnStateChanged;
+        _people = Config.Travelers.ToList();
+        _challenges = SpinChallenges.All.ToList();
+        await LoadFacesAsync();
+    }
+
+    private async void OnStateChanged()
+    {
+        await LoadFacesAsync();
+        StateHasChanged();
+    }
+
+    private async Task LoadFacesAsync()
+    {
+        _peopleImages = [];
+        foreach (var t in _people)
+        {
+            var url = await ResolveFaceUrlAsync(t);
+            if (url is not null) _faceUrls[t] = url;
+            _peopleImages.Add(url);
+        }
+    }
+
+    private string? FaceUrl(string person) => _faceUrls.GetValueOrDefault(person);
+
+    private async Task<string?> ResolveFaceUrlAsync(string traveler)
+    {
+        var face = State.FaceFor(traveler);
+        if (face is null) return null;
+        var local = await Interop.GetLocalPhotoUrlAsync($"photo-{face.Id:N}");
+        if (local is not null) return local;
+        if (face.StoragePath is not null)
+            return await Api.CreateSignedPhotoUrlAsync(face.StoragePath);
+        return null;
+    }
+
+    private void OnWhoChosen(int index)
+    {
+        _chosenPerson = _people[index];
+        _phase = Phase.What;
+        StateHasChanged();
+    }
+
+    private async Task OnWhatChosen(int index)
+    {
+        _chosenChallenge = _challenges[index];
+        _phase = Phase.Reveal;
+        var today = DateOnly.FromDateTime(DateTime.Now);
+        await State.SaveSpinAsync(today, _chosenPerson, _chosenChallenge);
+        _rerolling = false;
+        StateHasChanged();
+    }
+
+    private void AskReroll() => _confirmReroll = true;
+    private void CancelReroll() => _confirmReroll = false;
+
+    private void ConfirmReroll()
+    {
+        _confirmReroll = false;
+        _rerolling = true;
+        _phase = Phase.Who;
+        _chosenPerson = "";
+        _chosenChallenge = "";
+        StateHasChanged();
+    }
+
+    // portale JS per il foglio di conferma (scroll pulito su iOS)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_confirmReroll && !_sheetWasOpen)
+        {
+            _sheetWasOpen = true;
+            await Interop.OpenSheetAsync(_sheetEl);
+        }
+        else if (!_confirmReroll && _sheetWasOpen)
+        {
+            _sheetWasOpen = false;
+            await Interop.CloseSheetAsync();
+        }
+    }
+
+    public void Dispose() => State.Changed -= OnStateChanged;
+}

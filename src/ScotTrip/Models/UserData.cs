@@ -104,6 +104,50 @@ public sealed class Stay : UserEntity
 }
 
 /// <summary>
+/// Il risultato della "Ruota della Fortuna" per una giornata:
+/// chi (uno dei viaggiatori) deve fare cosa (una delle sfide).
+/// Uno per data; ri-girare aggiorna la stessa riga (id deterministico per data).
+/// </summary>
+public sealed class Spin : UserEntity
+{
+    /// <summary>Giorno a cui si riferisce l'esito.</summary>
+    [JsonPropertyName("spin_date")] public DateOnly Date { get; set; }
+    /// <summary>Nome della persona scelta dalla prima ruota.</summary>
+    [JsonPropertyName("person")] public string Person { get; set; } = "";
+    /// <summary>Testo della sfida scelta dalla seconda ruota.</summary>
+    [JsonPropertyName("challenge")] public string Challenge { get; set; } = "";
+
+    /// <summary>Id deterministico dalla data: un solo esito per giorno, ri-girare lo sovrascrive.</summary>
+    public static Guid DeterministicId(DateOnly date)
+    {
+        var bytes = System.Text.Encoding.UTF8.GetBytes($"spin|{date:yyyy-MM-dd}");
+        var hash = System.Security.Cryptography.SHA256.HashData(bytes);
+        var g = hash[..16];
+        g[7] = (byte)((g[7] & 0x0F) | 0x40);
+        g[8] = (byte)((g[8] & 0x3F) | 0x80);
+        return new Guid(g);
+    }
+}
+
+/// <summary>Le sfide possibili della ruota "Cosa". Modificabili qui in un punto solo.</summary>
+public static class SpinChallenges
+{
+    public static readonly string[] All =
+    [
+        "Offre colazione / spuntino di mattina",
+        "Offre la merenda",
+        "Beve una birra in massimo 5 minuti",
+        "Ordina un piatto molto strano",
+        "Compra un cappello orribile",
+        "Prova una bevanda strana",
+        "Indossa qualcosa di tipico",
+        "Offre caffè / spremuta",
+        "Compra un prodotto strano al supermercato",
+        "Porta lo zaino più pesante",
+    ];
+}
+
+/// <summary>
 /// Metadati di una foto, agganciata a una tappa, un pasto o un alloggio.
 /// Il file binario vive in IndexedDB finché non viene caricato su Supabase Storage.
 /// </summary>
