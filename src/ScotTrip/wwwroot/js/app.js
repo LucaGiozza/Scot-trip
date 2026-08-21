@@ -61,29 +61,30 @@
 
 
 
-    // ---------- ruota della fortuna: rotazione fluida controllata da JS ----------
-    spinWheel: (elOrId, finalAngle, durationMs) => {
+    // ---------- ruota della fortuna: animazione manuale frame-by-frame ----------
+    // Non usa transizioni CSS (i re-render di Blazor possono interromperle):
+    // il JS scrive l'angolo a ogni frame con un ease-out, per l'intera durata.
+    spinWheel: (elId, fromAngle, toAngle, durationMs) => {
       return new Promise((resolve) => {
         try {
-          // accetta sia un nodo DOM sia un id/selettore (Blazor passa un id stringa)
-          let el = elOrId;
-          if (typeof elOrId === "string") {
-            el = document.getElementById(elOrId) || document.querySelector(elOrId);
-          }
-          if (!el || !el.style) { resolve(); return; }
-          // 1) azzera la transizione e fissa lo stato attuale
+          const el = document.getElementById(elId);
+          if (!el) { resolve(); return; }
           el.style.transition = "none";
-          void el.offsetWidth; // reflow
-          // 2) su DUE frame successivi: il browser "vede" lo stato di partenza,
-          //    poi applichiamo transizione + angolo finale → la transizione parte davvero
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              el.style.transition = `transform ${durationMs}ms cubic-bezier(.16,.84,.28,1)`;
-              el.style.transform = `rotate(${finalAngle}deg)`;
-            });
-          });
-          // 3) risolviamo a durata scaduta (non ci affidiamo a transitionend: su iOS è inaffidabile)
-          setTimeout(resolve, durationMs + 120);
+          const delta = toAngle - fromAngle;
+          const start = performance.now();
+          // ease-out quartico: parte veloce, rallenta a lungo alla fine
+          const ease = (t) => 1 - Math.pow(1 - t, 4);
+          const frame = (now) => {
+            const t = Math.min(1, (now - start) / durationMs);
+            const angle = fromAngle + delta * ease(t);
+            el.style.transform = `rotate(${angle}deg)`;
+            if (t < 1) {
+              requestAnimationFrame(frame);
+            } else {
+              resolve();
+            }
+          };
+          requestAnimationFrame(frame);
         } catch (e) { console.error("spinWheel", e); resolve(); }
       });
     },

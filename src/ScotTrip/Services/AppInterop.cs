@@ -64,7 +64,7 @@ public sealed class AppInterop(IJSRuntime js)
     public ValueTask CloseSheetAsync() => js.InvokeVoidAsync("scotTrip.closeSheet");
 
     // ---- ruota della fortuna ----
-    /// <summary>Fa girare la ruota (per id) fino all'angolo finale, con transizione fluida.</summary>
-    public ValueTask SpinWheelAsync(string wheelId, double finalAngle, int durationMs)
-        => js.InvokeVoidAsync("scotTrip.spinWheel", wheelId, finalAngle, durationMs);
+    /// <summary>Anima la ruota dall'angolo di partenza a quello finale (frame-by-frame in JS).</summary>
+    public ValueTask SpinWheelAsync(string wheelId, double fromAngle, double toAngle, int durationMs)
+        => js.InvokeVoidAsync("scotTrip.spinWheel", wheelId, fromAngle, toAngle, durationMs);
 }

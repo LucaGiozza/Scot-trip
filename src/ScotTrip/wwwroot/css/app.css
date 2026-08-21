@@ -1175,16 +1175,36 @@ body.sheet-open .app-main { overflow: hidden; }
 .wheel-labels { position: absolute; inset: 0; }
 .wheel-label {
     position: absolute;
-    width: 84px;
-    text-align: center;
-    font-size: 9.5px;
+    pointer-events: none;
+}
+
+/* etichetta a raggio: ancorata al centro, ruotata sullo spicchio, il testo
+   inizia subito dopo il mozzo e corre verso il bordo senza mai uscire */
+.wheel-ray {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 50%;
+    height: 0;
+    transform-origin: 0 50%;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+}
+
+.wheel-ray span {
+    display: block;
+    width: 100%;
+    padding-left: 46px;    /* libera il mozzo centrale */
+    padding-right: 12px;   /* non tocca il bordo */
+    font-size: 11px;
     font-weight: 700;
     color: #FBFBF7;
-    line-height: 1.05;
-    pointer-events: none;
     text-shadow: 0 1px 1px rgba(0,0,0,.3);
-    white-space: normal;
-    word-break: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1;
 }
 .wheel-label.face {
     width: 30%;

@@ -17,22 +17,29 @@
             @for (int i = 0; i < Slices.Count; i++)
             {
                 var mid = (i + 0.5) * _step - 90;
-                var rad = mid * Math.PI / 180.0;
-                var r = FaceMode ? 62.0 : 82.0;
-                var x = 50 + r * Math.Cos(rad) / 2.0;
-                var y = 50 + r * Math.Sin(rad) / 2.0;
-                var rot = FaceMode ? 0 : mid;
-                <div class="wheel-label @(FaceMode ? "face" : "")"
-                     style="left:@Pc(x); top:@Pc(y); transform: translate(-50%,-50%) rotate(@(rot.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture))deg);">
-                    @if (FaceMode && SliceImages is not null && i < SliceImages.Count && SliceImages[i] is not null)
-                    {
-                        <img src="@SliceImages[i]" alt="@Slices[i]" />
-                    }
-                    else
-                    {
+                @if (FaceMode)
+                {
+                    var rad = mid * Math.PI / 180.0;
+                    var x = 50 + 62.0 * Math.Cos(rad) / 2.0;
+                    var y = 50 + 62.0 * Math.Sin(rad) / 2.0;
+                    <div class="wheel-label face" style="left:@Pc(x); top:@Pc(y); transform: translate(-50%,-50%);">
+                        @if (SliceImages is not null && i < SliceImages.Count && SliceImages[i] is not null)
+                        {
+                            <img src="@SliceImages[i]" alt="@Slices[i]" />
+                        }
+                        else
+                        {
+                            <span>@Slices[i]</span>
+                        }
+                    </div>
+                }
+                else
+                {
+                    @* raggio: parte dal centro (dopo il mozzo) e corre verso il bordo *@
+                    <div class="wheel-ray" style="transform: rotate(@(mid.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture))deg);">
                         <span>@Slices[i]</span>
-                    }
-                </div>
+                    </div>
+                }
             }
         </div>
     </div>
@@ -94,9 +101,10 @@
         var turns = 5 + rnd.Next(3);
         var current = ((_angle % 360) + 360) % 360;
         var toTop = (360 - target - current + 720) % 360;
+        var from = _angle;
         _angle += turns * 360 + toTop;
 
-        await Interop.SpinWheelAsync(_wheelId, _angle, SpinMs);
+        await Interop.SpinWheelAsync(_wheelId, from, _angle, SpinMs);
 
         _spinning = false;
         await OnResult.InvokeAsync(winner);
