@@ -1,5 +1,6 @@
 @page "/alloggi"
 @implements IDisposable
+@inject AppInterop Interop
 
 <PageTitle>Alloggi · Scozia</PageTitle>
 
@@ -59,7 +60,7 @@ else
 
 @if (_editing is not null)
 {
-    <div class="sheet-backdrop" @onclick="CloseSheet">
+    <div class="sheet-backdrop" @ref="_sheetEl" @onclick="CloseSheet">
         <div class="sheet" @onclick:stopPropagation="true">
             <div class="sheet-grip"></div>
             <h2>@(_isNew ? "Nuovo alloggio" : "Modifica alloggio")</h2>
@@ -101,6 +102,25 @@ else
 }
 
 @code {
+    private ElementReference _sheetEl;
+    private bool _sheetWasOpen;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        // apre/chiude il "portale" JS quando il foglio compare o sparisce
+        var open = _editing is not null;
+        if (open && !_sheetWasOpen)
+        {
+            _sheetWasOpen = true;
+            await Interop.OpenSheetAsync(_sheetEl);
+        }
+        else if (!open && _sheetWasOpen)
+        {
+            _sheetWasOpen = false;
+            await Interop.CloseSheetAsync();
+        }
+    }
+
     [Inject] public required TripState State { get; set; }
 
     private Stay? _editing;

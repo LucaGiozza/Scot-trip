@@ -1,7 +1,8 @@
 @* Bottom sheet di voto: 4 categorie × 2 persone, con media in tempo reale. *@
 @implements IDisposable
+@inject AppInterop Interop
 
-<div class="sheet-backdrop" @onclick="Close">
+<div class="sheet-backdrop" @ref="_sheetEl" @onclick="Close">
     <div class="sheet" @onclick:stopPropagation="true">
         <div class="sheet-grip"></div>
         <h2>@Title</h2>
@@ -42,6 +43,8 @@
 </div>
 
 @code {
+    private ElementReference _sheetEl;
+
     [Inject] public required TripState State { get; set; }
     [Inject] public required AppConfigService Config { get; set; }
 
@@ -56,7 +59,17 @@
     private Task SetAsync(string traveler, RatingCategory category, int stars)
         => State.SetRatingAsync(TargetKind, TargetId, traveler, stars, category);
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            await Interop.OpenSheetAsync(_sheetEl);
+    }
+
     private Task Close() => OnClose.InvokeAsync();
 
-    public void Dispose() => State.Changed -= StateHasChanged;
+    public void Dispose()
+    {
+        State.Changed -= StateHasChanged;
+        _ = Interop.CloseSheetAsync();
+    }
 }

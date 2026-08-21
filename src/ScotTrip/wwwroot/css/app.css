@@ -692,6 +692,10 @@ main.app-main {
     display: flex;
     align-items: flex-end;
     justify-content: center;
+    /* l'overlay cattura il tocco e non lascia passare lo scroll al contenuto sotto */
+    overscroll-behavior: contain;
+    touch-action: none;
+    -webkit-overflow-scrolling: touch;
 }
 
 .sheet {
@@ -703,7 +707,13 @@ main.app-main {
     border-radius: 18px 18px 0 0;
     padding: 10px 18px calc(18px + var(--safe-bottom));
     -webkit-overflow-scrolling: touch;
+    /* lo scroll resta DENTRO il foglio: non trascina mai la pagina di fondo */
+    overscroll-behavior: contain;
+    touch-action: pan-y;
 }
+
+/* quando un foglio è aperto, il contenuto di fondo non deve scrollare */
+body.sheet-open .app-main { overflow: hidden; }
 
 .sheet-grip {
     width: 40px; height: 4px;

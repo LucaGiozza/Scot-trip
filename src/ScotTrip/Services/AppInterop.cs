@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
 namespace ScotTrip.Services;
@@ -55,4 +56,10 @@ public sealed class AppInterop(IJSRuntime js)
     public ValueTask<string?> LocalGetAsync(string key) => js.InvokeAsync<string?>("scotTrip.lsGet", key);
     public ValueTask LocalSetAsync(string key, string value) => js.InvokeVoidAsync("scotTrip.lsSet", key, value);
     public ValueTask LocalRemoveAsync(string key) => js.InvokeVoidAsync("scotTrip.lsRemove", key);
+
+    // ---- fogli modali (bottom sheet): portale fuori da <main> per scroll pulito su iOS ----
+    /// <summary>Sposta il foglio come figlio del body e blocca lo scroll di fondo.</summary>
+    public ValueTask OpenSheetAsync(ElementReference backdrop) => js.InvokeVoidAsync("scotTrip.openSheet", backdrop);
+    /// <summary>Ripristina lo scroll di fondo e rimuove eventuali fogli orfani.</summary>
+    public ValueTask CloseSheetAsync() => js.InvokeVoidAsync("scotTrip.closeSheet");
 }

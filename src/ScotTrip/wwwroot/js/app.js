@@ -59,6 +59,27 @@
     idbDelete: (store, key) => tx(store, "readwrite", (os) => reqToBox(os.delete(key))).then(() => undefined),
     idbGetAll: (store) => tx(store, "readonly", (os) => reqToBox(os.getAll())).then((v) => v ?? []),
 
+
+    // ---------- fogli modali: portali fuori da <main> per uno scroll pulito su iOS ----------
+    // Blazor renderizza il foglio dentro la pagina (quindi dentro <main> che scrolla).
+    // Lo spostiamo come figlio diretto del body: così l'overlay copre davvero il viewport
+    // e lo scroll resta dentro il foglio, senza trascinare il contenuto di fondo.
+    openSheet: (backdropEl) => {
+      try {
+        if (!backdropEl) return;
+        document.body.classList.add("sheet-open");
+        backdropEl.__originalParent = backdropEl.parentNode;
+        document.body.appendChild(backdropEl);
+      } catch (e) { console.error("openSheet", e); }
+    },
+    closeSheet: () => {
+      try {
+        document.body.classList.remove("sheet-open");
+        // i nodi spostati vengono rimossi da Blazor al prossimo render; puliamo eventuali orfani
+        document.querySelectorAll("body > .sheet-backdrop").forEach((el) => el.remove());
+      } catch (e) { console.error("closeSheet", e); }
+    },
+
     // ---------- utilità DOM ----------
     clickElement: (id) => {
       const el = document.getElementById(id);
