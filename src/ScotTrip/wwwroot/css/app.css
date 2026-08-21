@@ -63,7 +63,7 @@ body {
     font-size: 16px;
     line-height: 1.5;
     color: var(--ink);
-    background-color: var(--mist);
+    background-color: var(--paper);
     /* trama tartan appena percepibile: dà calore senza disturbare la lettura */
     background-image:
         repeating-linear-gradient(0deg, rgba(30, 59, 51, .016) 0 2px, transparent 2px 36px),
@@ -279,6 +279,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-
 main.app-main {
     flex: 1 1 auto;
     min-height: 0;                  /* indispensabile perché flex-child scrolli */
+    background: var(--mist);        /* sfondo contenuto (il body sotto è color barra) */
     width: 100%;
     max-width: 640px;
     margin: 0 auto;
@@ -290,12 +291,25 @@ main.app-main {
 
 /* ---------- tab bar inferiore ---------- */
 .tabbar {
+    position: relative;
     flex: 0 0 auto;                 /* altezza fissa, sempre in fondo alla shell */
     display: flex;
     background: var(--paper);
     border-top: 1px solid var(--line);
     padding-bottom: var(--safe-bottom);   /* respiro sopra la home-bar iPhone */
     z-index: 30;
+}
+
+/* riempie di colore l'area della home-bar sotto la tabbar (niente fascia grigia).
+   Copre anche l'eventuale pixel non coperto da 100dvh su alcuni iPhone. */
+.tabbar::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: max(var(--safe-bottom), 60px);
+    background: var(--paper);
 }
 
 .tabbar a {
