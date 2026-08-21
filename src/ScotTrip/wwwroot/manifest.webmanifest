@@ -5,8 +5,8 @@
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#1E3B33",
-  "theme_color": "#1E3B33",
+  "background_color": "#2F5A4C",
+  "theme_color": "#2F5A4C",
   "lang": "it",
   "description": "Diario di viaggio in Scozia: tappe, curiosità, foto e voti.",
   "icons": [
