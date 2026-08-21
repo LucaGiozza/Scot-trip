@@ -3,7 +3,7 @@
 
 <div class="wheel-wrap">
     <div class="wheel-pointer" aria-hidden="true"></div>
-    <div class="wheel" @ref="_wheelEl">
+    <div class="wheel" id="@_wheelId">
         <svg viewBox="-110 -110 220 220" aria-hidden="true">
             @for (int i = 0; i < Slices.Count; i++)
             {
@@ -48,7 +48,7 @@
     [Parameter] public List<string?>? SliceImages { get; set; }
     [Parameter] public EventCallback<int> OnResult { get; set; }
 
-    private ElementReference _wheelEl;
+    private readonly string _wheelId = $"wheel-{Guid.NewGuid():N}";
     private double _angle;
     private double _step;
     private bool _spinning;
@@ -84,7 +84,8 @@
     {
         if (_spinning || Slices.Count == 0) return;
         _spinning = true;
-        StateHasChanged();
+        // NB: non chiamiamo StateHasChanged qui — un re-render azzererebbe il transform
+        // che il JS sta per applicare all'elemento .wheel. Il pulsante resta com'è per 4.5s.
 
         var rnd = new Random();
         var winner = rnd.Next(Slices.Count);
@@ -95,10 +96,9 @@
         var toTop = (360 - target - current + 720) % 360;
         _angle += turns * 360 + toTop;
 
-        await Interop.SpinWheelAsync(_wheelEl, _angle, SpinMs);
+        await Interop.SpinWheelAsync(_wheelId, _angle, SpinMs);
 
         _spinning = false;
-        StateHasChanged();
         await OnResult.InvokeAsync(winner);
     }
 }

@@ -62,21 +62,28 @@
 
 
     // ---------- ruota della fortuna: rotazione fluida controllata da JS ----------
-    spinWheel: (el, finalAngle, durationMs) => {
+    spinWheel: (elOrId, finalAngle, durationMs) => {
       return new Promise((resolve) => {
         try {
-          if (!el) { resolve(); return; }
-          // parte dall'angolo attuale, senza transizione, per un aggancio pulito
+          // accetta sia un nodo DOM sia un id/selettore (Blazor passa un id stringa)
+          let el = elOrId;
+          if (typeof elOrId === "string") {
+            el = document.getElementById(elOrId) || document.querySelector(elOrId);
+          }
+          if (!el || !el.style) { resolve(); return; }
+          // 1) azzera la transizione e fissa lo stato attuale
           el.style.transition = "none";
-          // forza il reflow così il browser "fissa" lo stato attuale
-          void el.offsetWidth;
-          // applica la transizione e l'angolo finale
-          el.style.transition = `transform ${durationMs}ms cubic-bezier(.16,.84,.28,1)`;
-          el.style.transform = `rotate(${finalAngle}deg)`;
-          const done = () => { el.removeEventListener("transitionend", done); resolve(); };
-          el.addEventListener("transitionend", done);
-          // fallback se transitionend non scatta
-          setTimeout(resolve, durationMs + 200);
+          void el.offsetWidth; // reflow
+          // 2) su DUE frame successivi: il browser "vede" lo stato di partenza,
+          //    poi applichiamo transizione + angolo finale → la transizione parte davvero
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              el.style.transition = `transform ${durationMs}ms cubic-bezier(.16,.84,.28,1)`;
+              el.style.transform = `rotate(${finalAngle}deg)`;
+            });
+          });
+          // 3) risolviamo a durata scaduta (non ci affidiamo a transitionend: su iOS è inaffidabile)
+          setTimeout(resolve, durationMs + 120);
         } catch (e) { console.error("spinWheel", e); resolve(); }
       });
     },
