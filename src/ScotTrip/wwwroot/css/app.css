@@ -179,8 +179,8 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-
     transform-origin: 80px 78px;
 }
 
-.run-legs-a { animation: run-kick .42s ease-in-out infinite; transform-origin: 80px 68px; }
-.run-legs-b { animation: run-kick .42s ease-in-out infinite reverse; transform-origin: 80px 68px; }
+.run-legs-a { animation: run-kick .42s ease-in-out infinite; transform-origin: 80px 60px; }
+.run-legs-b { animation: run-kick .42s ease-in-out infinite reverse; transform-origin: 80px 60px; }
 .run-tail { animation: run-tail .84s ease-in-out infinite; transform-origin: 46px 56px; }
 .run-scarf { animation: run-scarf .84s ease-in-out infinite; transform-origin: 102px 44px; }
 
@@ -190,8 +190,8 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-
 }
 
 @keyframes run-kick {
-    0%, 100% { transform: rotate(16deg); }
-    50% { transform: rotate(-16deg); }
+    0%, 100% { transform: rotate(11deg); }
+    50% { transform: rotate(-11deg); }
 }
 
 @keyframes run-tail {

@@ -1,0 +1,300 @@
+================================================================================
+  ScotTrip — DOCUMENTO DI PROGETTO / PUNTO DELLA SITUAZIONE
+  App di viaggio in Scozia per una coppia (Luca & Alessia)
+  Ultimo aggiornamento: 20 agosto 2026 — versione codice "v11"
+================================================================================
+
+COME USARE QUESTO FILE
+----------------------
+Questo file serve a riprendere il progetto in una NUOVA conversazione con Claude
+(o con qualsiasi assistente) senza dover rispiegare tutto da capo.
+Se apri una chat nuova, incolla il "MESSAGGIO DI RIPARTENZA" che trovi in fondo,
+oppure allega/linka questo file.
+IMPORTANTE: la fonte di verità del codice è SEMPRE il repository GitHub, non la
+chat. Se un file va modificato, si parte dalla versione che sta su GitHub.
+
+
+================================================================================
+1. COS'È L'APP
+================================================================================
+App web personale (NON commerciale) per documentare un viaggio in Scozia di
+coppia, dal 4 al 13 settembre 2026. Itinerario: Edimburgo, Stirling, Inverness,
+costa del Moray, Isola di Skye, Glencoe, Glasgow.
+
+Funzionalità principali:
+- Itinerario giorno per giorno (10 giorni, 45 tappe).
+- Per ogni tappa: descrizione, info pratiche (orari/costi/prenotazioni),
+  2-3 "curiosità" vere (categorie: Assurdo ma vero / Storia / Leggenda),
+  link a Google Maps, badge "Da vedere" → "✓ Visto".
+- Foto ricordo per ogni tappa, pasto e alloggio (scatto/caricamento, compresse
+  sul telefono, sincronizzate nel cloud).
+- Voti di coppia (2 persone, 1-5 stelle):
+    * Tappe: voto unico "Generale".
+    * Pasti e Alloggi: 4 categorie → Location, Prezzo, Qualità, Personale.
+- Pasti: nome locale, luogo, giorno, tipo pasto, "cosa abbiamo mangiato", costo,
+  nota, foto, voti.
+- Alloggi: nome, località, check-in/out, nota, foto, voti.
+- Classifiche: podio generale + migliori per categoria, separate per Ristoranti
+  e Alloggi.
+- Pagina "Altro": accesso alle classifiche, "il viaggio in numeri" (tappe viste,
+  foto, pasti, stelle), accesso alle impostazioni.
+- Impostazioni: nomi dei viaggiatori, login account condiviso (Supabase), stato
+  sincronizzazione.
+
+Grafica: tema scozzese sobrio. Palette verde pino / blu notte / erica (viola) /
+ginestra (oro), con nastri tartan SOTTILI come cornice. Gattino bianco con
+sciarpa tartan come mascotte (schermata di caricamento, timbro sulle curiosità,
+stati vuoti). Ogni tipo di tappa ha una "scenetta" illustrata dedicata e un
+colore d'accento (castello, natura, spiaggia, distilleria, chiesa, panorama,
+borgo, città).
+
+IDEE ESPLICITAMENTE RIFIUTATE dall'utente (NON reintrodurre):
+check-in GPS con animazione gatto, gatti collezionabili, passaporto timbri,
+parola gaelica del giorno, contatore pecore, diario di coppia.
+
+
+================================================================================
+2. STACK TECNICO E ARCHITETTURA
+================================================================================
+- Frontend: Blazor WebAssembly standalone, .NET 8 (net8.0), come PWA.
+  (MAUI è stato valutato e SCARTATO: complessità distribuzione iOS senza
+   account sviluppatore. Non riproporlo.)
+- Linguaggio: C# (l'utente programma in C# con Visual Studio).
+- Hosting: GitHub Pages (gratuito), deploy automatico via GitHub Actions.
+- Backend: Supabase (piano Free) = database Postgres + Storage foto + Auth.
+- NIENTE SDK Supabase: si usano le REST API dirette (PostgREST / GoTrue /
+  Storage) con HttpClient. Scelta deliberata per bundle più piccolo.
+- Offline-first OBBLIGATORIO (Highlands e Skye senza rete):
+    * Si scrive SEMPRE prima in locale (IndexedDB), poi si sincronizza.
+    * Coda di operazioni in IndexedDB; push + delta-pull.
+    * Conflitti: last-write-wins su updated_at (sia client sia trigger SQL).
+    * Cancellazioni = "soft delete" (colonna deleted=true) così si propagano.
+    * ID generati dal client (UUID). I voti usano un UUID DETERMINISTICO
+      calcolato da (target, persona, categoria): così se entrambi votano la
+      stessa cosa offline i due upsert convergono sulla stessa riga.
+- iOS/Safari NON supporta la Background Sync API: la sync è guidata dall'app
+  (all'avvio, quando torna online, al ritorno in primo piano, dopo ogni salvataggio).
+- Foto: compressione client-side via canvas (lato max 1600px, JPEG qualità 0.8),
+  blob salvato in IndexedDB, upload a Supabase Storage via fetch JS (il binario
+  non passa mai per .NET). Foto dell'altro telefono viste con URL firmati
+  (bucket privato).
+
+NOTA IMPORTANTE per chi modifica il codice in futuro:
+Il progetto Blazor WASM completo NON si compila in ambienti dove NuGet è
+bloccato. Per verificare il codice offline si può usare un progetto "ombra"
+con Sdk Microsoft.NET.Sdk.Razor + FrameworkReference Microsoft.AspNetCore.App
+che compila .cs e .razor (escludendo Program.cs). Per i test visivi mobile si
+usa Playwright/Chromium con un testbench HTML statico che carica il CSS reale a
+viewport iPhone (390x844 e 320px), verificando assenza di overflow orizzontale.
+
+
+================================================================================
+3. STRUTTURA DEL REPOSITORY
+================================================================================
+Repo GitHub: github.com/LucaGiozza/Scot-trip  (branch: main, pubblico)
+URL app online: https://lucagiozza.github.io/Scot-trip/
+
+scotland-trip/
+├── PROGETTO.txt                      ← questo file
+├── README.md                          setup completo (Supabase, deploy, iPhone)
+├── .gitignore
+├── .github/workflows/deploy.yml       CI: build + deploy su GitHub Pages
+│                                       (sistema base href, 404.html, .nojekyll)
+├── supabase/schema.sql                tabelle, RLS, trigger LWW, bucket foto
+└── src/ScotTrip/
+    ├── ScotTrip.csproj                Blazor WASM PWA, net8.0, globalizzazione it
+    ├── Program.cs                     DI dei servizi, cultura it-IT forzata
+    ├── App.razor, _Imports.razor
+    ├── Models/
+    │   ├── Itinerary.cs              Itinerary→TripDay→TripStop, Curiosity, enum StopKind/CuriosityKind
+    │   └── UserData.cs              Rating(+RatingCategory), Meal, Stay, TripPhoto, PendingOp, sessione, AppSettingsFile
+    ├── Services/
+    │   ├── AppInterop.cs            ponte tipizzato verso js/app.js (IndexedDB, foto, rete, localStorage)
+    │   ├── CoreServices.cs          Json.Options, AppConfigService, ItineraryService
+    │   ├── LocalStore.cs            store IndexedDB + coda operazioni
+    │   ├── SupabaseAuthService.cs   login GoTrue password + refresh token
+    │   ├── SupabaseApiService.cs    upsert PostgREST, delta pull, upload/sign foto
+    │   ├── SyncService.cs           motore sync (push coda + pull LWW), stati
+    │   └── TripState.cs             facade UI: dati in memoria + azioni
+    ├── Components/
+    │   ├── CatDoodle.razor / CatPose.cs   gattino SVG (3 pose)
+    │   ├── ThistleDoodle.razor            cardo SVG (ornamento titoli)
+    │   ├── KindScene.razor / KindInfo.cs  scenette + icone/colori per tipo tappa
+    │   ├── RatingStars.razor              5 stelle accessibili
+    │   ├── RatingBlock.razor              voti per una categoria (2 persone + media)
+    │   ├── RateSheet.razor                bottom sheet voto 4 categorie
+    │   ├── CategoryChips.razor            chip riepilogo medie per categoria
+    │   ├── PhotoGallery.razor             galleria foto (generica: tappa/pasto/alloggio)
+    │   ├── SyncBadge.razor                badge stato sync nell'header
+    │   └── DayView.razor                  strip giorni + timeline tappe
+    ├── Layout/MainLayout.razor            header (tartan) + tab bar inferiore
+    ├── Pages/
+    │   ├── Home.razor            "/"                giorno corrente
+    │   ├── DayPage.razor         "/giorno/{Index}"  giorno specifico
+    │   ├── StopPage.razor        "/tappa/{Id}"      dettaglio tappa
+    │   ├── MealsPage.razor       "/pasti"
+    │   ├── StaysPage.razor       "/alloggi"
+    │   ├── RankingsPage.razor    "/classifiche"
+    │   ├── AltroPage.razor       "/altro"
+    │   └── SettingsPage.razor    "/impostazioni"
+    └── wwwroot/
+        ├── index.html            splash boot (gatto che corre), meta iOS
+        ├── css/app.css           design system completo (link con ?v=NN anti-cache)
+        ├── js/app.js             IndexedDB, compressione/upload foto, connettività
+        ├── data/itinerary.json   IL CONTENUTO: 10 giorni, 45 tappe, 95 curiosità
+        ├── appsettings.json      config Supabase (URL + anon key) + nomi viaggiatori
+        ├── manifest.webmanifest
+        ├── service-worker.js               (dev: nessuna cache)
+        ├── service-worker.published.js     (prod: cache offline della shell)
+        └── icons/icon-192.png, icon-512.png
+
+
+================================================================================
+4. CONFIGURAZIONE SUPABASE (GIÀ FATTA)
+================================================================================
+Progetto Supabase creato e collegato. Dettagli:
+- Project ID:  zozjecpvqitthkixbmyv
+- Project URL: https://zozjecpvqitthkixbmyv.supabase.co
+- Region:      West EU (Ireland) / eu-west-1
+- La ANON PUBLIC key è già inserita in src/ScotTrip/wwwroot/appsettings.json
+  (è una chiave pubblica, sicura in un'app client; la protezione vera è la RLS).
+  NB: usata la chiave LEGACY "anon" (formato eyJ...), non la nuova
+  "sb_publishable_..." (l'app attuale usa il sistema di auth legacy).
+- Tabelle create eseguendo supabase/schema.sql nel SQL Editor:
+  ratings, meals, stays, photos (+ trigger last-write-wins + RLS solo utenti
+  autenticati + bucket privato "trip-photos" con policy).
+- Utenti: creati in Authentication → Users (Auto Confirm attivo). Possibile
+  usare due account (uno per persona) OPPURE lo stesso su entrambi i telefoni.
+  Consigliato disattivare "Allow new users to sign up".
+
+SVUOTARE I DATI DI PROVA prima del viaggio (SQL Editor):
+    truncate table public.ratings, public.meals, public.stays, public.photos;
+  Poi svuotare anche il bucket Storage "trip-photos" (foto di prova) e
+  REINSTALLARE l'app sui telefoni (altrimenti i dati locali risincronizzano e
+  "risorgono"): eliminare l'icona dalla Home e riaggiungerla dal browser.
+
+COMPORTAMENTO ATTESO, NON è un bug:
+Le righe eliminate restano nelle tabelle Supabase con deleted=true (soft delete).
+Nell'app non si vedono. Per vederle "pulite" nel pannello, filtrare deleted=false.
+
+
+================================================================================
+5. FLUSSO DI LAVORO / DEPLOY
+================================================================================
+1. Modifica i file (in locale con Visual Studio, oppure direttamente su GitHub).
+2. Carica su GitHub:
+   - da riga di comando (consigliato):
+       git add . && git commit -m "descrizione" && git push
+   - oppure via web: "Add file" / matita, mantenendo le CARTELLE (non appiattire).
+3. Il workflow deploy.yml parte da solo su push a main → tab "Actions" → verde ✅.
+4. In ~2 minuti l'app è aggiornata su https://lucagiozza.github.io/Scot-trip/
+
+CACHE (PWA) — importante durante lo sviluppo:
+Dopo un deploy, gli iPhone possono mostrare la versione vecchia in cache.
+Il CSS è versionato con ?v=NN in index.html: aumentare quel numero a ogni
+modifica del CSS forza il refresh. Se l'app è installata sulla Home: chiuderla
+del tutto e riaprirla DUE volte (il service worker aggiorna al primo avvio e
+applica al secondo), o eliminare/riaggiungere l'icona.
+
+GIT / ACCOUNT (nota storica di un intoppo già risolto):
+Il PC aveva salvate le credenziali dell'account di lavoro "LucaGiozzaPrimeweb"
+mentre il repo è dell'account personale "LucaGiozza" → errore 403 sul push.
+Se ricapita: Gestione credenziali Windows → rimuovere le voci git:github.com,
+poi ripetere il push e loggarsi come LucaGiozza.
+
+
+================================================================================
+6. STATO ATTUALE (dove siamo arrivati)
+================================================================================
+FATTO:
+- App completa e funzionante, online su GitHub Pages.
+- Supabase collegato: DB, Auth, Storage configurati; app che sincronizza.
+- Login testato; dati che arrivano nel DB verificato.
+- Itinerario completo: 10 giorni, 45 tappe, 95 curiosità (verificate, senza
+  duplicare il PDF originale dell'itinerario, tranne la descrizione base).
+- Voti a 4 categorie per pasti/alloggi + classifiche.
+- Foto su tappe, pasti, alloggi.
+- Grafica scozzese, scenette per tipo tappa, gattino mascotte.
+- Schermata di caricamento: gatto bianco con sciarpa tartan che corre nel prato,
+  castello con bandiera scozzese all'orizzonte, pecora, cardi, bandierine,
+  scritta "Caricamento…" (tutto schermo, animazioni CSS).
+- Icone Modifica/Elimina (matita/cestino) al posto delle scritte.
+- Badge sync "onesto": se Supabase non configurato dice "Solo su questo
+  telefono"; se manca login "Accedi per condividere" (porta alle impostazioni).
+
+ULTIMO INTERVENTO (v11) — bug tab bar inferiore:
+Problema: passando da Itinerario (pagina lunga) a Pasti/Alloggi (pagina corta)
+la tab bar in basso "si alzava" invece di restare ancorata.
+Causa: la tabbar era position:fixed rispetto alla finestra; su iPhone la barra
+indirizzi del browser appare/scompare cambiando l'altezza della finestra e
+facendo saltare la tabbar.
+Soluzione applicata: nuovo impianto layout. html/body/#app/.app-shell ad altezza
+viewport fissa (100dvh, fallback 100vh); header e .tabbar sono blocchi fissi ai
+bordi (flex 0 0 auto); SOLO <main class="app-main"> scorre (overflow-y:auto,
+min-height:0). Così la tabbar non è più agganciata al fondo della finestra ma al
+fondo dell'app e non può più saltare. Verificato con Playwright: tabbar nella
+stessa posizione su pagina piena e vuota, ferma durante lo scroll, nessun
+overflow a 390px e 320px.
+→ DA CONFERMARE dall'utente sul telefono reale dopo il deploy v11.
+
+VERSIONE CODICE CORRENTE: v11 (CSS a ?v=11 in index.html).
+
+
+================================================================================
+7. COSE DA FARE / IN SOSPESO
+================================================================================
+- [ ] Confermare che il fix v11 della tab bar funzioni sul telefono reale.
+- [ ] Prima della partenza: svuotare tabelle + bucket + reinstallare app pulita
+      su entrambi i telefoni (vedi sezione 4).
+- [ ] Fare il login su ENTRAMBI i telefoni (o stesso account) e una prova reale
+      di sincronizzazione a due dispositivi.
+- [ ] Confermare le prenotazioni ad alta richiesta segnate in-app con ⚠:
+      Edinburgh Castle (giorno 1) e The Macallan Estate (giorno 5).
+- [ ] Aprire l'app con buona rete PRIMA di partire, così il service worker
+      scarica tutto e funziona offline durante il viaggio.
+- [ ] (Facoltativo) inserire gli alloggi reali già prenotati.
+
+Idee eventuali future (non richieste, solo appunti): mappa offline delle tappe,
+export/backup dei ricordi a fine viaggio, "km percorsi".
+
+
+================================================================================
+8. PREFERENZE DELL'UTENTE (stile di lavoro)
+================================================================================
+- Programma in C# con Visual Studio.
+- Usa SOLO iPhone (la resa mobile su iPhone è prioritaria: nessun bug di
+  visualizzazione/dimensioni).
+- Vuole cose curate, testate, con best practice; niente fretta.
+- Testi dell'interfaccia semplici e descrittivi, non "scritti da AI".
+- Grafica scozzese presente ma non eccessiva.
+- Preferisce spiegazioni passo-passo quando si tratta di operazioni pratiche
+  (GitHub, Supabase), procedendo un blocco alla volta.
+
+
+================================================================================
+9. MESSAGGIO DI RIPARTENZA (da incollare in una chat NUOVA)
+================================================================================
+Copia da qui:
+--------------------------------------------------------------------------------
+Sto lavorando alla mia app "ScotTrip": un'app di viaggio in Scozia per me e la
+mia ragazza (4-13 settembre 2026). È una PWA in Blazor WebAssembly (.NET 8, C#),
+ospitata su GitHub Pages, con backend Supabase (Postgres + Storage + Auth) usato
+via REST, architettura offline-first. La uso solo da iPhone, quindi la resa
+mobile è prioritaria.
+
+Repo (fonte di verità del codice): github.com/LucaGiozza/Scot-trip
+App online: https://lucagiozza.github.io/Scot-trip/
+Nel repo c'è il file PROGETTO.txt con TUTTI i dettagli (stack, struttura file,
+config Supabase già fatta, stato attuale, cose da fare). Leggilo/consideralo
+come contesto.
+
+MAUI è già stato scartato, non riproporlo. Idee già rifiutate: check-in GPS con
+animazione gatto, gatti collezionabili, passaporto timbri, parola gaelica,
+contatore pecore, diario di coppia.
+
+Quello che voglio fare ora è: [DESCRIVI QUI LA MODIFICA].
+Se ti serve un file preciso, dimmi quale e te lo incollo dal repo.
+--------------------------------------------------------------------------------
+================================================================================
+FINE DOCUMENTO
+================================================================================
