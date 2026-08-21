@@ -2,11 +2,26 @@
 @implements IDisposable
 @inject AppInterop Interop
 @inject SupabaseApiService Api
+@inject SupabaseAuthService Auth
 
 <PageTitle>Fortuna · Scozia</PageTitle>
 
 <h1 class="day-heading">La ruota della fortuna</h1>
 <p class="day-area">Ogni giorno la sorte decide chi fa cosa.</p>
+
+@if (!Config.IsConfigured)
+{
+    <div class="warn-banner">
+        ⚠️ I dati restano solo su questo telefono. Configura Supabase per salvarli e condividerli.
+    </div>
+}
+else if (!Auth.IsLoggedIn)
+{
+    <div class="warn-banner">
+        ⚠️ Non hai fatto l'accesso: foto ed esiti restano solo su questo telefono finché non accedi.
+        <a href="impostazioni">Accedi ora</a>
+    </div>
+}
 
 @{
     var today = DateOnly.FromDateTime(DateTime.Now);
@@ -124,7 +139,8 @@ else
 
     private List<string> _people = [];
     private List<string?> _peopleImages = [];
-    private List<string> _challenges = [];
+    private List<string> _challenges = [];      // etichette brevi mostrate sulla ruota
+    private List<string> _challengesFull = [];  // testo completo salvato nel risultato
 
     private string _chosenPerson = "";
     private string _chosenChallenge = "";
@@ -139,7 +155,8 @@ else
     {
         State.Changed += OnStateChanged;
         _people = Config.Travelers.ToList();
-        _challenges = SpinChallenges.All.ToList();
+        _challenges = SpinChallenges.Short.ToList();
+        _challengesFull = SpinChallenges.All.ToList();
         await LoadFacesAsync();
     }
 
@@ -182,7 +199,7 @@ else
 
     private async Task OnWhatChosen(int index)
     {
-        _chosenChallenge = _challenges[index];
+        _chosenChallenge = _challengesFull[index];   // salviamo il testo completo
         _phase = Phase.Reveal;
         var today = DateOnly.FromDateTime(DateTime.Now);
         await State.SaveSpinAsync(today, _chosenPerson, _chosenChallenge);

@@ -145,6 +145,21 @@ public static class SpinChallenges
         "Compra un prodotto strano al supermercato",
         "Porta lo zaino più pesante",
     ];
+
+    /// <summary>Etichette brevi per gli spicchi della ruota (il testo completo resta in All).</summary>
+    public static readonly string[] Short =
+    [
+        "Colazione",
+        "Merenda",
+        "Birra 5 min",
+        "Piatto strano",
+        "Cappello",
+        "Bevanda strana",
+        "Tipico",
+        "Caffè",
+        "Prodotto strano",
+        "Zaino pesante",
+    ];
 }
 
 /// <summary>

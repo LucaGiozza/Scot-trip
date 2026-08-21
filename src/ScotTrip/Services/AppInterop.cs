@@ -62,4 +62,9 @@ public sealed class AppInterop(IJSRuntime js)
     public ValueTask OpenSheetAsync(ElementReference backdrop) => js.InvokeVoidAsync("scotTrip.openSheet", backdrop);
     /// <summary>Ripristina lo scroll di fondo e rimuove eventuali fogli orfani.</summary>
     public ValueTask CloseSheetAsync() => js.InvokeVoidAsync("scotTrip.closeSheet");
+
+    // ---- ruota della fortuna ----
+    /// <summary>Fa girare la ruota fino all'angolo finale, con transizione fluida. Attende la fine.</summary>
+    public ValueTask SpinWheelAsync(ElementReference wheel, double finalAngle, int durationMs)
+        => js.InvokeVoidAsync("scotTrip.spinWheel", wheel, finalAngle, durationMs);
 }

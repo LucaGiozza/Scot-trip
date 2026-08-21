@@ -1,9 +1,9 @@
-@* Ruota della fortuna generica: N spicchi, gira e restituisce l'indice scelto. *@
-@implements IDisposable
+@* Ruota della fortuna generica: N spicchi, gira per qualche secondo e restituisce l'indice scelto. *@
+@inject AppInterop Interop
 
 <div class="wheel-wrap">
     <div class="wheel-pointer" aria-hidden="true"></div>
-    <div class="wheel @(_spinning ? "spinning" : "")" style="transform: rotate(@_angle.ToString(System.Globalization.CultureInfo.InvariantCulture)deg);">
+    <div class="wheel" @ref="_wheelEl">
         <svg viewBox="-110 -110 220 220" aria-hidden="true">
             @for (int i = 0; i < Slices.Count; i++)
             {
@@ -13,17 +13,15 @@
             }
         </svg>
 
-        @* etichette/facce sopra ogni spicchio *@
         <div class="wheel-labels">
             @for (int i = 0; i < Slices.Count; i++)
             {
                 var mid = (i + 0.5) * _step - 90;
                 var rad = mid * Math.PI / 180.0;
-                // testo vicino al bordo e orientato lungo il raggio; facce più interne
                 var r = FaceMode ? 62.0 : 82.0;
                 var x = 50 + r * Math.Cos(rad) / 2.0;
                 var y = 50 + r * Math.Sin(rad) / 2.0;
-                var rot = FaceMode ? 0 : mid; // il testo segue il raggio, la faccia resta dritta
+                var rot = FaceMode ? 0 : mid;
                 <div class="wheel-label @(FaceMode ? "face" : "")"
                      style="left:@Pc(x); top:@Pc(y); transform: translate(-50%,-50%) rotate(@(rot.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture))deg);">
                     @if (FaceMode && SliceImages is not null && i < SliceImages.Count && SliceImages[i] is not null)
@@ -46,15 +44,16 @@
 
 @code {
     [Parameter, EditorRequired] public List<string> Slices { get; set; } = [];
-    /// <summary>In modalità faccia gli spicchi mostrano immagini invece del testo.</summary>
     [Parameter] public bool FaceMode { get; set; }
     [Parameter] public List<string?>? SliceImages { get; set; }
     [Parameter] public EventCallback<int> OnResult { get; set; }
 
+    private ElementReference _wheelEl;
     private double _angle;
     private double _step;
     private bool _spinning;
-    private System.Threading.Timer? _timer;
+
+    private const int SpinMs = 4500;
 
     private static readonly string[] Palette =
         ["#2F5A4C", "#3E7060", "#7A5F9E", "#C9A227", "#3E7C8A", "#9A6B2F", "#6A5490", "#4A5560", "#B0563E", "#4E7A63"];
@@ -85,32 +84,21 @@
     {
         if (_spinning || Slices.Count == 0) return;
         _spinning = true;
+        StateHasChanged();
 
         var rnd = new Random();
         var winner = rnd.Next(Slices.Count);
 
-        // portiamo il centro dello spicchio vincente sotto il puntatore (in alto, -90°).
-        // il puntatore è a top; lo spicchio i è centrato a (i+0.5)*step - 90 nel sistema ruota.
         var target = (winner + 0.5) * _step;
-        var turns = 5 + rnd.Next(3);                 // 5-7 giri pieni per l'effetto
-        var current = _angle % 360;
-        var final = _angle - current + turns * 360 + (360 - target);
-        _angle = final;
-        StateHasChanged();
+        var turns = 5 + rnd.Next(3);
+        var current = ((_angle % 360) + 360) % 360;
+        var toTop = (360 - target - current + 720) % 360;
+        _angle += turns * 360 + toTop;
 
-        // durata dell'animazione CSS = 4.2s: al termine notifichiamo il risultato
-        _timer?.Dispose();
-        var tcs = new TaskCompletionSource();
-        _timer = new System.Threading.Timer(_ => tcs.TrySetResult(), null, 4300, System.Threading.Timeout.Infinite);
-        await tcs.Task;
+        await Interop.SpinWheelAsync(_wheelEl, _angle, SpinMs);
 
         _spinning = false;
-        await InvokeAsync(async () =>
-        {
-            StateHasChanged();
-            await OnResult.InvokeAsync(winner);
-        });
+        StateHasChanged();
+        await OnResult.InvokeAsync(winner);
     }
-
-    public void Dispose() => _timer?.Dispose();
 }

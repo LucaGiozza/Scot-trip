@@ -60,6 +60,27 @@
     idbGetAll: (store) => tx(store, "readonly", (os) => reqToBox(os.getAll())).then((v) => v ?? []),
 
 
+
+    // ---------- ruota della fortuna: rotazione fluida controllata da JS ----------
+    spinWheel: (el, finalAngle, durationMs) => {
+      return new Promise((resolve) => {
+        try {
+          if (!el) { resolve(); return; }
+          // parte dall'angolo attuale, senza transizione, per un aggancio pulito
+          el.style.transition = "none";
+          // forza il reflow così il browser "fissa" lo stato attuale
+          void el.offsetWidth;
+          // applica la transizione e l'angolo finale
+          el.style.transition = `transform ${durationMs}ms cubic-bezier(.16,.84,.28,1)`;
+          el.style.transform = `rotate(${finalAngle}deg)`;
+          const done = () => { el.removeEventListener("transitionend", done); resolve(); };
+          el.addEventListener("transitionend", done);
+          // fallback se transitionend non scatta
+          setTimeout(resolve, durationMs + 200);
+        } catch (e) { console.error("spinWheel", e); resolve(); }
+      });
+    },
+
     // ---------- fogli modali: portali fuori da <main> per uno scroll pulito su iOS ----------
     // Blazor renderizza il foglio dentro la pagina (quindi dentro <main> che scrolla).
     // Lo spostiamo come figlio diretto del body: così l'overlay copre davvero il viewport
