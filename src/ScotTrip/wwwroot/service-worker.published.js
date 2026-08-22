@@ -44,6 +44,8 @@ async function onFetch(event) {
 
     const isNavigation = event.request.mode === 'navigate';
     const cache = await caches.open(cacheName);
-    const cachedResponse = await cache.match(isNavigation ? 'index.html' : event.request);
+    // ignoreSearch: i nostri asset usano ?v=NN per forzare gli aggiornamenti online,
+    // ma in cache sono salvati senza query → senza questa opzione l'offline si rompe.
+    const cachedResponse = await cache.match(isNavigation ? 'index.html' : event.request, { ignoreSearch: true });
     return cachedResponse || fetch(event.request);
 }

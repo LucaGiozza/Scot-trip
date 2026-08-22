@@ -1344,3 +1344,15 @@ body.sheet-open .app-main { overflow: hidden; }
     font-weight: 700;
     white-space: nowrap;
 }
+
+/* messaggio se il caricamento si blocca (offline al primissimo avvio) */
+.boot-stuck {
+    position: absolute;
+    left: 24px; right: 24px;
+    top: 80%;
+    text-align: center;
+    font-size: 13px;
+    color: #FBFBF7;
+    opacity: .85;
+    text-shadow: 0 1px 2px rgba(30, 59, 51, .35);
+}

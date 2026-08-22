@@ -302,53 +302,9 @@
     {
       "index": 4,
       "date": "2026-09-07",
-      "title": "Storia e mostri",
-      "area": "Culloden e Loch Ness",
+      "title": "Il lago del mostro",
+      "area": "Loch Ness e la Great Glen",
       "stops": [
-        {
-          "id": "culloden",
-          "name": "Culloden Battlefield",
-          "kind": "Sight",
-          "lat": 57.477,
-          "lng": -4.0967,
-          "summary": "La brughiera dove nel 1746 finì il sogno giacobita e con lui il mondo dei clan. Un sentiero circolare attraversa il campo, tra le pietre che ricordano i caduti clan per clan; il centro visitatori ricostruisce la battaglia in una sala a 360°.",
-          "practical": "Campo sempre accessibile e gratuito; centro visitatori 9:00–18:00, circa £14. Parcheggio £2 se non visitate il museo.",
-          "bookingRequired": false,
-          "curiosities": [
-            {
-              "kind": "History",
-              "title": "Un'ora che cambiò la Scozia",
-              "text": "La battaglia del 16 aprile 1746 durò meno di un'ora e fu l'ultima battaglia campale mai combattuta su suolo britannico. L'esercito giacobita di Charlie, stremato da una marcia notturna fallita, fu travolto dall'artiglieria governativa."
-            },
-            {
-              "kind": "Weird",
-              "title": "Quando il kilt era illegale",
-              "text": "Dopo Culloden, Londra vietò per legge kilt e tartan: il Dress Act del 1746 puniva chi li indossava con il carcere e, alla recidiva, con la deportazione nelle colonie. Il divieto durò 36 anni. Portare il kilt oggi è anche un piccolo atto di rivincita."
-            }
-          ]
-        },
-        {
-          "id": "clava-cairns",
-          "name": "Clava Cairns",
-          "kind": "Sight",
-          "lat": 57.4735,
-          "lng": -4.0748,
-          "summary": "A cinque minuti da Culloden, un salto indietro di 4000 anni: tombe a camera dell'età del bronzo e cerchi di pietre in un boschetto silenzioso.",
-          "practical": "Sempre accessibile, gratuito. La luce migliore è al mattino presto o verso il tramonto.",
-          "bookingRequired": false,
-          "curiosities": [
-            {
-              "kind": "Weird",
-              "title": "Puntate al solstizio",
-              "text": "I corridoi delle tombe principali sono allineati con il tramonto del solstizio d'inverno: in quel momento la luce entra fino alla camera centrale. Quattromila anni fa, senza calcoli scritti, qualcuno ha orientato tonnellate di pietra al grado giusto."
-            },
-            {
-              "kind": "Weird",
-              "title": "Le pietre che tornano per posta",
-              "text": "Portarsi via una pietra da qui porta sfortuna, dicono. E qualcuno ci crede sul serio: è cronaca che turisti pentiti abbiano rispedito per posta le pietre sottratte, con lettere di scuse in cui raccontavano anni di guai. Il sito le riaccoglie senza fare domande."
-            }
-          ]
-        },
         {
           "id": "drumnadrochit",
           "name": "Drumnadrochit",
@@ -420,9 +376,53 @@
     {
       "index": 5,
       "date": "2026-09-08",
-      "title": "Mare e whisky",
-      "area": "Costa del Moray e Speyside",
+      "title": "Battaglie e mare",
+      "area": "Da Culloden alla costa del Moray",
       "stops": [
+        {
+          "id": "culloden",
+          "name": "Culloden Battlefield",
+          "kind": "Sight",
+          "lat": 57.477,
+          "lng": -4.0967,
+          "summary": "La brughiera dove nel 1746 finì il sogno giacobita e con lui il mondo dei clan. Un sentiero circolare attraversa il campo, tra le pietre che ricordano i caduti clan per clan; il centro visitatori ricostruisce la battaglia in una sala a 360°.",
+          "practical": "Campo sempre accessibile e gratuito; centro visitatori 9:00–18:00, circa £14. Parcheggio £2 se non visitate il museo.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "History",
+              "title": "Un'ora che cambiò la Scozia",
+              "text": "La battaglia del 16 aprile 1746 durò meno di un'ora e fu l'ultima battaglia campale mai combattuta su suolo britannico. L'esercito giacobita di Charlie, stremato da una marcia notturna fallita, fu travolto dall'artiglieria governativa."
+            },
+            {
+              "kind": "Weird",
+              "title": "Quando il kilt era illegale",
+              "text": "Dopo Culloden, Londra vietò per legge kilt e tartan: il Dress Act del 1746 puniva chi li indossava con il carcere e, alla recidiva, con la deportazione nelle colonie. Il divieto durò 36 anni. Portare il kilt oggi è anche un piccolo atto di rivincita."
+            }
+          ]
+        },
+        {
+          "id": "clava-cairns",
+          "name": "Clava Cairns",
+          "kind": "Sight",
+          "lat": 57.4735,
+          "lng": -4.0748,
+          "summary": "A cinque minuti da Culloden, un salto indietro di 4000 anni: tombe a camera dell'età del bronzo e cerchi di pietre in un boschetto silenzioso.",
+          "practical": "Sempre accessibile, gratuito. La luce migliore è al mattino presto o verso il tramonto.",
+          "bookingRequired": false,
+          "curiosities": [
+            {
+              "kind": "Weird",
+              "title": "Puntate al solstizio",
+              "text": "I corridoi delle tombe principali sono allineati con il tramonto del solstizio d'inverno: in quel momento la luce entra fino alla camera centrale. Quattromila anni fa, senza calcoli scritti, qualcuno ha orientato tonnellate di pietra al grado giusto."
+            },
+            {
+              "kind": "Weird",
+              "title": "Le pietre che tornano per posta",
+              "text": "Portarsi via una pietra da qui porta sfortuna, dicono. E qualcuno ci crede sul serio: è cronaca che turisti pentiti abbiano rispedito per posta le pietre sottratte, con lettere di scuse in cui raccontavano anni di guai. Il sito le riaccoglie senza fare domande."
+            }
+          ]
+        },
         {
           "id": "elgin",
           "name": "Elgin",
@@ -552,33 +552,6 @@
               "kind": "Weird",
               "title": "Una spiaggia a orologeria",
               "text": "L'escursione di marea qui è notevole: nel giro di poche ore la spiaggia raddoppia e le rocce si trasformano in un labirinto di pozze dove restano intrappolati granchi, anemoni e stelle marine. Il momento migliore per esplorarla è circa un'ora dopo il picco di bassa marea."
-            }
-          ]
-        },
-        {
-          "id": "macallan",
-          "name": "The Macallan Estate",
-          "kind": "Distillery",
-          "lat": 57.4849,
-          "lng": -3.2113,
-          "summary": "Più che una distilleria, un'astronave di legno e prato ondulato incastonata nelle colline dello Speyside. Dentro: un percorso espositivo, un bar leggendario e il tempio del single malt.",
-          "practical": "In genere 10:00–18:00 (verificare i giorni di chiusura sul sito). Tenuta e centro visitatori gratuiti previa disponibilità; tour e degustazioni da £50. Prenotazione obbligatoria con mesi di anticipo, spesso anche solo per bar e boutique.",
-          "bookingRequired": true,
-          "curiosities": [
-            {
-              "kind": "Weird",
-              "title": "La bottiglia da 2,1 milioni",
-              "text": "Nel 2023 una bottiglia di Macallan 1926 è stata battuta all'asta per circa 2,1 milioni di sterline: il whisky più costoso mai venduto. Fa più o meno 30.000 sterline al sorso. A quel prezzo, il ghiaccio è un reato."
-            },
-            {
-              "kind": "Weird",
-              "title": "Il tetto che è un prato",
-              "text": "Il tetto ondulato della distilleria è una collina artificiale coperta da centinaia di migliaia di piante ed è una delle strutture in legno curvato più complesse del mondo: quasi 400.000 componenti, nessuno uguale all'altro. Da lontano l'edificio semplicemente scompare nel paesaggio."
-            },
-            {
-              "kind": "History",
-              "title": "Tra le prime distillerie legali",
-              "text": "Macallan ottenne la licenza nel 1824, tra le primissime dello Speyside dopo la legge che rese conveniente uscire dalla clandestinità. Prima di allora, in queste valli, la distillazione era uno sport notturno praticato lontano dagli esattori."
             }
           ]
         }
@@ -833,7 +806,7 @@
           "lat": 57.4486,
           "lng": -6.59,
           "summary": "La roccaforte del Clan MacLeod da otto secoli, su una roccia che domina un'insenatura marina. Dentro c'è la leggendaria Fairy Flag; fuori, giardini rigogliosi che sembrano rubati a un altro clima.",
-          "practical": "10:00–17:30 (ultimo ingresso 17:00), circa £16,50 castello + giardini. Dal molo partono brevi tour in barca per vedere le foche.",
+          "practical": "⚠ Ad agosto 2026 il castello risultava temporaneamente chiuso: verificate sul sito ufficiale prima di andare. Se aperto: 10:00–17:30 (ultimo ingresso 17:00), circa £16,50 castello + giardini. Dal molo partono brevi tour in barca per vedere le foche.",
           "bookingRequired": false,
           "curiosities": [
             {
@@ -912,7 +885,7 @@
           "lat": 57.067,
           "lng": -5.895,
           "summary": "Il porticciolo nella verdissima penisola di Sleat, 'il giardino di Skye', da cui salpa il traghetto per Mallaig: il modo più scenografico di lasciare l'isola.",
-          "practical": "Traghetto CalMac Armadale–Mallaig (~30 minuti): con l'auto la prenotazione è fortemente consigliata. Arrivare almeno 20 minuti prima dell'imbarco.",
+          "practical": "Traghetto CalMac Armadale–Mallaig (~30 minuti): il vostro è alle 8:10. Con l'auto presentarsi all'imbarco almeno 20 minuti prima.",
           "bookingRequired": false,
           "curiosities": [
             {
@@ -1057,7 +1030,7 @@
           "lat": 55.8721,
           "lng": -4.2882,
           "summary": "Fondata nel 1451, con chiostri neogotici che sembrano usciti da Hogwarts. Nel cortile principale cercate la scala del Leone e dell'Unicorno.",
-          "practical": "Esterni e chiostri accessibili in genere 9:00–17:00, anche di domenica. Gratuito.",
+          "practical": "Attenzione: di domenica gli interni sono chiusi; esterni e chiostri restano visitabili in genere 9:00–17:00. Gratuito.",
           "bookingRequired": false,
           "curiosities": [
             {
